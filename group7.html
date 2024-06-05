@@ -7774,48 +7774,39 @@ the subsequent ones.</p>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">ProjectData</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="c1"># Define costs</span>
-        
-        <span class="bp">self</span><span class="o">.</span><span class="n">demands</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">12</span><span class="p">],</span>  <span class="c1"># Table</span>
-            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">],</span>  <span class="c1"># TableT</span>
-            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">],</span>  <span class="c1"># leg</span>
-            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">],</span>  <span class="c1"># beam</span>
-            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">],</span>  <span class="c1"># screws</span>
-            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">],</span>  <span class="c1"># plank</span>
-            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">],</span>  <span class="c1"># brackets</span>
-            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">0</span><span class="p">],</span>  <span class="c1"># glue</span>
-        <span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">setup_cost</span> <span class="o">=</span> <span class="p">[</span><span class="mi">500</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">production_cost</span> <span class="o">=</span> <span class="p">[</span><span class="mi">100</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">demands</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">inventory_cost</span> <span class="o">=</span> <span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">first_inventory</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">]</span>
 
-        <span class="c1"># Define demands for the table over 16 days</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">days</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">demands</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
-        
-        <span class="c1"># Lead times for each product</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">lead_time</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
-        
-        <span class="c1"># Define the parts requirements as per the BOM</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">parts</span> <span class="o">=</span> <span class="p">[</span> <span class="c1">#table #tableT #leg #beam #screws #plank # brackets #glue</span>
-                        <span class="p">[</span><span class="mi">0</span><span class="p">,</span>     <span class="mi">1</span><span class="p">,</span>      <span class="mi">4</span><span class="p">,</span>   <span class="mi">2</span><span class="p">,</span>     <span class="mi">0</span><span class="p">,</span>      <span class="mi">0</span><span class="p">,</span>      <span class="mi">0</span><span class="p">,</span>       <span class="mi">0</span><span class="p">],</span> 
-                        <span class="p">[</span><span class="mi">0</span><span class="p">,</span>     <span class="mi">0</span><span class="p">,</span>      <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>     <span class="mi">20</span><span class="p">,</span>     <span class="mi">7</span><span class="p">,</span>      <span class="mi">12</span><span class="p">,</span>      <span class="mi">1</span><span class="p">],</span>  
-                        <span class="p">[</span><span class="mi">0</span><span class="p">,</span>     <span class="mi">0</span><span class="p">,</span>      <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>     <span class="mi">0</span><span class="p">,</span>      <span class="mi">0</span><span class="p">,</span>      <span class="mi">0</span><span class="p">,</span>       <span class="mi">2</span><span class="p">],</span> 
-                        <span class="p">[</span><span class="mi">0</span><span class="p">,</span>     <span class="mi">0</span><span class="p">,</span>      <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>     <span class="mi">0</span><span class="p">,</span>      <span class="mi">0</span><span class="p">,</span>      <span class="mi">0</span><span class="p">,</span>       <span class="mi">0</span><span class="p">],</span>
-                        <span class="p">[</span><span class="mi">0</span><span class="p">,</span>     <span class="mi">0</span><span class="p">,</span>      <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>     <span class="mi">0</span><span class="p">,</span>      <span class="mi">0</span><span class="p">,</span>      <span class="mi">0</span><span class="p">,</span>       <span class="mi">0</span><span class="p">],</span>
-                        <span class="p">[</span><span class="mi">0</span><span class="p">,</span>     <span class="mi">0</span><span class="p">,</span>      <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>     <span class="mi">0</span><span class="p">,</span>      <span class="mi">0</span><span class="p">,</span>      <span class="mi">0</span><span class="p">,</span>       <span class="mi">0</span><span class="p">],</span>
-                        <span class="p">[</span><span class="mi">0</span><span class="p">,</span>     <span class="mi">0</span><span class="p">,</span>      <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>     <span class="mi">0</span><span class="p">,</span>      <span class="mi">0</span><span class="p">,</span>      <span class="mi">0</span><span class="p">,</span>       <span class="mi">0</span><span class="p">],</span>
-                        <span class="p">[</span><span class="mi">0</span><span class="p">,</span>     <span class="mi">0</span><span class="p">,</span>      <span class="mi">0</span><span class="p">,</span>   <span class="mi">0</span><span class="p">,</span>     <span class="mi">0</span><span class="p">,</span>      <span class="mi">0</span><span class="p">,</span>      <span class="mi">0</span><span class="p">,</span>       <span class="mi">0</span><span class="p">]</span> 
-                        <span class="p">]</span>
-        
-        <span class="c1"># print(f"Setup cost: {self.setup_cost}")</span>
-        <span class="c1"># print(f"Production cost: {self.production_cost}")</span>
-        <span class="c1"># print(f"Initial inventory: {self.first_inventory}")</span>
-        <span class="c1"># print(f"Inventory cost: {self.inventory_cost}")</span>
-        <span class="c1"># print(f"Number of days: {len(self.days)}")</span>
-        <span class="c1"># print(f"Demands: {self.demands}")</span>
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">demands</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">12</span><span class="p">],</span>  <span class="c1"># Table demand</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">16</span><span class="p">,</span>  <span class="c1"># Tabletop demand (calculated)</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">16</span><span class="p">,</span>  <span class="c1"># Leg demand (calculated)</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">16</span><span class="p">,</span>  <span class="c1"># Beam demand (calculated)</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">16</span><span class="p">,</span>  <span class="c1"># Screw demand (calculated)</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">16</span><span class="p">,</span>  <span class="c1"># Plank demand (calculated)</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">16</span><span class="p">,</span>  <span class="c1"># Bracket demand (calculated)</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">16</span>   <span class="c1"># Glue demand (calculated)</span>
+        <span class="p">]</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">days</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">demands</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">parts</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>  <span class="c1"># Table</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>  <span class="c1"># Tabletop</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>  <span class="c1"># Leg</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>  <span class="c1"># Beam</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>  <span class="c1"># Screws</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>  <span class="c1"># Plank</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>  <span class="c1"># Brackets</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>   <span class="c1"># Glue</span>
+        <span class="p">]</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">lead_time</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">production_cost</span> <span class="o">=</span> <span class="p">[</span><span class="mi">100</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">demands</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">first_inventory</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">inventory_cost</span> <span class="o">=</span> <span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">setup_cost</span> <span class="o">=</span> <span class="p">[</span><span class="mi">500</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -7902,18 +7893,18 @@ the subsequent ones.</p>
 <tr>
 <th>product 0</th>
 <td>20.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>13.0</td>
+<td>16.0</td>
+<td>55.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>53.0</td>
 <td>-0.0</td>
 <td>0.0</td>
-<td>41.0</td>
 <td>-0.0</td>
-<td>0.0</td>
-<td>56.0</td>
-<td>-0.0</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>40.0</td>
-<td>-0.0</td>
-<td>0.0</td>
 <td>0.0</td>
 <td>0.0</td>
 <td>0.0</td>
@@ -7924,13 +7915,13 @@ the subsequent ones.</p>
 <td>0.0</td>
 <td>0.0</td>
 <td>1.0</td>
-<td>0.0</td>
-<td>0.0</td>
+<td>1.0</td>
 <td>1.0</td>
 <td>0.0</td>
 <td>0.0</td>
 <td>0.0</td>
 <td>1.0</td>
+<td>0.0</td>
 <td>0.0</td>
 <td>0.0</td>
 <td>0.0</td>
@@ -7945,13 +7936,13 @@ the subsequent ones.</p>
 <td>20.0</td>
 <td>20.0</td>
 <td>2.0</td>
-<td>28.0</td>
-<td>12.0</td>
-<td>-0.0</td>
-<td>42.0</td>
-<td>23.0</td>
-<td>13.0</td>
 <td>0.0</td>
+<td>0.0</td>
+<td>43.0</td>
+<td>29.0</td>
+<td>10.0</td>
+<td>0.0</td>
+<td>40.0</td>
 <td>29.0</td>
 <td>12.0</td>
 <td>0.0</td>
@@ -8003,15 +7994,15 @@ the subsequent ones.</p>
 <tbody>
 <tr>
 <th>product 1</th>
-<td>2.0</td>
-<td>38.0</td>
+<td>6.0</td>
+<td>7.0</td>
+<td>16.0</td>
+<td>55.0</td>
 <td>0.0</td>
 <td>0.0</td>
-<td>56.0</td>
 <td>0.0</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>40.0</td>
+<td>53.0</td>
+<td>-0.0</td>
 <td>0.0</td>
 <td>0.0</td>
 <td>0.0</td>
@@ -8024,13 +8015,13 @@ the subsequent ones.</p>
 <th>setup</th>
 <td>1.0</td>
 <td>1.0</td>
-<td>0.0</td>
-<td>0.0</td>
+<td>1.0</td>
 <td>1.0</td>
 <td>0.0</td>
 <td>0.0</td>
 <td>0.0</td>
 <td>1.0</td>
+<td>0.0</td>
 <td>0.0</td>
 <td>0.0</td>
 <td>0.0</td>
@@ -8041,11 +8032,9 @@ the subsequent ones.</p>
 </tr>
 <tr>
 <th>inventory</th>
+<td>-0.0</td>
 <td>0.0</td>
-<td>0.0</td>
-<td>2.0</td>
-<td>0.0</td>
-<td>0.0</td>
+<td>6.0</td>
 <td>0.0</td>
 <td>-0.0</td>
 <td>0.0</td>
@@ -8053,6 +8042,8 @@ the subsequent ones.</p>
 <td>0.0</td>
 <td>-0.0</td>
 <td>0.0</td>
+<td>0.0</td>
+<td>-0.0</td>
 <td>0.0</td>
 <td>0.0</td>
 <td>0.0</td>
@@ -8105,17 +8096,17 @@ the subsequent ones.</p>
 <tbody>
 <tr>
 <th>product 2</th>
+<td>-0.0</td>
+<td>33.0</td>
+<td>63.0</td>
+<td>220.0</td>
 <td>0.0</td>
-<td>144.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>212.0</td>
 <td>-0.0</td>
 <td>0.0</td>
-<td>224.0</td>
 <td>-0.0</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>160.0</td>
-<td>-0.0</td>
-<td>0.0</td>
 <td>0.0</td>
 <td>0.0</td>
 <td>0.0</td>
@@ -8126,13 +8117,13 @@ the subsequent ones.</p>
 <th>setup</th>
 <td>0.0</td>
 <td>1.0</td>
-<td>0.0</td>
-<td>0.0</td>
+<td>1.0</td>
 <td>1.0</td>
 <td>0.0</td>
 <td>0.0</td>
 <td>0.0</td>
 <td>1.0</td>
+<td>0.0</td>
 <td>0.0</td>
 <td>0.0</td>
 <td>0.0</td>
@@ -8147,7 +8138,7 @@ the subsequent ones.</p>
 <td>20.0</td>
 <td>20.0</td>
 <td>0.0</td>
-<td>0.0</td>
+<td>-0.0</td>
 <td>0.0</td>
 <td>0.0</td>
 <td>0.0</td>
@@ -8207,16 +8198,16 @@ the subsequent ones.</p>
 <tbody>
 <tr>
 <th>product 3</th>
-<td>52.0</td>
+<td>0.0</td>
+<td>28.0</td>
+<td>110.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>106.0</td>
+<td>-0.0</td>
 <td>0.0</td>
 <td>-0.0</td>
-<td>112.0</td>
-<td>-0.0</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>80.0</td>
-<td>-0.0</td>
-<td>0.0</td>
 <td>0.0</td>
 <td>0.0</td>
 <td>0.0</td>
@@ -8226,14 +8217,14 @@ the subsequent ones.</p>
 </tr>
 <tr>
 <th>setup</th>
+<td>0.0</td>
+<td>1.0</td>
 <td>1.0</td>
 <td>0.0</td>
 <td>0.0</td>
-<td>1.0</td>
-<td>0.0</td>
-<td>0.0</td>
 <td>0.0</td>
 <td>1.0</td>
+<td>0.0</td>
 <td>0.0</td>
 <td>0.0</td>
 <td>0.0</td>
@@ -8248,7 +8239,7 @@ the subsequent ones.</p>
 <td>30.0</td>
 <td>30.0</td>
 <td>30.0</td>
-<td>0.0</td>
+<td>4.0</td>
 <td>0.0</td>
 <td>0.0</td>
 <td>0.0</td>
@@ -8309,16 +8300,16 @@ the subsequent ones.</p>
 <tbody>
 <tr>
 <th>product 4</th>
-<td>770.0</td>
+<td>429.0</td>
+<td>1073.0</td>
+<td>2200.0</td>
 <td>0.0</td>
 <td>0.0</td>
-<td>1120.0</td>
+<td>424.0</td>
+<td>2120.0</td>
+<td>-0.0</td>
 <td>0.0</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>800.0</td>
-<td>0.0</td>
-<td>0.0</td>
+<td>-0.0</td>
 <td>0.0</td>
 <td>0.0</td>
 <td>0.0</td>
@@ -8329,13 +8320,13 @@ the subsequent ones.</p>
 <tr>
 <th>setup</th>
 <td>1.0</td>
-<td>0.0</td>
-<td>0.0</td>
+<td>1.0</td>
 <td>1.0</td>
 <td>0.0</td>
 <td>0.0</td>
-<td>0.0</td>
 <td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
 <td>0.0</td>
 <td>0.0</td>
 <td>0.0</td>
@@ -8347,7 +8338,7 @@ the subsequent ones.</p>
 </tr>
 <tr>
 <th>inventory</th>
-<td>0.0</td>
+<td>-0.0</td>
 <td>0.0</td>
 <td>0.0</td>
 <td>0.0</td>
@@ -8411,16 +8402,16 @@ the subsequent ones.</p>
 <tbody>
 <tr>
 <th>product 5</th>
-<td>187.0</td>
+<td>100.0</td>
+<td>489.0</td>
+<td>935.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>212.0</td>
+<td>901.0</td>
 <td>-0.0</td>
 <td>0.0</td>
-<td>392.0</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>280.0</td>
-<td>0.0</td>
-<td>0.0</td>
+<td>-0.0</td>
 <td>0.0</td>
 <td>0.0</td>
 <td>0.0</td>
@@ -8431,13 +8422,13 @@ the subsequent ones.</p>
 <tr>
 <th>setup</th>
 <td>1.0</td>
-<td>0.0</td>
-<td>0.0</td>
+<td>1.0</td>
 <td>1.0</td>
 <td>0.0</td>
 <td>0.0</td>
-<td>0.0</td>
 <td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
 <td>0.0</td>
 <td>0.0</td>
 <td>0.0</td>
@@ -8449,7 +8440,7 @@ the subsequent ones.</p>
 </tr>
 <tr>
 <th>inventory</th>
-<td>82.0</td>
+<td>94.0</td>
 <td>0.0</td>
 <td>0.0</td>
 <td>0.0</td>
@@ -8513,16 +8504,16 @@ the subsequent ones.</p>
 <tbody>
 <tr>
 <th>product 6</th>
-<td>442.0</td>
+<td>246.0</td>
+<td>756.0</td>
+<td>1100.0</td>
 <td>0.0</td>
 <td>0.0</td>
-<td>672.0</td>
+<td>424.0</td>
+<td>1060.0</td>
 <td>0.0</td>
 <td>0.0</td>
-<td>0.0</td>
-<td>480.0</td>
-<td>0.0</td>
-<td>0.0</td>
+<td>-0.0</td>
 <td>0.0</td>
 <td>0.0</td>
 <td>0.0</td>
@@ -8533,13 +8524,13 @@ the subsequent ones.</p>
 <tr>
 <th>setup</th>
 <td>1.0</td>
-<td>0.0</td>
-<td>0.0</td>
+<td>1.0</td>
 <td>1.0</td>
 <td>0.0</td>
 <td>0.0</td>
-<td>0.0</td>
 <td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
 <td>0.0</td>
 <td>0.0</td>
 <td>0.0</td>
@@ -8551,7 +8542,7 @@ the subsequent ones.</p>
 </tr>
 <tr>
 <th>inventory</th>
-<td>20.0</td>
+<td>25.0</td>
 <td>0.0</td>
 <td>0.0</td>
 <td>0.0</td>
@@ -8615,16 +8606,16 @@ the subsequent ones.</p>
 <tbody>
 <tr>
 <th>product 7</th>
-<td>229.0</td>
+<td>550.0</td>
+<td>1108.0</td>
+<td>220.0</td>
+<td>0.0</td>
+<td>212.0</td>
+<td>1007.0</td>
+<td>212.0</td>
 <td>0.0</td>
 <td>0.0</td>
-<td>504.0</td>
 <td>-0.0</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>360.0</td>
-<td>-0.0</td>
-<td>0.0</td>
 <td>0.0</td>
 <td>0.0</td>
 <td>0.0</td>
@@ -8635,13 +8626,13 @@ the subsequent ones.</p>
 <tr>
 <th>setup</th>
 <td>1.0</td>
-<td>0.0</td>
-<td>0.0</td>
+<td>1.0</td>
 <td>1.0</td>
 <td>0.0</td>
-<td>0.0</td>
-<td>0.0</td>
 <td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
 <td>0.0</td>
 <td>0.0</td>
 <td>0.0</td>
@@ -8653,8 +8644,8 @@ the subsequent ones.</p>
 </tr>
 <tr>
 <th>inventory</th>
-<td>98.0</td>
-<td>0.0</td>
+<td>-0.0</td>
+<td>-0.0</td>
 <td>0.0</td>
 <td>0.0</td>
 <td>0.0</td>
@@ -8678,7 +8669,7 @@ the subsequent ones.</p>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>objective is :  12945 . Run time is :  3.2171411514282227
+<pre>objective is :  15396 . Run time is :  14.336862325668335
 </pre>
 </div>
 </div>
@@ -8847,7 +8838,7 @@ the subsequent ones.</p>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>objective is :  4200 . Run time is :  0.024180889129638672
+<pre>objective is :  4200 . Run time is :  0.04064631462097168
 </pre>
 </div>
 </div>
@@ -8896,10 +8887,11 @@ the subsequent ones.</p>
     <span class="bp">self</span><span class="o">.</span><span class="n">setup_cost</span> <span class="o">=</span> <span class="p">[</span><span class="mi">200</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">demands</span><span class="p">)</span>
 
 <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">data_generator_MRP_A</span><span class="p">()</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">data_generator_MRP_tabelT</span><span class="p">()</span>
 <span class="n">PRODUCTION_PLAN</span><span class="p">,</span> <span class="n">obj</span> <span class="o">=</span> <span class="n">opt_production_plan</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
 
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Table top obj fct: '</span><span class="p">)</span>
 <span class="n">run_time</span> <span class="o">=</span> <span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span>
 <span class="k">for</span> <span class="n">product</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">demands</span><span class="p">)):</span>
     <span class="c1"># print(pd.DataFrame.from_dict(PRODUCTION_PLAN[product]))</span>
@@ -8914,6 +8906,13 @@ the subsequent ones.</p>
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>Table top obj fct: 
+</pre>
+</div>
+</div>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
@@ -9019,7 +9018,7 @@ the subsequent ones.</p>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>objective is :  1600 . Run time is :  0.015223979949951172
+<pre>objective is :  1600 . Run time is :  0.02134394645690918
 </pre>
 </div>
 </div>
@@ -9044,11 +9043,12 @@ the subsequent ones.</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">data_generator_MRP_A</span><span class="p">():</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">data_generator_MRP_leg</span><span class="p">():</span>
 
   <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
-    <span class="bp">self</span><span class="o">.</span><span class="n">demands</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">13</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">demands</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">132.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">112.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">56.0</span><span class="p">,</span> <span class="mf">116.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">96.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">116.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span>
+<span class="p">]</span>
 
     <span class="bp">self</span><span class="o">.</span><span class="n">days</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">demands</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
 
@@ -9068,7 +9068,7 @@ the subsequent ones.</p>
     <span class="bp">self</span><span class="o">.</span><span class="n">setup_cost</span> <span class="o">=</span> <span class="p">[</span><span class="mi">200</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">demands</span><span class="p">)</span>
 
 <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">data_generator_MRP_A</span><span class="p">()</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">data_generator_MRP_leg</span><span class="p">()</span>
 <span class="n">PRODUCTION_PLAN</span><span class="p">,</span> <span class="n">obj</span> <span class="o">=</span> <span class="n">opt_production_plan</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
 
@@ -9128,16 +9128,16 @@ the subsequent ones.</p>
 <tbody>
 <tr>
 <th>product 0</th>
+<td>32.0</td>
 <td>0.0</td>
-<td>-0.0</td>
-<td>-0.0</td>
+<td>112.0</td>
 <td>0.0</td>
+<td>56.0</td>
+<td>116.0</td>
 <td>0.0</td>
-<td>8.0</td>
+<td>96.0</td>
 <td>0.0</td>
-<td>29.0</td>
-<td>0.0</td>
-<td>0.0</td>
+<td>116.0</td>
 <td>0.0</td>
 <td>0.0</td>
 <td>0.0</td>
@@ -9147,16 +9147,16 @@ the subsequent ones.</p>
 </tr>
 <tr>
 <th>setup</th>
-<td>0.0</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>0.0</td>
 <td>1.0</td>
 <td>0.0</td>
 <td>1.0</td>
 <td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
 <td>0.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>1.0</td>
 <td>0.0</td>
 <td>0.0</td>
 <td>0.0</td>
@@ -9166,22 +9166,22 @@ the subsequent ones.</p>
 </tr>
 <tr>
 <th>inventory</th>
-<td>87.0</td>
-<td>87.0</td>
-<td>59.0</td>
-<td>59.0</td>
-<td>45.0</td>
-<td>16.0</td>
-<td>16.0</td>
+<td>100.0</td>
+<td>100.0</td>
 <td>0.0</td>
 <td>0.0</td>
-<td>-0.0</td>
-<td>-0.0</td>
-<td>-0.0</td>
-<td>-0.0</td>
-<td>-0.0</td>
-<td>-0.0</td>
-<td>-0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
 </tr>
 </tbody>
 </table>
@@ -9191,7 +9191,7 @@ the subsequent ones.</p>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>objective is :  4090 . Run time is :  0.01013803482055664
+<pre>objective is :  3200 . Run time is :  0.0205996036529541
 </pre>
 </div>
 </div>
@@ -9216,11 +9216,11 @@ the subsequent ones.</p>
 <div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">data_generator_MRP_A</span><span class="p">():</span>
+<div class="highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">data_generator_MRP_beam</span><span class="p">():</span>
 
   <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 
-    <span class="bp">self</span><span class="o">.</span><span class="n">demands</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">demands</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">66.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">56.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">28.0</span><span class="p">,</span> <span class="mf">58.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">48.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">58.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]]</span>
 
     <span class="bp">self</span><span class="o">.</span><span class="n">days</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">demands</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
 
@@ -9231,8 +9231,6 @@ the subsequent ones.</p>
                   <span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">lead_time</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">]</span>
 
-
-
     <span class="bp">self</span><span class="o">.</span><span class="n">first_inventory</span> <span class="o">=</span> <span class="p">[</span><span class="mi">70</span><span class="p">]</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">production_cost</span> <span class="o">=</span> <span class="p">[</span><span class="mi">100</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">demands</span><span class="p">)</span>
 
@@ -9240,7 +9238,7 @@ the subsequent ones.</p>
     <span class="bp">self</span><span class="o">.</span><span class="n">setup_cost</span> <span class="o">=</span> <span class="p">[</span><span class="mi">200</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">demands</span><span class="p">)</span>
 
 <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">data_generator_MRP_A</span><span class="p">()</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">data_generator_MRP_beam</span><span class="p">()</span>
 <span class="n">PRODUCTION_PLAN</span><span class="p">,</span> <span class="n">obj</span> <span class="o">=</span> <span class="n">opt_production_plan</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
 
@@ -9301,14 +9299,14 @@ the subsequent ones.</p>
 <tr>
 <th>product 0</th>
 <td>0.0</td>
+<td>52.0</td>
 <td>0.0</td>
+<td>28.0</td>
+<td>58.0</td>
 <td>0.0</td>
+<td>48.0</td>
 <td>0.0</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>0.0</td>
+<td>58.0</td>
 <td>0.0</td>
 <td>0.0</td>
 <td>0.0</td>
@@ -9320,14 +9318,14 @@ the subsequent ones.</p>
 <tr>
 <th>setup</th>
 <td>0.0</td>
+<td>1.0</td>
 <td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
 <td>0.0</td>
+<td>1.0</td>
 <td>0.0</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>0.0</td>
-<td>0.0</td>
+<td>1.0</td>
 <td>0.0</td>
 <td>0.0</td>
 <td>0.0</td>
@@ -9340,20 +9338,20 @@ the subsequent ones.</p>
 <th>inventory</th>
 <td>70.0</td>
 <td>70.0</td>
-<td>70.0</td>
-<td>70.0</td>
-<td>62.0</td>
-<td>62.0</td>
-<td>33.0</td>
-<td>33.0</td>
-<td>33.0</td>
-<td>33.0</td>
-<td>33.0</td>
-<td>33.0</td>
-<td>33.0</td>
-<td>33.0</td>
-<td>33.0</td>
-<td>33.0</td>
+<td>4.0</td>
+<td>4.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>-0.0</td>
+<td>-0.0</td>
+<td>-0.0</td>
+<td>-0.0</td>
+<td>-0.0</td>
 </tr>
 </tbody>
 </table>
@@ -9363,7 +9361,1421 @@ the subsequent ones.</p>
 <div class="jp-OutputArea-child">
 <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
-<pre>objective is :  7010 . Run time is :  0.015022993087768555
+<pre>objective is :  2480 . Run time is :  0.015332937240600586
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Screws">Screws<a class="anchor-link" href="#Screws">¶</a></h3>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># demand for screws for each table_top, legs and beams</span>
+<span class="n">list1</span> <span class="o">=</span> <span class="p">[</span><span class="mf">13.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">28.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">14.0</span><span class="p">,</span> <span class="mf">29.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">24.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">29.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span>
+<span class="n">list2</span> <span class="o">=</span> <span class="p">[</span><span class="mf">32.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">112.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">56.0</span><span class="p">,</span> <span class="mf">116.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">96.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">116.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span>
+<span class="n">list3</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">52.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">28.0</span><span class="p">,</span> <span class="mf">58.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">48.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">58.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span>
+
+<span class="c1"># Multiply each list by the specified factor</span>
+<span class="n">list1_multiplied</span> <span class="o">=</span> <span class="p">[</span><span class="n">num</span> <span class="o">*</span> <span class="mi">8</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">list1</span><span class="p">]</span>
+<span class="n">list2_multiplied</span> <span class="o">=</span> <span class="p">[</span><span class="n">num</span> <span class="o">*</span> <span class="mi">8</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">list2</span><span class="p">]</span>
+<span class="n">list3_multiplied</span> <span class="o">=</span> <span class="p">[</span><span class="n">num</span> <span class="o">*</span> <span class="mi">4</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">list3</span><span class="p">]</span>
+
+<span class="c1"># Combine the three lists by adding corresponding elements</span>
+<span class="n">combined_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">c</span> <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">list1_multiplied</span><span class="p">,</span> <span class="n">list2_multiplied</span><span class="p">,</span> <span class="n">list3_multiplied</span><span class="p">)]</span>
+<span class="n">combined_list</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[ ]:</div>
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
+<pre>[360.0,
+ 208.0,
+ 1120.0,
+ 112.0,
+ 792.0,
+ 1160.0,
+ 192.0,
+ 960.0,
+ 232.0,
+ 1160.0,
+ 0.0,
+ 0.0,
+ 0.0,
+ 0.0,
+ 0.0,
+ 0.0]</pre>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">data_generator_MRP_screws</span><span class="p">():</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">demands</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">360</span><span class="p">,</span> <span class="mi">208</span><span class="p">,</span> <span class="mi">1120</span><span class="p">,</span> <span class="mi">112</span><span class="p">,</span> <span class="mi">792</span><span class="p">,</span> <span class="mi">1160</span><span class="p">,</span> <span class="mi">192</span><span class="p">,</span> <span class="mi">960</span><span class="p">,</span> <span class="mi">232</span><span class="p">,</span> <span class="mi">1160</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">days</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">demands</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">production_rate</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">days</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">parts</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">],</span>
+                  <span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                  <span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                  <span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">lead_time</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">first_inventory</span> <span class="o">=</span> <span class="p">[</span><span class="mi">50</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">production_cost</span> <span class="o">=</span> <span class="p">[</span><span class="mi">100</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">demands</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">inventory_cost</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">demands</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">setup_cost</span> <span class="o">=</span> <span class="p">[</span><span class="mi">200</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">demands</span><span class="p">)</span>
+
+<span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">data_generator_MRP_screws</span><span class="p">()</span>
+<span class="n">PRODUCTION_PLAN</span><span class="p">,</span> <span class="n">obj</span> <span class="o">=</span> <span class="n">opt_production_plan</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+<span class="n">run_time</span> <span class="o">=</span> <span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span>
+<span class="k">for</span> <span class="n">product</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">demands</span><span class="p">)):</span>
+    <span class="c1"># print(pd.DataFrame.from_dict(PRODUCTION_PLAN[product]))</span>
+  <span class="n">display</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">PRODUCTION_PLAN</span><span class="p">[</span><span class="n">product</span><span class="p">])</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'objective is : '</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">obj</span><span class="p">),</span> <span class="s1">'. Run time is : '</span><span class="p">,</span> <span class="n">run_time</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>The problem does not have an optimal solution.
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
+<pre>
+<span class="ansi-red-intense-fg ansi-bold">---------------------------------------------------------------------------</span>
+<span class="ansi-red-intense-fg ansi-bold">TypeError</span>                                 Traceback (most recent call last)
+Cell <span class="ansi-green-intense-fg ansi-bold">In[72], line 25</span>
+<span class="ansi-green-fg">     23</span> start_time <span style="color: rgb(98,98,98)">=</span> time<span style="color: rgb(98,98,98)">.</span>time()
+<span class="ansi-green-fg">     24</span> data <span style="color: rgb(98,98,98)">=</span> data_generator_MRP_screws()
+<span class="ansi-green-intense-fg ansi-bold">---&gt; 25</span> PRODUCTION_PLAN, obj <span style="color: rgb(98,98,98)">=</span> opt_production_plan(data)
+<span class="ansi-green-fg">     26</span> end_time <span style="color: rgb(98,98,98)">=</span> time<span style="color: rgb(98,98,98)">.</span>time()
+<span class="ansi-green-fg">     28</span> run_time <span style="color: rgb(98,98,98)">=</span> end_time <span style="color: rgb(98,98,98)">-</span> start_time
+
+<span class="ansi-red-intense-fg ansi-bold">TypeError</span>: cannot unpack non-iterable NoneType object</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Plank">Plank<a class="anchor-link" href="#Plank">¶</a></h3>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># demand for screws for each table_top, legs and beams</span>
+<span class="n">list1</span> <span class="o">=</span> <span class="p">[</span><span class="mf">13.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">28.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">14.0</span><span class="p">,</span> <span class="mf">29.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">24.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">29.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span>
+<span class="n">list2</span> <span class="o">=</span> <span class="p">[</span><span class="mf">32.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">112.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">56.0</span><span class="p">,</span> <span class="mf">116.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">96.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">116.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span>
+<span class="n">list3</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">52.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">28.0</span><span class="p">,</span> <span class="mf">58.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">48.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">58.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span>
+
+<span class="c1"># Multiply each list by the specified factor</span>
+<span class="n">list1_multiplied</span> <span class="o">=</span> <span class="p">[</span><span class="n">num</span> <span class="o">*</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">list1</span><span class="p">]</span>
+<span class="n">list2_multiplied</span> <span class="o">=</span> <span class="p">[</span><span class="n">num</span> <span class="o">*</span> <span class="mi">4</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">list2</span><span class="p">]</span>
+<span class="n">list3_multiplied</span> <span class="o">=</span> <span class="p">[</span><span class="n">num</span> <span class="o">*</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">list3</span><span class="p">]</span>
+
+<span class="c1"># Combine the three lists by adding corresponding elements</span>
+<span class="n">combined_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">c</span> <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">list1_multiplied</span><span class="p">,</span> <span class="n">list2_multiplied</span><span class="p">,</span> <span class="n">list3_multiplied</span><span class="p">)]</span>
+<span class="n">combined_list</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[ ]:</div>
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
+<pre>[141.0,
+ 104.0,
+ 476.0,
+ 56.0,
+ 354.0,
+ 493.0,
+ 96.0,
+ 408.0,
+ 116.0,
+ 493.0,
+ 0.0,
+ 0.0,
+ 0.0,
+ 0.0,
+ 0.0,
+ 0.0]</pre>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">data_generator_MRP_planks</span><span class="p">():</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">demands</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">141</span><span class="p">,</span> <span class="mi">104</span><span class="p">,</span> <span class="mi">476</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span> <span class="mi">354</span><span class="p">,</span> <span class="mi">493</span><span class="p">,</span> <span class="mi">96</span><span class="p">,</span> <span class="mi">408</span><span class="p">,</span> <span class="mi">116</span><span class="p">,</span> <span class="mi">493</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">days</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">demands</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">production_rate</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">days</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">parts</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">],</span>
+                  <span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                  <span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                  <span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">lead_time</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">first_inventory</span> <span class="o">=</span> <span class="p">[</span><span class="mi">50</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">production_cost</span> <span class="o">=</span> <span class="p">[</span><span class="mi">100</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">demands</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">inventory_cost</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">demands</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">setup_cost</span> <span class="o">=</span> <span class="p">[</span><span class="mi">200</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">demands</span><span class="p">)</span>
+
+<span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">data_generator_MRP_planks</span><span class="p">()</span>
+<span class="n">PRODUCTION_PLAN</span><span class="p">,</span> <span class="n">obj</span> <span class="o">=</span> <span class="n">opt_production_plan</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+<span class="n">run_time</span> <span class="o">=</span> <span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span>
+<span class="k">for</span> <span class="n">product</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">demands</span><span class="p">)):</span>
+    <span class="c1"># print(pd.DataFrame.from_dict(PRODUCTION_PLAN[product]))</span>
+  <span class="n">display</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">PRODUCTION_PLAN</span><span class="p">[</span><span class="n">product</span><span class="p">])</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'objective is : '</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">obj</span><span class="p">),</span> <span class="s1">'. Run time is : '</span><span class="p">,</span> <span class="n">run_time</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>The problem does not have an optimal solution.
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
+<pre>
+<span class="ansi-red-intense-fg ansi-bold">---------------------------------------------------------------------------</span>
+<span class="ansi-red-intense-fg ansi-bold">TypeError</span>                                 Traceback (most recent call last)
+Cell <span class="ansi-green-intense-fg ansi-bold">In[74], line 23</span>
+<span class="ansi-green-fg">     21</span> start_time <span style="color: rgb(98,98,98)">=</span> time<span style="color: rgb(98,98,98)">.</span>time()
+<span class="ansi-green-fg">     22</span> data <span style="color: rgb(98,98,98)">=</span> data_generator_MRP_planks()
+<span class="ansi-green-intense-fg ansi-bold">---&gt; 23</span> PRODUCTION_PLAN, obj <span style="color: rgb(98,98,98)">=</span> opt_production_plan(data)
+<span class="ansi-green-fg">     24</span> end_time <span style="color: rgb(98,98,98)">=</span> time<span style="color: rgb(98,98,98)">.</span>time()
+<span class="ansi-green-fg">     26</span> run_time <span style="color: rgb(98,98,98)">=</span> end_time <span style="color: rgb(98,98,98)">-</span> start_time
+
+<span class="ansi-red-intense-fg ansi-bold">TypeError</span>: cannot unpack non-iterable NoneType object</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Brackets">Brackets<a class="anchor-link" href="#Brackets">¶</a></h3>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># demand for screws for each table_top, legs and beams</span>
+<span class="n">list1</span> <span class="o">=</span> <span class="p">[</span><span class="mf">13.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">28.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">14.0</span><span class="p">,</span> <span class="mf">29.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">24.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">29.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span>
+<span class="n">list2</span> <span class="o">=</span> <span class="p">[</span><span class="mf">32.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">112.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">56.0</span><span class="p">,</span> <span class="mf">116.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">96.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">116.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span>
+<span class="n">list3</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">52.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">28.0</span><span class="p">,</span> <span class="mf">58.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">48.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">58.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span>
+
+<span class="c1"># Multiply each list by the specified factor</span>
+<span class="n">list1_multiplied</span> <span class="o">=</span> <span class="p">[</span><span class="n">num</span> <span class="o">*</span> <span class="mi">4</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">list1</span><span class="p">]</span>
+<span class="n">list2_multiplied</span> <span class="o">=</span> <span class="p">[</span><span class="n">num</span> <span class="o">*</span> <span class="mi">4</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">list2</span><span class="p">]</span>
+<span class="n">list3_multiplied</span> <span class="o">=</span> <span class="p">[</span><span class="n">num</span> <span class="o">*</span> <span class="mi">4</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">list3</span><span class="p">]</span>
+
+<span class="c1"># Combine the three lists by adding corresponding elements</span>
+<span class="n">combined_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">c</span> <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">list1_multiplied</span><span class="p">,</span> <span class="n">list2_multiplied</span><span class="p">,</span> <span class="n">list3_multiplied</span><span class="p">)]</span>
+<span class="n">combined_list</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[ ]:</div>
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
+<pre>[180.0,
+ 208.0,
+ 560.0,
+ 112.0,
+ 512.0,
+ 580.0,
+ 192.0,
+ 480.0,
+ 232.0,
+ 580.0,
+ 0.0,
+ 0.0,
+ 0.0,
+ 0.0,
+ 0.0,
+ 0.0]</pre>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">data_generator_MRP_planks</span><span class="p">():</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">demands</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">180</span><span class="p">,</span> <span class="mi">208</span><span class="p">,</span> <span class="mi">560</span><span class="p">,</span> <span class="mi">112</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="mi">580</span><span class="p">,</span> <span class="mi">192</span><span class="p">,</span> <span class="mi">480</span><span class="p">,</span> <span class="mi">232</span><span class="p">,</span> <span class="mi">580</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">days</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">demands</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">production_rate</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">days</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">parts</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">],</span>
+                  <span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                  <span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                  <span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">lead_time</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">first_inventory</span> <span class="o">=</span> <span class="p">[</span><span class="mi">50</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">production_cost</span> <span class="o">=</span> <span class="p">[</span><span class="mi">100</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">demands</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">inventory_cost</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">demands</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">setup_cost</span> <span class="o">=</span> <span class="p">[</span><span class="mi">200</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">demands</span><span class="p">)</span>
+
+<span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">data_generator_MRP_planks</span><span class="p">()</span>
+<span class="n">PRODUCTION_PLAN</span><span class="p">,</span> <span class="n">obj</span> <span class="o">=</span> <span class="n">opt_production_plan</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+<span class="n">run_time</span> <span class="o">=</span> <span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span>
+<span class="k">for</span> <span class="n">product</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">demands</span><span class="p">)):</span>
+    <span class="c1"># print(pd.DataFrame.from_dict(PRODUCTION_PLAN[product]))</span>
+  <span class="n">display</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">PRODUCTION_PLAN</span><span class="p">[</span><span class="n">product</span><span class="p">])</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'objective is : '</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">obj</span><span class="p">),</span> <span class="s1">'. Run time is : '</span><span class="p">,</span> <span class="n">run_time</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>The problem does not have an optimal solution.
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
+<pre>
+<span class="ansi-red-intense-fg ansi-bold">---------------------------------------------------------------------------</span>
+<span class="ansi-red-intense-fg ansi-bold">TypeError</span>                                 Traceback (most recent call last)
+Cell <span class="ansi-green-intense-fg ansi-bold">In[76], line 23</span>
+<span class="ansi-green-fg">     21</span> start_time <span style="color: rgb(98,98,98)">=</span> time<span style="color: rgb(98,98,98)">.</span>time()
+<span class="ansi-green-fg">     22</span> data <span style="color: rgb(98,98,98)">=</span> data_generator_MRP_planks()
+<span class="ansi-green-intense-fg ansi-bold">---&gt; 23</span> PRODUCTION_PLAN, obj <span style="color: rgb(98,98,98)">=</span> opt_production_plan(data)
+<span class="ansi-green-fg">     24</span> end_time <span style="color: rgb(98,98,98)">=</span> time<span style="color: rgb(98,98,98)">.</span>time()
+<span class="ansi-green-fg">     26</span> run_time <span style="color: rgb(98,98,98)">=</span> end_time <span style="color: rgb(98,98,98)">-</span> start_time
+
+<span class="ansi-red-intense-fg ansi-bold">TypeError</span>: cannot unpack non-iterable NoneType object</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h3 id="Glue">Glue<a class="anchor-link" href="#Glue">¶</a></h3>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1"># demand for screws for each table_top, legs and beams</span>
+<span class="n">list1</span> <span class="o">=</span> <span class="p">[</span><span class="mf">13.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">28.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">14.0</span><span class="p">,</span> <span class="mf">29.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">24.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">29.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span>
+<span class="n">list2</span> <span class="o">=</span> <span class="p">[</span><span class="mf">32.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">112.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">56.0</span><span class="p">,</span> <span class="mf">116.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">96.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">116.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span>
+<span class="n">list3</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">52.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">28.0</span><span class="p">,</span> <span class="mf">58.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">48.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">58.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]</span>
+
+
+<span class="c1"># Multiply each list by the specified factor</span>
+<span class="n">list1_multiplied</span> <span class="o">=</span> <span class="p">[</span><span class="n">num</span> <span class="o">*</span> <span class="mi">4</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">list1</span><span class="p">]</span>
+<span class="n">list2_multiplied</span> <span class="o">=</span> <span class="p">[</span><span class="n">num</span> <span class="o">*</span> <span class="mi">4</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">list2</span><span class="p">]</span>
+<span class="n">list3_multiplied</span> <span class="o">=</span> <span class="p">[</span><span class="n">num</span> <span class="o">*</span> <span class="mi">4</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">list3</span><span class="p">]</span>
+
+<span class="c1"># Combine the three lists by adding corresponding elements</span>
+<span class="n">combined_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="o">+</span> <span class="n">c</span> <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">list1_multiplied</span><span class="p">,</span> <span class="n">list2_multiplied</span><span class="p">,</span> <span class="n">list3_multiplied</span><span class="p">)]</span>
+<span class="n">combined_list</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">data_generator_MRP_planks</span><span class="p">():</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">demands</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">180</span><span class="p">,</span> <span class="mi">208</span><span class="p">,</span> <span class="mi">560</span><span class="p">,</span> <span class="mi">112</span><span class="p">,</span> <span class="mi">512</span><span class="p">,</span> <span class="mi">580</span><span class="p">,</span> <span class="mi">192</span><span class="p">,</span> <span class="mi">480</span><span class="p">,</span> <span class="mi">232</span><span class="p">,</span> <span class="mi">580</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">days</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">demands</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">production_rate</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">days</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">parts</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">],</span>
+                  <span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                  <span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                  <span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">lead_time</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">first_inventory</span> <span class="o">=</span> <span class="p">[</span><span class="mi">50</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">production_cost</span> <span class="o">=</span> <span class="p">[</span><span class="mi">100</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">demands</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">inventory_cost</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">demands</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">setup_cost</span> <span class="o">=</span> <span class="p">[</span><span class="mi">200</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">demands</span><span class="p">)</span>
+
+<span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">data_generator_MRP_planks</span><span class="p">()</span>
+<span class="n">PRODUCTION_PLAN</span><span class="p">,</span> <span class="n">obj</span> <span class="o">=</span> <span class="n">opt_production_plan</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+<span class="n">run_time</span> <span class="o">=</span> <span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span>
+<span class="k">for</span> <span class="n">product</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">demands</span><span class="p">)):</span>
+    <span class="c1"># print(pd.DataFrame.from_dict(PRODUCTION_PLAN[product]))</span>
+  <span class="n">display</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">PRODUCTION_PLAN</span><span class="p">[</span><span class="n">product</span><span class="p">])</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'objective is : '</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">obj</span><span class="p">),</span> <span class="s1">'. Run time is : '</span><span class="p">,</span> <span class="n">run_time</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Question-4">Question 4<a class="anchor-link" href="#Question-4">¶</a></h2><table>
+<thead>
+<tr>
+<th>Product/material</th>
+<th>Table</th>
+<th>Table-top</th>
+<th>Leg</th>
+<th>Beam</th>
+<th>Screws</th>
+<th>Plank</th>
+<th>Brackets</th>
+<th>Glue</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Demand</td>
+<td>100</td>
+<td>30</td>
+<td>40</td>
+<td>70</td>
+<td>40</td>
+<td>60</td>
+<td>80</td>
+<td>30</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">ProjectData</span><span class="p">:</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">demands</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">12</span><span class="p">],</span>  <span class="c1"># Table demand</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">16</span><span class="p">,</span>  <span class="c1"># Tabletop demand (calculated)</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">16</span><span class="p">,</span>  <span class="c1"># Leg demand (calculated)</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">16</span><span class="p">,</span>  <span class="c1"># Beam demand (calculated)</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">16</span><span class="p">,</span>  <span class="c1"># Screw demand (calculated)</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">16</span><span class="p">,</span>  <span class="c1"># Plank demand (calculated)</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">16</span><span class="p">,</span>  <span class="c1"># Bracket demand (calculated)</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">16</span>   <span class="c1"># Glue demand (calculated)</span>
+        <span class="p">]</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">days</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">demands</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">parts</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>  <span class="c1"># Table</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>  <span class="c1"># Tabletop</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>  <span class="c1"># Leg</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>  <span class="c1"># Beam</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>  <span class="c1"># Screws</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>  <span class="c1"># Plank</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>  <span class="c1"># Brackets</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>   <span class="c1"># Glue</span>
+        <span class="p">]</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">lead_time</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">production_cost</span> <span class="o">=</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">30</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">first_inventory</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">inventory_cost</span> <span class="o">=</span> <span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">setup_cost</span> <span class="o">=</span> <span class="p">[</span><span class="mi">500</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">]</span>
+
+<span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ProjectData</span><span class="p">()</span>
+<span class="n">PRODUCTION_PLAN</span><span class="p">,</span> <span class="n">obj</span> <span class="o">=</span> <span class="n">opt_production_plan</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+<span class="n">run_time</span> <span class="o">=</span> <span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span>
+<span class="k">for</span> <span class="n">product</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">demands</span><span class="p">)):</span>
+    <span class="c1"># print(pd.DataFrame.from_dict(PRODUCTION_PLAN[product]))</span>
+  <span class="n">display</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">PRODUCTION_PLAN</span><span class="p">[</span><span class="n">product</span><span class="p">])</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'objective is : '</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">obj</span><span class="p">),</span> <span class="s1">'. Run time is : '</span><span class="p">,</span> <span class="n">run_time</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>product 0</th>
+<td>20.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>13.0</td>
+<td>16.0</td>
+<td>55.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>53.0</td>
+<td>-0.0</td>
+<td>0.0</td>
+<td>-0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>setup</th>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>inventory</th>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>20.0</td>
+<td>20.0</td>
+<td>2.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>43.0</td>
+<td>29.0</td>
+<td>10.0</td>
+<td>0.0</td>
+<td>40.0</td>
+<td>29.0</td>
+<td>12.0</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>product 1</th>
+<td>6.0</td>
+<td>7.0</td>
+<td>16.0</td>
+<td>55.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>53.0</td>
+<td>-0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>setup</th>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>inventory</th>
+<td>-0.0</td>
+<td>0.0</td>
+<td>6.0</td>
+<td>0.0</td>
+<td>-0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>-0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>-0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>product 2</th>
+<td>-0.0</td>
+<td>33.0</td>
+<td>63.0</td>
+<td>220.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>212.0</td>
+<td>-0.0</td>
+<td>0.0</td>
+<td>-0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>setup</th>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>inventory</th>
+<td>20.0</td>
+<td>20.0</td>
+<td>20.0</td>
+<td>0.0</td>
+<td>-0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>product 3</th>
+<td>0.0</td>
+<td>28.0</td>
+<td>110.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>106.0</td>
+<td>-0.0</td>
+<td>0.0</td>
+<td>-0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>setup</th>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>inventory</th>
+<td>30.0</td>
+<td>30.0</td>
+<td>30.0</td>
+<td>4.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>product 4</th>
+<td>429.0</td>
+<td>1073.0</td>
+<td>2200.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>424.0</td>
+<td>2120.0</td>
+<td>-0.0</td>
+<td>0.0</td>
+<td>-0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>setup</th>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>inventory</th>
+<td>-0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>product 5</th>
+<td>100.0</td>
+<td>489.0</td>
+<td>935.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>212.0</td>
+<td>901.0</td>
+<td>-0.0</td>
+<td>0.0</td>
+<td>-0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>setup</th>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>inventory</th>
+<td>94.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>product 6</th>
+<td>246.0</td>
+<td>756.0</td>
+<td>1100.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>424.0</td>
+<td>1060.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>-0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>setup</th>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>inventory</th>
+<td>25.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>product 7</th>
+<td>550.0</td>
+<td>1108.0</td>
+<td>220.0</td>
+<td>0.0</td>
+<td>212.0</td>
+<td>1007.0</td>
+<td>212.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>-0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>setup</th>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>inventory</th>
+<td>-0.0</td>
+<td>-0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>objective is :  15396 . Run time is :  16.271689891815186
 </pre>
 </div>
 </div>
