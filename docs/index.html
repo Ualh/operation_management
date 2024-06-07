@@ -14323,11 +14323,14 @@ We also naturally observe that instead of producing 53 unit of <code>table</code
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Question-7">Question 7<a class="anchor-link" href="#Question-7">¶</a></h2>
+<h2 id="Question-7">Question 7<a class="anchor-link" href="#Question-7">¶</a></h2><p>Assuming now that the setup cost of the table increases from 500 to 10000, how do
+the total cost and its components change? Describe the changes of each separately and
+together in this interval ([500,10000]). Explain the changes in the production plans.</p>
+<h3 id="setup-cost-of-10000">setup cost of 10000<a class="anchor-link" href="#setup-cost-of-10000">¶</a></h3>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -14335,9 +14338,3685 @@ We also naturally observe that instead of producing 53 unit of <code>table</code
 <div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
-<div class="highlight hl-ipython3"><pre><span></span> 
+<div class="highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">ProjectData</span><span class="p">:</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">demands</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">12</span><span class="p">],</span>  <span class="c1"># Table demand</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">16</span><span class="p">,</span>  <span class="c1"># Tabletop demand (calculated)</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">16</span><span class="p">,</span>  <span class="c1"># Leg demand (calculated)</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">16</span><span class="p">,</span>  <span class="c1"># Beam demand (calculated)</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">16</span><span class="p">,</span>  <span class="c1"># Screw demand (calculated)</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">16</span><span class="p">,</span>  <span class="c1"># Plank demand (calculated)</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">16</span><span class="p">,</span>  <span class="c1"># Bracket demand (calculated)</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">16</span>   <span class="c1"># Glue demand (calculated)</span>
+        <span class="p">]</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">days</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">demands</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">parts</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>  <span class="c1"># Table</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>  <span class="c1"># Tabletop</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>  <span class="c1"># Leg</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>  <span class="c1"># Beam</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>  <span class="c1"># Screws</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>  <span class="c1"># Plank</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>  <span class="c1"># Brackets</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>   <span class="c1"># Glue</span>
+        <span class="p">]</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">lead_time</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">production_cost</span> <span class="o">=</span> <span class="p">[</span><span class="mi">100</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">demands</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">first_inventory</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">inventory_cost</span> <span class="o">=</span> <span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">setup_cost</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10000</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">]</span>
+
+<span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ProjectData</span><span class="p">()</span>
+<span class="n">PRODUCTION_PLAN</span><span class="p">,</span> <span class="n">obj</span> <span class="o">=</span> <span class="n">opt_production_plan</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+<span class="n">run_time</span> <span class="o">=</span> <span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span>
+<span class="k">for</span> <span class="n">product</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">demands</span><span class="p">)):</span>
+    <span class="c1"># print(pd.DataFrame.from_dict(PRODUCTION_PLAN[product]))</span>
+  <span class="n">display</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">PRODUCTION_PLAN</span><span class="p">[</span><span class="n">product</span><span class="p">])</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'objective is : '</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">obj</span><span class="p">),</span> <span class="s1">'. Run time is : '</span><span class="p">,</span> <span class="n">run_time</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
+<pre>2024-06-07 10:20:47,677 - DEBUG - Solver created.
+2024-06-07 10:20:47,682 - DEBUG - Variables created.
+2024-06-07 10:20:47,694 - DEBUG - Objective function added.
+2024-06-07 10:20:47,711 - DEBUG - All constraints added.
+2024-06-07 10:20:47,711 - DEBUG - Objective function set to minimize.
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
+<pre>2024-06-07 10:20:48,135 - DEBUG - Solving the model, solver status: 0
+2024-06-07 10:20:48,141 - DEBUG - Optimal solution found.
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>product 0</th>
+<td>20.0</td>
+<td>-0.0</td>
+<td>0.0</td>
+<td>13.0</td>
+<td>17.0</td>
+<td>107.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>setup</th>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>inventory</th>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>20.0</td>
+<td>20.0</td>
+<td>2.0</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>96.0</td>
+<td>82.0</td>
+<td>63.0</td>
+<td>53.0</td>
+<td>40.0</td>
+<td>29.0</td>
+<td>12.0</td>
+<td>-0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>product 1</th>
+<td>6.0</td>
+<td>7.0</td>
+<td>17.0</td>
+<td>107.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>setup</th>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>inventory</th>
+<td>0.0</td>
+<td>-0.0</td>
+<td>6.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>product 2</th>
+<td>0.0</td>
+<td>32.0</td>
+<td>67.0</td>
+<td>429.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>setup</th>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>inventory</th>
+<td>20.0</td>
+<td>20.0</td>
+<td>20.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>product 3</th>
+<td>0.0</td>
+<td>29.0</td>
+<td>215.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>setup</th>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>inventory</th>
+<td>30.0</td>
+<td>30.0</td>
+<td>30.0</td>
+<td>4.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>product 4</th>
+<td>428.0</td>
+<td>1528.0</td>
+<td>4290.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>setup</th>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>inventory</th>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>product 5</th>
+<td>100.0</td>
+<td>714.0</td>
+<td>1823.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>setup</th>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>inventory</th>
+<td>94.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>product 6</th>
+<td>248.0</td>
+<td>1193.0</td>
+<td>2145.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>setup</th>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>inventory</th>
+<td>25.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>product 7</th>
+<td>775.0</td>
+<td>2105.0</td>
+<td>429.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>setup</th>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>inventory</th>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>objective is :  1739151 . Run time is :  0.47667670249938965
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p><span style="color: orange">We clearly observe that the 2 first production of table does not change but starting from day 6 in produces all of what is needed, unlike in the first plan where it divided it into two days. This make sense as the setup increase to 10'000 producing all item in one go is more profitable than having multiple setup cost..</span></p>
+<p><span style="color: orange">The overall cost is also way higher which makes sense because an increase of 95000 is quite a lot</span></p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h4 id="Varying-setup-cost-between-500-and-10000">Varying setup cost between 500 and 10000<a class="anchor-link" href="#Varying-setup-cost-between-500-and-10000">¶</a></h4><h5 id="setup-cost-at-from-500-to-1500">setup cost at from 500 to 1500<a class="anchor-link" href="#setup-cost-at-from-500-to-1500">¶</a></h5>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">ProjectData</span><span class="p">:</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">demands</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">12</span><span class="p">],</span>  <span class="c1"># Table demand</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">16</span><span class="p">,</span>  <span class="c1"># Tabletop demand (calculated)</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">16</span><span class="p">,</span>  <span class="c1"># Leg demand (calculated)</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">16</span><span class="p">,</span>  <span class="c1"># Beam demand (calculated)</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">16</span><span class="p">,</span>  <span class="c1"># Screw demand (calculated)</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">16</span><span class="p">,</span>  <span class="c1"># Plank demand (calculated)</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">16</span><span class="p">,</span>  <span class="c1"># Bracket demand (calculated)</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">16</span>   <span class="c1"># Glue demand (calculated)</span>
+        <span class="p">]</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">days</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">demands</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">parts</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>  <span class="c1"># Table</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>  <span class="c1"># Tabletop</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>  <span class="c1"># Leg</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>  <span class="c1"># Beam</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>  <span class="c1"># Screws</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>  <span class="c1"># Plank</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>  <span class="c1"># Brackets</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>   <span class="c1"># Glue</span>
+        <span class="p">]</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">lead_time</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">production_cost</span> <span class="o">=</span> <span class="p">[</span><span class="mi">100</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">demands</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">first_inventory</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">inventory_cost</span> <span class="o">=</span> <span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">setup_cost</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1500</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">]</span>
+
+<span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ProjectData</span><span class="p">()</span>
+<span class="n">PRODUCTION_PLAN</span><span class="p">,</span> <span class="n">obj</span> <span class="o">=</span> <span class="n">opt_production_plan</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+<span class="n">run_time</span> <span class="o">=</span> <span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span>
+<span class="k">for</span> <span class="n">product</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">demands</span><span class="p">)):</span>
+    <span class="c1"># print(pd.DataFrame.from_dict(PRODUCTION_PLAN[product]))</span>
+  <span class="n">display</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">PRODUCTION_PLAN</span><span class="p">[</span><span class="n">product</span><span class="p">])</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'objective is : '</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">obj</span><span class="p">),</span> <span class="s1">'. Run time is : '</span><span class="p">,</span> <span class="n">run_time</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
+<pre>2024-06-07 10:27:35,220 - DEBUG - Solver created.
+2024-06-07 10:27:35,228 - DEBUG - Variables created.
+2024-06-07 10:27:35,238 - DEBUG - Objective function added.
+2024-06-07 10:27:35,259 - DEBUG - All constraints added.
+2024-06-07 10:27:35,259 - DEBUG - Objective function set to minimize.
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
+<pre>2024-06-07 10:27:40,894 - DEBUG - Solving the model, solver status: 0
+2024-06-07 10:27:40,909 - DEBUG - Optimal solution found.
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>product 0</th>
+<td>20.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>13.0</td>
+<td>16.0</td>
+<td>55.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>53.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>-0.0</td>
+<td>-0.0</td>
+<td>-0.0</td>
+</tr>
+<tr>
+<th>setup</th>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>inventory</th>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>20.0</td>
+<td>20.0</td>
+<td>2.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>43.0</td>
+<td>29.0</td>
+<td>10.0</td>
+<td>0.0</td>
+<td>40.0</td>
+<td>29.0</td>
+<td>12.0</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>product 1</th>
+<td>6.0</td>
+<td>7.0</td>
+<td>16.0</td>
+<td>55.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>53.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>setup</th>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>inventory</th>
+<td>0.0</td>
+<td>0.0</td>
+<td>6.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>product 2</th>
+<td>-0.0</td>
+<td>33.0</td>
+<td>63.0</td>
+<td>220.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>212.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>setup</th>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>inventory</th>
+<td>20.0</td>
+<td>20.0</td>
+<td>20.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>product 3</th>
+<td>0.0</td>
+<td>28.0</td>
+<td>110.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>106.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>setup</th>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>inventory</th>
+<td>30.0</td>
+<td>30.0</td>
+<td>30.0</td>
+<td>4.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>product 4</th>
+<td>429.0</td>
+<td>1073.0</td>
+<td>2200.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>424.0</td>
+<td>2120.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>setup</th>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>inventory</th>
+<td>-0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>product 5</th>
+<td>100.0</td>
+<td>489.0</td>
+<td>935.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>212.0</td>
+<td>901.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>setup</th>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>inventory</th>
+<td>94.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>product 6</th>
+<td>246.0</td>
+<td>756.0</td>
+<td>1100.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>424.0</td>
+<td>1060.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>setup</th>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>inventory</th>
+<td>25.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>product 7</th>
+<td>550.0</td>
+<td>1108.0</td>
+<td>220.0</td>
+<td>-0.0</td>
+<td>212.0</td>
+<td>1007.0</td>
+<td>212.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>setup</th>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>inventory</th>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>objective is :  1704796 . Run time is :  5.7110724449157715
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p><span style="color: orange">Cost naturally increase as setup cost increase.</span></p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h5 id="setup-cost-to-2000">setup cost to 2000<a class="anchor-link" href="#setup-cost-to-2000">¶</a></h5>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">ProjectData</span><span class="p">:</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">demands</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">12</span><span class="p">],</span>  <span class="c1"># Table demand</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">16</span><span class="p">,</span>  <span class="c1"># Tabletop demand (calculated)</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">16</span><span class="p">,</span>  <span class="c1"># Leg demand (calculated)</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">16</span><span class="p">,</span>  <span class="c1"># Beam demand (calculated)</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">16</span><span class="p">,</span>  <span class="c1"># Screw demand (calculated)</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">16</span><span class="p">,</span>  <span class="c1"># Plank demand (calculated)</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">16</span><span class="p">,</span>  <span class="c1"># Bracket demand (calculated)</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">16</span>   <span class="c1"># Glue demand (calculated)</span>
+        <span class="p">]</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">days</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">demands</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">parts</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>  <span class="c1"># Table</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>  <span class="c1"># Tabletop</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>  <span class="c1"># Leg</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>  <span class="c1"># Beam</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>  <span class="c1"># Screws</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>  <span class="c1"># Plank</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>  <span class="c1"># Brackets</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>   <span class="c1"># Glue</span>
+        <span class="p">]</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">lead_time</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">production_cost</span> <span class="o">=</span> <span class="p">[</span><span class="mi">100</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">demands</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">first_inventory</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">inventory_cost</span> <span class="o">=</span> <span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">setup_cost</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2000</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">]</span>
+
+<span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ProjectData</span><span class="p">()</span>
+<span class="n">PRODUCTION_PLAN</span><span class="p">,</span> <span class="n">obj</span> <span class="o">=</span> <span class="n">opt_production_plan</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+<span class="n">run_time</span> <span class="o">=</span> <span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span>
+<span class="k">for</span> <span class="n">product</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">demands</span><span class="p">)):</span>
+    <span class="c1"># print(pd.DataFrame.from_dict(PRODUCTION_PLAN[product]))</span>
+  <span class="n">display</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">PRODUCTION_PLAN</span><span class="p">[</span><span class="n">product</span><span class="p">])</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'objective is : '</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">obj</span><span class="p">),</span> <span class="s1">'. Run time is : '</span><span class="p">,</span> <span class="n">run_time</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
+<pre>2024-06-07 10:28:34,416 - DEBUG - Solver created.
+2024-06-07 10:28:34,420 - DEBUG - Variables created.
+2024-06-07 10:28:34,421 - DEBUG - Objective function added.
+2024-06-07 10:28:34,431 - DEBUG - All constraints added.
+2024-06-07 10:28:34,436 - DEBUG - Objective function set to minimize.
+2024-06-07 10:28:37,566 - DEBUG - Solving the model, solver status: 0
+2024-06-07 10:28:37,569 - DEBUG - Optimal solution found.
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>product 0</th>
+<td>20.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>13.0</td>
+<td>16.0</td>
+<td>108.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>setup</th>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>inventory</th>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>20.0</td>
+<td>20.0</td>
+<td>2.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>96.0</td>
+<td>82.0</td>
+<td>63.0</td>
+<td>53.0</td>
+<td>40.0</td>
+<td>29.0</td>
+<td>12.0</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>product 1</th>
+<td>6.0</td>
+<td>7.0</td>
+<td>16.0</td>
+<td>108.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>setup</th>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>inventory</th>
+<td>0.0</td>
+<td>0.0</td>
+<td>6.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>product 2</th>
+<td>0.0</td>
+<td>33.0</td>
+<td>63.0</td>
+<td>432.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>setup</th>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>inventory</th>
+<td>20.0</td>
+<td>20.0</td>
+<td>20.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>product 3</th>
+<td>0.0</td>
+<td>28.0</td>
+<td>216.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>setup</th>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>inventory</th>
+<td>30.0</td>
+<td>30.0</td>
+<td>30.0</td>
+<td>4.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>product 4</th>
+<td>429.0</td>
+<td>1497.0</td>
+<td>4320.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>setup</th>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>inventory</th>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>product 5</th>
+<td>100.0</td>
+<td>701.0</td>
+<td>1836.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>setup</th>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>inventory</th>
+<td>94.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>product 6</th>
+<td>246.0</td>
+<td>1180.0</td>
+<td>2160.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>setup</th>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>inventory</th>
+<td>25.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>product 7</th>
+<td>762.0</td>
+<td>2115.0</td>
+<td>432.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>setup</th>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>inventory</th>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>objective is :  1707136 . Run time is :  3.1717400550842285
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p><span style="color: orange">Cost naturally increase as setup cost increase. The threshold for a change in the production plan seems to be around 2000 for setup cost where we observe that at day 5 it produces more at once</span></p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h5 id="increase-setup-cost-to-5000">increase setup cost to 5000<a class="anchor-link" href="#increase-setup-cost-to-5000">¶</a></h5>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [ ]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">ProjectData</span><span class="p">:</span>
+
+  <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">demands</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">12</span><span class="p">],</span>  <span class="c1"># Table demand</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">16</span><span class="p">,</span>  <span class="c1"># Tabletop demand (calculated)</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">16</span><span class="p">,</span>  <span class="c1"># Leg demand (calculated)</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">16</span><span class="p">,</span>  <span class="c1"># Beam demand (calculated)</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">16</span><span class="p">,</span>  <span class="c1"># Screw demand (calculated)</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">16</span><span class="p">,</span>  <span class="c1"># Plank demand (calculated)</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">16</span><span class="p">,</span>  <span class="c1"># Bracket demand (calculated)</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">16</span>   <span class="c1"># Glue demand (calculated)</span>
+        <span class="p">]</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">days</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">demands</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">parts</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>  <span class="c1"># Table</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>  <span class="c1"># Tabletop</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>  <span class="c1"># Leg</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>  <span class="c1"># Beam</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>  <span class="c1"># Screws</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>  <span class="c1"># Plank</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>  <span class="c1"># Brackets</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>   <span class="c1"># Glue</span>
+        <span class="p">]</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">lead_time</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">production_cost</span> <span class="o">=</span> <span class="p">[</span><span class="mi">100</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">demands</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">first_inventory</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">inventory_cost</span> <span class="o">=</span> <span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">setup_cost</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5000</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">]</span>
+
+<span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">ProjectData</span><span class="p">()</span>
+<span class="n">PRODUCTION_PLAN</span><span class="p">,</span> <span class="n">obj</span> <span class="o">=</span> <span class="n">opt_production_plan</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+<span class="n">run_time</span> <span class="o">=</span> <span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span>
+<span class="k">for</span> <span class="n">product</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">demands</span><span class="p">)):</span>
+    <span class="c1"># print(pd.DataFrame.from_dict(PRODUCTION_PLAN[product]))</span>
+  <span class="n">display</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">PRODUCTION_PLAN</span><span class="p">[</span><span class="n">product</span><span class="p">])</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'objective is : '</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">obj</span><span class="p">),</span> <span class="s1">'. Run time is : '</span><span class="p">,</span> <span class="n">run_time</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
+<pre>2024-06-07 10:29:43,741 - DEBUG - Solver created.
+2024-06-07 10:29:43,744 - DEBUG - Variables created.
+2024-06-07 10:29:43,755 - DEBUG - Objective function added.
+2024-06-07 10:29:43,766 - DEBUG - All constraints added.
+2024-06-07 10:29:43,769 - DEBUG - Objective function set to minimize.
+2024-06-07 10:29:43,977 - DEBUG - Solving the model, solver status: 0
+2024-06-07 10:29:43,977 - DEBUG - Optimal solution found.
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>product 0</th>
+<td>20.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>13.0</td>
+<td>17.0</td>
+<td>107.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>setup</th>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>inventory</th>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>20.0</td>
+<td>20.0</td>
+<td>2.0</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>96.0</td>
+<td>82.0</td>
+<td>63.0</td>
+<td>53.0</td>
+<td>40.0</td>
+<td>29.0</td>
+<td>12.0</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>product 1</th>
+<td>6.0</td>
+<td>7.0</td>
+<td>17.0</td>
+<td>107.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>setup</th>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>inventory</th>
+<td>0.0</td>
+<td>0.0</td>
+<td>6.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>-0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>product 2</th>
+<td>0.0</td>
+<td>32.0</td>
+<td>68.0</td>
+<td>428.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>setup</th>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>inventory</th>
+<td>20.0</td>
+<td>20.0</td>
+<td>20.0</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>product 3</th>
+<td>0.0</td>
+<td>29.0</td>
+<td>214.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>setup</th>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>inventory</th>
+<td>30.0</td>
+<td>30.0</td>
+<td>30.0</td>
+<td>4.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>product 4</th>
+<td>428.0</td>
+<td>1538.0</td>
+<td>4280.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>setup</th>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>inventory</th>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>product 5</th>
+<td>100.0</td>
+<td>718.0</td>
+<td>1819.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>setup</th>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>inventory</th>
+<td>94.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>product 6</th>
+<td>248.0</td>
+<td>1198.0</td>
+<td>2140.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>setup</th>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>inventory</th>
+<td>25.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>product 7</th>
+<td>780.0</td>
+<td>2101.0</td>
+<td>428.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>setup</th>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+<tr>
+<th>inventory</th>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+<td>0.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>objective is :  1719164 . Run time is :  0.25426697731018066
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p><span style="color: orange">Then we observe that interestingly around the 5000 threshold it changes very ligthly where day 4 produces 1 unit more which is weird, then it doesn't change unitl increasing it to 10000. Otherwise same pattern, as setup cost increase overall cost increases </span></p>
 </div>
 </div>
 </div>
