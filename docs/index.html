@@ -18027,7 +18027,74 @@ together in this interval ([500,10000]). Explain the changes in the production p
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h2 id="Question-8">Question 8<a class="anchor-link" href="#Question-8">¶</a></h2>
+<h2 id="Question-8">Question 8<a class="anchor-link" href="#Question-8">¶</a></h2><p>The process to produce each of the sub-materials in the BOM is as follows:</p>
+<ul>
+<li>Plank: Cutting station</li>
+<li>Leg: Shaping station - Drilling station</li>
+<li>Beam: Shaping station - Drilling station</li>
+<li>Top: Shaping station - Drilling station</li>
+<li>Table: Assembly station - Sanding station - Finishing station</li>
+</ul>
+<p>The information regarding each station is given in Table 6.</p>
+<table>
+<thead>
+<tr>
+<th>Station</th>
+<th>Processing time (min)</th>
+<th>Setup time (min)</th>
+<th>Available stations</th>
+<th>Efficiency</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cutting</td>
+<td>1</td>
+<td>-</td>
+<td>4</td>
+<td>80%</td>
+</tr>
+<tr>
+<td>Shaping</td>
+<td>1.5</td>
+<td>30</td>
+<td>2</td>
+<td>75%</td>
+</tr>
+<tr>
+<td>Drilling</td>
+<td>0.9</td>
+<td>5</td>
+<td>1</td>
+<td>90%</td>
+</tr>
+<tr>
+<td>Assembly</td>
+<td>3</td>
+<td>-</td>
+<td>1</td>
+<td>95%</td>
+</tr>
+<tr>
+<td>Sanding</td>
+<td>1.5</td>
+<td>-</td>
+<td>1</td>
+<td>95%</td>
+</tr>
+<tr>
+<td>Finishing</td>
+<td>2</td>
+<td>-</td>
+<td>1</td>
+<td>98%</td>
+</tr>
+</tbody>
+</table>
+<p>Each working day is 8 hours.</p>
+<p>Solve the production plan again with the new information (both optimally and using the
+decomposition approach) and compare the results with those obtained previously. Explain
+the differences.</p>
 </div>
 </div>
 </div>
