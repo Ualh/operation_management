@@ -71,6 +71,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -99,13 +128,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<div id="cell-2" class="cell" data-execution_count="1">
+<div id="cell-2" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> display</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ortools.linear_solver <span class="im">import</span> pywraplp</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> logging</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> logging</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="context" class="level1">
 <h1>Context</h1>
@@ -2022,7 +2052,8 @@ objective is :  15300 . Run time is :  0.055376291275024414</code></pre>
 <p>The integrated model and the decomposition approach to production planning handle the synchronization of production processes differently, which leads to discrepancies in their results, particularly regarding feasibility and efficiency.</p>
 <p><strong>Integrated Model Approach:</strong> In the integrated model, the entire production process—right from raw materials to final product assembly—is considered as a single cohesive system. This model effectively coordinates all the sub-processes, ensuring that the timing of raw material acquisition, component production, and final assembly is synchronized across all stages. The solver used in the integrated model calculates the optimal production start times for each component, ensuring that all parts are available precisely when needed for assembly, despite the lead times. This is why the integrated model output seems feasible and presents a coherent production plan.</p>
 <p><strong>Decomposition Approach:</strong> On the other hand, the decomposition approach breaks down the overall production process into smaller, independent units, each optimized separately. While this approach can simplify calculations and potentially increase focus on specific areas or units, it leads to a significant challenge: it does not inherently account for the interdependencies between different production stages. For instance, when you optimize sub-components like screws or planks separately, the model does not account for their necessary synchronization with the production of other parts like table tops or legs. As such, the decomposition model shows that production needs to start before day 1 to meet the demand by the given lead times, a situation that’s obviously not feasible.</p>
-<p>In essence, the decomposition approach highlights a critical flaw when it comes to the timing of each sub-component’s production, suggesting the initiation of production activities before actual start capability (before day 1). This points out a non-feasible solution under actual production constraints and underscores the importance of the integrated model in handling complex, multi-stage production processes where timing synchronization is crucial. The integrated model, by considering all elements of the production chain simultaneously, ensures that all parts are produced and assembled in the right sequence to meet final product delivery dates effectively. </p>
+<p>In essence, the decomposition approach highlights a critical flaw when it comes to the timing of each sub-component’s production, suggesting the initiation of production activities before actual start capability (before day 1). This points out a non-feasible solution under actual production constraints and underscores the importance of the integrated model in handling complex, multi-stage production processes where timing synchronization is crucial. The integrated model, by considering all elements of the production chain simultaneously, ensures that all parts are produced and assembled in the right sequence to meet final product delivery dates effectively.</p>
+<p>Bah en gros le integrated problem il prend tout en compte en même temps donc au final tout marche alors que decomposition il divise en sous problèmes et ça simplifie justement c’est sous problèmes et donc les contraintes et au final la solution globale est pas forcément faisable </p>
 </section>
 </section>
 </section>
@@ -22938,8 +22969,9 @@ objective is :  929369 . Run time is :  0.3199882507324219</code></pre>
 <section id="flow-time" class="level3">
 <h3 class="anchored" data-anchor-id="flow-time">Flow time</h3>
 <p>takes too much time to compute..</p>
-<section id="table-of-order-based-on-each-rules" class="level4">
-<h4 class="anchored" data-anchor-id="table-of-order-based-on-each-rules">Table of order based on each rules</h4>
+</section>
+<section id="table-of-order-based-on-each-rules" class="level3">
+<h3 class="anchored" data-anchor-id="table-of-order-based-on-each-rules">Table of order based on each rules</h3>
 <div id="cell-79" class="cell" data-execution_count="57">
 <div class="sourceCode cell-code" id="cb77"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> print_job_order(JOBS, order):</span>
 <span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> {</span>
@@ -23462,7 +23494,6 @@ SPT Order:</code></pre>
 <p>The MILP takes way to much times to runs, thus we’ll focus on the LPT</p>
 <p>Why ?</p>
 <p>because based on the course material, the Largest-Processing-Time-first (LPT) heuristic is recommended as the best heuristic method to minimize the duration in scheduling. This method sequences jobs to be processed on a resource in descending order of their processing times. It is particularly effective for minimizing the makespan on identical parallel machines by assigning each job to the machine with the least start time. This approach is illustrated and recommended for its effectiveness in achieving good scheduling performance in minimizing the total processing time Analytics in Operations Management, pages 168-176.</p>
-</section>
 </section>
 <section id="question-2-1" class="level2">
 <h2 class="anchored" data-anchor-id="question-2-1">Question 2</h2>
@@ -24110,8 +24141,11 @@ EDD Order:</code></pre>
 </div>
 </div>
 </div>
-<section id="mathematical-model---max-lateness" class="level4">
-<h4 class="anchored" data-anchor-id="mathematical-model---max-lateness">MAthematical model - Max lateness</h4>
+</section>
+<section id="mathematical-model" class="level3">
+<h3 class="anchored" data-anchor-id="mathematical-model">Mathematical model</h3>
+<section id="max-lateness" class="level4">
+<h4 class="anchored" data-anchor-id="max-lateness">Max lateness</h4>
 <div id="cell-89" class="cell" data-execution_count="61">
 <div class="sourceCode cell-code" id="cb89"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> opt_schedule(JOBS):</span>
 <span id="cb89-2"><a href="#cb89-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -24195,7 +24229,476 @@ EDD Order:</code></pre>
 </div>
 </div>
 </section>
+<section id="number-of-delayed-jobs" class="level4">
+<h4 class="anchored" data-anchor-id="number-of-delayed-jobs">Number of delayed jobs</h4>
+<div id="cell-91" class="cell" data-execution_count="62">
+<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> opt_schedule(JOBS):</span>
+<span id="cb92-2"><a href="#cb92-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-3"><a href="#cb92-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create the mip solver with the SCIP backend.</span></span>
+<span id="cb92-4"><a href="#cb92-4" aria-hidden="true" tabindex="-1"></a>    m <span class="op">=</span> pywraplp.Solver.CreateSolver(<span class="st">'SCIP'</span>)</span>
+<span id="cb92-5"><a href="#cb92-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-6"><a href="#cb92-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># upper bounds on how long it would take to process all jobs</span></span>
+<span id="cb92-7"><a href="#cb92-7" aria-hidden="true" tabindex="-1"></a>    tmax <span class="op">=</span> <span class="bu">max</span>([JOBS[job_id][<span class="st">'release'</span>] <span class="cf">for</span> job_id <span class="kw">in</span> JOBS.keys()]) <span class="op">+</span> <span class="bu">sum</span>([JOBS[job_id][<span class="st">'duration'</span>] <span class="cf">for</span> job_id <span class="kw">in</span> JOBS.keys()])</span>
+<span id="cb92-8"><a href="#cb92-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-9"><a href="#cb92-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-10"><a href="#cb92-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># decision variables</span></span>
+<span id="cb92-11"><a href="#cb92-11" aria-hidden="true" tabindex="-1"></a>    completion_time <span class="op">=</span> []</span>
+<span id="cb92-12"><a href="#cb92-12" aria-hidden="true" tabindex="-1"></a>    auxilaryVar <span class="op">=</span> []</span>
+<span id="cb92-13"><a href="#cb92-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> job <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(JOBS.keys())):</span>
+<span id="cb92-14"><a href="#cb92-14" aria-hidden="true" tabindex="-1"></a>        suffix <span class="op">=</span> <span class="st">'_</span><span class="sc">%s</span><span class="st">'</span> <span class="op">%</span> job</span>
+<span id="cb92-15"><a href="#cb92-15" aria-hidden="true" tabindex="-1"></a>        completion_time.append(m.NumVar(<span class="dv">0</span>, tmax, <span class="st">'complete'</span> <span class="op">+</span> suffix))</span>
+<span id="cb92-16"><a href="#cb92-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-17"><a href="#cb92-17" aria-hidden="true" tabindex="-1"></a>        auxilaryVar_nested<span class="op">=</span>[]</span>
+<span id="cb92-18"><a href="#cb92-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> job_k <span class="kw">in</span> JOBS.keys():</span>
+<span id="cb92-19"><a href="#cb92-19" aria-hidden="true" tabindex="-1"></a>            auxilaryVar_nested.append(m.BoolVar(<span class="st">'y'</span> <span class="op">+</span> suffix))</span>
+<span id="cb92-20"><a href="#cb92-20" aria-hidden="true" tabindex="-1"></a>        auxilaryVar.append(auxilaryVar_nested)</span>
+<span id="cb92-21"><a href="#cb92-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-22"><a href="#cb92-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-23"><a href="#cb92-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># additional decision variables for use in the objecive</span></span>
+<span id="cb92-24"><a href="#cb92-24" aria-hidden="true" tabindex="-1"></a>    ispastdue <span class="op">=</span> []</span>
+<span id="cb92-25"><a href="#cb92-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> job_id <span class="kw">in</span> JOBS.keys():</span>
+<span id="cb92-26"><a href="#cb92-26" aria-hidden="true" tabindex="-1"></a>        ispastdue.append(m.BoolVar(<span class="st">'ispastdue'</span>))</span>
+<span id="cb92-27"><a href="#cb92-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-28"><a href="#cb92-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># constraints</span></span>
+<span id="cb92-29"><a href="#cb92-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j,job_id <span class="kw">in</span> <span class="bu">enumerate</span>(JOBS.keys()):</span>
+<span id="cb92-30"><a href="#cb92-30" aria-hidden="true" tabindex="-1"></a>        m.Add(completion_time[j] <span class="op">&lt;=</span> JOBS[job_id][<span class="st">'due'</span>] <span class="op">+</span> tmax <span class="op">*</span> ispastdue[j])</span>
+<span id="cb92-31"><a href="#cb92-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-32"><a href="#cb92-32" aria-hidden="true" tabindex="-1"></a>        m.Add(completion_time[j] <span class="op">&gt;=</span> JOBS[job_id][<span class="st">'release'</span>] <span class="op">+</span> JOBS[job_id][<span class="st">'duration'</span>])</span>
+<span id="cb92-33"><a href="#cb92-33" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> k,job_id_k <span class="kw">in</span> <span class="bu">enumerate</span>(JOBS.keys()):</span>
+<span id="cb92-34"><a href="#cb92-34" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> k <span class="op">!=</span>j:</span>
+<span id="cb92-35"><a href="#cb92-35" aria-hidden="true" tabindex="-1"></a>                m.Add(completion_time[j] <span class="op">+</span> JOBS[job_id_k][<span class="st">'duration'</span>] <span class="op">&lt;=</span> completion_time[k] <span class="op">+</span> tmax<span class="op">*</span>auxilaryVar[j][k])</span>
+<span id="cb92-36"><a href="#cb92-36" aria-hidden="true" tabindex="-1"></a>                m.Add(completion_time[k] <span class="op">+</span> JOBS[job_id][<span class="st">'duration'</span>] <span class="op">&lt;=</span> completion_time[j] <span class="op">+</span> tmax<span class="op">*</span>(<span class="dv">1</span> <span class="op">-</span> auxilaryVar[j][k]))</span>
+<span id="cb92-37"><a href="#cb92-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-38"><a href="#cb92-38" aria-hidden="true" tabindex="-1"></a>    <span class="co"># objective function</span></span>
+<span id="cb92-39"><a href="#cb92-39" aria-hidden="true" tabindex="-1"></a>    m.Minimize(<span class="bu">sum</span>(ispastdue))</span>
+<span id="cb92-40"><a href="#cb92-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-41"><a href="#cb92-41" aria-hidden="true" tabindex="-1"></a>    status <span class="op">=</span> m.Solve()</span>
+<span id="cb92-42"><a href="#cb92-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-43"><a href="#cb92-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> status <span class="op">==</span> pywraplp.Solver.OPTIMAL:</span>
+<span id="cb92-44"><a href="#cb92-44" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="bu">sum</span>(ispastdue[job_id].solution_value() <span class="cf">for</span> job_id <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(JOBS.keys()))))</span>
+<span id="cb92-45"><a href="#cb92-45" aria-hidden="true" tabindex="-1"></a>        SCHEDULE <span class="op">=</span> {}</span>
+<span id="cb92-46"><a href="#cb92-46" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> j,job_id <span class="kw">in</span> <span class="bu">enumerate</span>(JOBS.keys()):</span>
+<span id="cb92-47"><a href="#cb92-47" aria-hidden="true" tabindex="-1"></a>            SCHEDULE[job_id] <span class="op">=</span> {<span class="st">'machine'</span>: <span class="dv">1</span>, <span class="st">'start'</span>: completion_time[j].solution_value() <span class="op">-</span> JOBS[job_id][<span class="st">'duration'</span>], <span class="st">'finish'</span>: completion_time[j].solution_value()}</span>
+<span id="cb92-48"><a href="#cb92-48" aria-hidden="true" tabindex="-1"></a>        <span class="co"># print(SCHEDULE)</span></span>
+<span id="cb92-49"><a href="#cb92-49" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> SCHEDULE</span>
+<span id="cb92-50"><a href="#cb92-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-51"><a href="#cb92-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-52"><a href="#cb92-52" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb92-53"><a href="#cb92-53" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">'The problem does not have an optimal solution.'</span>)</span>
+<span id="cb92-54"><a href="#cb92-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-55"><a href="#cb92-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb92-56"><a href="#cb92-56" aria-hidden="true" tabindex="-1"></a>SCHEDULE <span class="op">=</span> opt_schedule(JOBS)</span>
+<span id="cb92-57"><a href="#cb92-57" aria-hidden="true" tabindex="-1"></a>gantt(JOBS, SCHEDULE)</span>
+<span id="cb92-58"><a href="#cb92-58" aria-hidden="true" tabindex="-1"></a>kpi(JOBS, SCHEDULE)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.0</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="62">
+<pre><code>{'Makespan': 2939.9999999999995,
+ 'Max Pastdue': 4.547473508864641e-13,
+ 'Sum of Pastdue': 4.547473508864641e-13,
+ 'Number Pastdue': 1,
+ 'Number on Time': 16,
+ 'Fraction on Time': 0.9411764705882353}</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="group7_files/figure-html/cell-39-output-3.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="group7_files/figure-html/cell-39-output-4.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
+<section id="moore-and-hudson-algo" class="level4">
+<h4 class="anchored" data-anchor-id="moore-and-hudson-algo">Moore and Hudson Algo</h4>
+<div id="cell-93" class="cell" data-execution_count="65">
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a>order <span class="op">=</span> <span class="bu">sorted</span>(JOBS, key<span class="op">=</span><span class="kw">lambda</span> x: (JOBS[x][<span class="st">'due'</span>], x))</span>
+<span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a><span class="co"># print(order)</span></span>
+<span id="cb95-3"><a href="#cb95-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb95-4"><a href="#cb95-4" aria-hidden="true" tabindex="-1"></a>Flow_Time <span class="op">=</span> []</span>
+<span id="cb95-5"><a href="#cb95-5" aria-hidden="true" tabindex="-1"></a>j <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb95-6"><a href="#cb95-6" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> j <span class="op">&lt;</span> <span class="bu">len</span>(order):</span>
+<span id="cb95-7"><a href="#cb95-7" aria-hidden="true" tabindex="-1"></a>    job <span class="op">=</span> order[j]</span>
+<span id="cb95-8"><a href="#cb95-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># print(j,job)</span></span>
+<span id="cb95-9"><a href="#cb95-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(Flow_Time) <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb95-10"><a href="#cb95-10" aria-hidden="true" tabindex="-1"></a>        Flow_Time.append(JOBS[job][<span class="st">'duration'</span>])</span>
+<span id="cb95-11"><a href="#cb95-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb95-12"><a href="#cb95-12" aria-hidden="true" tabindex="-1"></a>        Flow_Time.append(Flow_Time[<span class="op">-</span><span class="dv">1</span>] <span class="op">+</span> JOBS[job][<span class="st">'duration'</span>])</span>
+<span id="cb95-13"><a href="#cb95-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># print(Flow_Time)</span></span>
+<span id="cb95-14"><a href="#cb95-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> Flow_Time[j] <span class="op">&gt;</span> JOBS[job][<span class="st">'due'</span>]:</span>
+<span id="cb95-15"><a href="#cb95-15" aria-hidden="true" tabindex="-1"></a>        remove_ele <span class="op">=</span> np.argmax(np.array([JOBS[i][<span class="st">'duration'</span>] <span class="cf">for</span> i <span class="kw">in</span> order[:j]]))</span>
+<span id="cb95-16"><a href="#cb95-16" aria-hidden="true" tabindex="-1"></a>        order.pop(remove_ele)</span>
+<span id="cb95-17"><a href="#cb95-17" aria-hidden="true" tabindex="-1"></a>        j <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb95-18"><a href="#cb95-18" aria-hidden="true" tabindex="-1"></a>        Flow_Time <span class="op">=</span> []</span>
+<span id="cb95-19"><a href="#cb95-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb95-20"><a href="#cb95-20" aria-hidden="true" tabindex="-1"></a>        j <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb95-21"><a href="#cb95-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># print(order)</span></span>
+<span id="cb95-22"><a href="#cb95-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb95-23"><a href="#cb95-23" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(np.column_stack((order,np.array([JOBS[job][<span class="st">'duration'</span>] <span class="cf">for</span> job <span class="kw">in</span> order]),np.array([JOBS[job][<span class="st">'due'</span>] <span class="cf">for</span> job <span class="kw">in</span> order]),Flow_Time)))</span>
+<span id="cb95-24"><a href="#cb95-24" aria-hidden="true" tabindex="-1"></a>df.columns <span class="op">=</span> [<span class="st">'Job'</span>,<span class="st">'Processing Time'</span>,<span class="st">'Due Date'</span>,<span class="st">'Flow Time'</span>]</span>
+<span id="cb95-25"><a href="#cb95-25" aria-hidden="true" tabindex="-1"></a>df.style</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="65">
+<div>
+<style type="text/css">
+</style>
+
+<table id="T_e498f" data-quarto-postprocess="true" class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th class="blank level0" data-quarto-table-cell-role="th">&nbsp;</th>
+<th id="T_e498f_level0_col0" class="col_heading level0 col0" data-quarto-table-cell-role="th">Job</th>
+<th id="T_e498f_level0_col1" class="col_heading level0 col1" data-quarto-table-cell-role="th">Processing Time</th>
+<th id="T_e498f_level0_col2" class="col_heading level0 col2" data-quarto-table-cell-role="th">Due Date</th>
+<th id="T_e498f_level0_col3" class="col_heading level0 col3" data-quarto-table-cell-role="th">Flow Time</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td id="T_e498f_level0_row0" class="row_heading level0 row0" data-quarto-table-cell-role="th">0</td>
+<td id="T_e498f_row0_col0" class="data row0 col0">E</td>
+<td id="T_e498f_row0_col1" class="data row0 col1">150</td>
+<td id="T_e498f_row0_col2" class="data row0 col2">630</td>
+<td id="T_e498f_row0_col3" class="data row0 col3">150</td>
+</tr>
+<tr class="even">
+<td id="T_e498f_level0_row1" class="row_heading level0 row1" data-quarto-table-cell-role="th">1</td>
+<td id="T_e498f_row1_col0" class="data row1 col0">N</td>
+<td id="T_e498f_row1_col1" class="data row1 col1">135</td>
+<td id="T_e498f_row1_col2" class="data row1 col2">930</td>
+<td id="T_e498f_row1_col3" class="data row1 col3">285</td>
+</tr>
+<tr class="odd">
+<td id="T_e498f_level0_row2" class="row_heading level0 row2" data-quarto-table-cell-role="th">2</td>
+<td id="T_e498f_row2_col0" class="data row2 col0">L</td>
+<td id="T_e498f_row2_col1" class="data row2 col1">75</td>
+<td id="T_e498f_row2_col2" class="data row2 col2">1020</td>
+<td id="T_e498f_row2_col3" class="data row2 col3">360</td>
+</tr>
+<tr class="even">
+<td id="T_e498f_level0_row3" class="row_heading level0 row3" data-quarto-table-cell-role="th">3</td>
+<td id="T_e498f_row3_col0" class="data row3 col0">O</td>
+<td id="T_e498f_row3_col1" class="data row3 col1">60</td>
+<td id="T_e498f_row3_col2" class="data row3 col2">1065</td>
+<td id="T_e498f_row3_col3" class="data row3 col3">420</td>
+</tr>
+<tr class="odd">
+<td id="T_e498f_level0_row4" class="row_heading level0 row4" data-quarto-table-cell-role="th">4</td>
+<td id="T_e498f_row4_col0" class="data row4 col0">M</td>
+<td id="T_e498f_row4_col1" class="data row4 col1">45</td>
+<td id="T_e498f_row4_col2" class="data row4 col2">1125</td>
+<td id="T_e498f_row4_col3" class="data row4 col3">465</td>
+</tr>
+<tr class="even">
+<td id="T_e498f_level0_row5" class="row_heading level0 row5" data-quarto-table-cell-role="th">5</td>
+<td id="T_e498f_row5_col0" class="data row5 col0">Q</td>
+<td id="T_e498f_row5_col1" class="data row5 col1">150</td>
+<td id="T_e498f_row5_col2" class="data row5 col2">1245</td>
+<td id="T_e498f_row5_col3" class="data row5 col3">615</td>
+</tr>
+<tr class="odd">
+<td id="T_e498f_level0_row6" class="row_heading level0 row6" data-quarto-table-cell-role="th">6</td>
+<td id="T_e498f_row6_col0" class="data row6 col0">A</td>
+<td id="T_e498f_row6_col1" class="data row6 col1">165</td>
+<td id="T_e498f_row6_col2" class="data row6 col2">1350</td>
+<td id="T_e498f_row6_col3" class="data row6 col3">780</td>
+</tr>
+<tr class="even">
+<td id="T_e498f_level0_row7" class="row_heading level0 row7" data-quarto-table-cell-role="th">7</td>
+<td id="T_e498f_row7_col0" class="data row7 col0">B</td>
+<td id="T_e498f_row7_col1" class="data row7 col1">105</td>
+<td id="T_e498f_row7_col2" class="data row7 col2">1440</td>
+<td id="T_e498f_row7_col3" class="data row7 col3">885</td>
+</tr>
+<tr class="odd">
+<td id="T_e498f_level0_row8" class="row_heading level0 row8" data-quarto-table-cell-role="th">8</td>
+<td id="T_e498f_row8_col0" class="data row8 col0">J</td>
+<td id="T_e498f_row8_col1" class="data row8 col1">180</td>
+<td id="T_e498f_row8_col2" class="data row8 col2">1470</td>
+<td id="T_e498f_row8_col3" class="data row8 col3">1065</td>
+</tr>
+<tr class="even">
+<td id="T_e498f_level0_row9" class="row_heading level0 row9" data-quarto-table-cell-role="th">9</td>
+<td id="T_e498f_row9_col0" class="data row9 col0">G</td>
+<td id="T_e498f_row9_col1" class="data row9 col1">90</td>
+<td id="T_e498f_row9_col2" class="data row9 col2">1530</td>
+<td id="T_e498f_row9_col3" class="data row9 col3">1155</td>
+</tr>
+<tr class="odd">
+<td id="T_e498f_level0_row10" class="row_heading level0 row10" data-quarto-table-cell-role="th">10</td>
+<td id="T_e498f_row10_col0" class="data row10 col0">D</td>
+<td id="T_e498f_row10_col1" class="data row10 col1">120</td>
+<td id="T_e498f_row10_col2" class="data row10 col2">1545</td>
+<td id="T_e498f_row10_col3" class="data row10 col3">1275</td>
+</tr>
+<tr class="even">
+<td id="T_e498f_level0_row11" class="row_heading level0 row11" data-quarto-table-cell-role="th">11</td>
+<td id="T_e498f_row11_col0" class="data row11 col0">C</td>
+<td id="T_e498f_row11_col1" class="data row11 col1">165</td>
+<td id="T_e498f_row11_col2" class="data row11 col2">2025</td>
+<td id="T_e498f_row11_col3" class="data row11 col3">1440</td>
+</tr>
+<tr class="odd">
+<td id="T_e498f_level0_row12" class="row_heading level0 row12" data-quarto-table-cell-role="th">12</td>
+<td id="T_e498f_row12_col0" class="data row12 col0">K</td>
+<td id="T_e498f_row12_col1" class="data row12 col1">225</td>
+<td id="T_e498f_row12_col2" class="data row12 col2">2130</td>
+<td id="T_e498f_row12_col3" class="data row12 col3">1665</td>
+</tr>
+<tr class="even">
+<td id="T_e498f_level0_row13" class="row_heading level0 row13" data-quarto-table-cell-role="th">13</td>
+<td id="T_e498f_row13_col0" class="data row13 col0">I</td>
+<td id="T_e498f_row13_col1" class="data row13 col1">180</td>
+<td id="T_e498f_row13_col2" class="data row13 col2">2175</td>
+<td id="T_e498f_row13_col3" class="data row13 col3">1845</td>
+</tr>
+<tr class="odd">
+<td id="T_e498f_level0_row14" class="row_heading level0 row14" data-quarto-table-cell-role="th">14</td>
+<td id="T_e498f_row14_col0" class="data row14 col0">F</td>
+<td id="T_e498f_row14_col1" class="data row14 col1">195</td>
+<td id="T_e498f_row14_col2" class="data row14 col2">2370</td>
+<td id="T_e498f_row14_col3" class="data row14 col3">2040</td>
+</tr>
+<tr class="even">
+<td id="T_e498f_level0_row15" class="row_heading level0 row15" data-quarto-table-cell-role="th">15</td>
+<td id="T_e498f_row15_col0" class="data row15 col0">H</td>
+<td id="T_e498f_row15_col1" class="data row15 col1">75</td>
+<td id="T_e498f_row15_col2" class="data row15 col2">2505</td>
+<td id="T_e498f_row15_col3" class="data row15 col3">2115</td>
+</tr>
+<tr class="odd">
+<td id="T_e498f_level0_row16" class="row_heading level0 row16" data-quarto-table-cell-role="th">16</td>
+<td id="T_e498f_row16_col0" class="data row16 col0">P</td>
+<td id="T_e498f_row16_col1" class="data row16 col1">165</td>
+<td id="T_e498f_row16_col2" class="data row16 col2">2940</td>
+<td id="T_e498f_row16_col3" class="data row16 col3">2280</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="question-4-1" class="level2">
+<h2 class="anchored" data-anchor-id="question-4-1">Question 4</h2>
+<p>Constraint Analysis for Parallel-Machine Scheduling Model</p>
+<section id="constraints-description" class="level3">
+<h3 class="anchored" data-anchor-id="constraints-description">Constraints Description</h3>
+<p>The constraints governing the scheduling of jobs on parallel machines can be described as follows:</p>
+<ol type="1">
+<li><p><strong>Time Scheduling Constraint</strong>: <span class="math display">\[
+C_j + p_k \leq C_k + M(2 - x_{jm} - x_{km} + y_{jk}) \quad \forall j, k, m
+\]</span> This constraint ensures that if job (j) is scheduled before job (k) on any machine (m), then the completion time of job (j) plus the processing time of job (k) is less than or equal to the completion time of job (k), adjusted by a large constant (M) times the condition of sequencing and machine assignment.</p></li>
+<li><p><strong>Mutual Exclusivity Constraint</strong>: <span class="math display">\[
+C_k + p_j \leq C_j + M(3 - y_{jk} - x_{jm} - x_{km}) \quad \forall j, k, m
+\]</span> This ensures that two jobs cannot overlap in their scheduling unless the sequence and machine allocations are appropriately set.</p></li>
+<li><p><strong>Non-negativity Constraint</strong>: <span class="math display">\[
+C_j \geq 0 \quad \forall j
+\]</span> The completion times of all jobs must be non-negative.</p></li>
+<li><p><strong>Binary Constraint for Job Sequencing</strong>: <span class="math display">\[
+y_{jk} \in \{0, 1\} \quad \forall j, k
+\]</span> This binary variable indicates whether job (k) is processed after job (j).</p></li>
+</ol>
+</section>
+<section id="parameters-and-variables" class="level3">
+<h3 class="anchored" data-anchor-id="parameters-and-variables">Parameters and Variables</h3>
+<ul>
+<li><p>Processing time of job ( j ): <span class="math display">\[
+p_j
+\]</span></p></li>
+<li><p>A large number (Big M): <span class="math display">\[
+M
+\]</span></p></li>
+<li><p>Maximum completion time on all machines: <span class="math display">\[
+C_{\text{max}}
+\]</span></p></li>
+<li><p>Completion time of job ( j ): <span class="math display">\[
+C_j
+\]</span></p></li>
+<li><p>Binary variable, 1 if job ( k ) is processed after job ( j ) (job sequencing): <span class="math display">\[
+y_{jk}
+\]</span></p></li>
+<li><p>Binary variable, 1 if job ( j ) is processed on machine ( m ) (machine assignment): <span class="math display">\[
+x_{jm}
+\]</span></p></li>
+</ul>
+</section>
+<section id="optimization-model" class="level3">
+<h3 class="anchored" data-anchor-id="optimization-model">Optimization Model</h3>
+<p>The objective is to minimize the maximum completion time across all machines: <span class="math display">\[
+\min C_{\text{max}}
+\]</span> subject to: <span class="math display">\[
+\sum_{j} x_{jm}p_j \leq C_{\text{max}} \quad \forall m
+\]</span> <span class="math display">\[
+\sum_{m} x_{jm} = 1 \quad \forall j
+\]</span> <span class="math display">\[
+x_{jm} \in \{0, 1\} \quad \forall j, m
+\]</span></p>
+</section>
+<section id="additional-constraints-needed" class="level3">
+<h3 class="anchored" data-anchor-id="additional-constraints-needed">Additional Constraints Needed</h3>
+<p>To complete the model, additional constraints are required to fully capture the scheduling problem:</p>
+<p><strong>Machine Capacity Constraint</strong>: Ensuring that each job is assigned to exactly one machine.</p>
+<p><span class="math display">\[
+\sum_{m} x_{jm} = 1 \quad \forall j
+\]</span></p>
+<p>This ensures that each job ( j ) is assigned to exactly one machine ( m ).</p>
+<p><strong>Completion Time Constraint</strong>: Ensuring that the completion time of each job does not exceed the maximum completion time ( C_{} ).</p>
+<p><span class="math display">\[
+\sum_{j} x_{jm} p_j \leq C_{\text{max}} \quad \forall m
+\]</span></p>
+<p>This ensures that the total processing time on any machine ( m ) does not exceed ( C_{} ).</p>
+<p><strong>Binary Assignment</strong>: Ensuring binary values for machine assignment variables.</p>
+<p><span class="math display">\[
+x_{jm} \in \{0, 1\} \quad \forall j, m
+\]</span></p>
+</section>
+<section id="integration-of-the-additional-constraints" class="level3">
+<h3 class="anchored" data-anchor-id="integration-of-the-additional-constraints">Integration of the Additional Constraints</h3>
+<p>When integrated with the given constraints, the model ensures proper scheduling of jobs on parallel machines while minimizing the makespan:</p>
+<p><strong>Objective</strong>:</p>
+<p><span class="math display">\[
+\min C_{\text{max}}
+\]</span></p>
+<p><strong>Constraints</strong>:</p>
+<p><span class="math display">\[
+C_j + p_k \leq C_k + M(2 - x_{jm} - x_{km} + y_{jk}) \quad \forall j, k, m
+\]</span></p>
+<p><span class="math display">\[
+C_k + p_j \leq C_j + M(3 - y_{jk} - x_{jm} - x_{km}) \quad \forall j, k, m
+\]</span></p>
+<p><span class="math display">\[
+C_j \geq 0 \quad \forall j
+\]</span></p>
+<p><span class="math display">\[
+y_{jk} \in \{0, 1\} \quad \forall j, k
+\]</span></p>
+<p><span class="math display">\[
+\sum_{m} x_{jm} = 1 \quad \forall j
+\]</span></p>
+<p><span class="math display">\[
+\sum_{j} x_{jm} p_j \leq C_{\text{max}} \quad \forall m
+\]</span></p>
+<p><span class="math display">\[
+x_{jm} \in \{0, 1\} \quad \forall j, m
+\]</span></p>
+</section>
+<section id="justification" class="level3">
+<h3 class="anchored" data-anchor-id="justification">Justification</h3>
+<p>Based on the course materials, these constraints form a comprehensive model for parallel machine scheduling aimed at minimizing the makespan. The additional constraints ensure that each job is processed exactly once and the load on each machine does not exceed the specified maximum completion time, ensuring an optimal schedule.</p>
+</section>
+<section id="course-reference" class="level3">
+<h3 class="anchored" data-anchor-id="course-reference">Course Reference</h3>
+<p>The constraints and methods align with the optimization models and heuristics for scheduling problems discussed in the course materials, particularly in sections focusing on multiple machines and minimizing the makespan:</p>
+<ul>
+<li>pages 165</li>
+</ul>
+</section>
+</section>
+<section id="question-6-1" class="level2">
+<h2 class="anchored" data-anchor-id="question-6-1">Question 6</h2>
+<p>WoodCraft Creations has decided to incorporate an inspection booth after the assembly machines. They adhere to a full inspection policy to uphold the quality they promise. Full inspection involves examining every product or component to ensure it meets specific standards or requirements. At this station, an employee checks the products and assesses if they meet expectations. The file data project 2.csv provides the inspection time for each product.</p>
+<p>Address this problem by taking into account the release time of each product at the completion of its assembly. Use the rules outlined below, ensuring that the priorities and deadlines align with those mentioned in the previous section: - LPT - SPT - EDD</p>
+<div id="cell-96" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a>data_2 <span class="op">=</span> pd.read_csv(<span class="st">'data/data_project_2.csv'</span>)</span>
+<span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a>data_2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Needed_Time (Hour)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>1.899808</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>0.590951</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>2.127029</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>2.889249</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>2.554759</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>0.058992</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>0.901546</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>1.275430</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>0.838140</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>1.912403</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">10</td>
+<td>1.307950</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">11</td>
+<td>0.942278</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">12</td>
+<td>0.459693</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">13</td>
+<td>2.124013</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">14</td>
+<td>0.897701</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">15</td>
+<td>1.870851</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">16</td>
+<td>1.663483</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
 </section>
 </section>
 
