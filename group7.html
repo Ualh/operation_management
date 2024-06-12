@@ -23552,7 +23552,9 @@ SPT Order:</code></pre>
 <span id="cb82-18"><a href="#cb82-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">'17'</span>: {<span class="st">'release'</span>: time_to_continuous_minutes(<span class="st">'Monday'</span>, <span class="dv">15</span>, <span class="dv">30</span>), <span class="st">'duration'</span>: <span class="dv">2</span> <span class="op">*</span> <span class="dv">60</span> <span class="op">+</span> <span class="dv">30</span>, <span class="st">'due'</span>: <span class="dv">0</span>, <span class="st">'weight'</span>: <span class="dv">4</span>},</span>
 <span id="cb82-19"><a href="#cb82-19" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb82-20"><a href="#cb82-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb82-21"><a href="#cb82-21" aria-hidden="true" tabindex="-1"></a>MACHINES <span class="op">=</span> [<span class="st">'A'</span>, <span class="st">'B'</span>, <span class="st">'C'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb82-21"><a href="#cb82-21" aria-hidden="true" tabindex="-1"></a>MACHINES <span class="op">=</span> [<span class="st">'A'</span>, <span class="st">'B'</span>, <span class="st">'C'</span>]</span>
+<span id="cb82-22"><a href="#cb82-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb82-23"><a href="#cb82-23" aria-hidden="true" tabindex="-1"></a>JOBS</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="milp-1" class="level3">
 <h3 class="anchored" data-anchor-id="milp-1">MILP</h3>
@@ -24810,40 +24812,52 @@ x_{jm} \in \{0, 1\} \quad \forall j, m
 <pre><code>[113, 35, 127, 173, 153, 3, 54, 76, 50, 114, 78, 56, 27, 127, 53, 112, 99]</code></pre>
 </div>
 </div>
-<div id="cell-112" class="cell" data-execution_count="212">
+<div id="cell-112" class="cell" data-execution_count="222">
 <div class="sourceCode cell-code" id="cb107"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a>JOBS <span class="op">=</span> {</span>
-<span id="cb107-2"><a href="#cb107-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'1'</span>: {<span class="st">'release'</span>: time_to_continuous_minutes(<span class="st">'Tuesday'</span>, <span class="dv">16</span>, <span class="dv">45</span>), <span class="st">'duration'</span>: (<span class="dv">2</span> <span class="op">*</span> <span class="dv">60</span> <span class="op">+</span> <span class="dv">45</span>) <span class="op">+</span> inspection_times[<span class="dv">0</span>], <span class="st">'due'</span>: time_to_continuous_minutes(<span class="st">'Wednesday'</span>, <span class="dv">10</span>, <span class="dv">30</span>), <span class="st">'weight'</span>: <span class="dv">1</span>},</span>
-<span id="cb107-3"><a href="#cb107-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'2'</span>: {<span class="st">'release'</span>: time_to_continuous_minutes(<span class="st">'Monday'</span>, <span class="dv">15</span>, <span class="dv">45</span>), <span class="st">'duration'</span>: (<span class="dv">1</span> <span class="op">*</span> <span class="dv">60</span> <span class="op">+</span> <span class="dv">45</span>) <span class="op">+</span> inspection_times[<span class="dv">1</span>], <span class="st">'due'</span>: time_to_continuous_minutes(<span class="st">'Wednesday'</span>, <span class="dv">12</span>, <span class="dv">0</span>), <span class="st">'weight'</span>: <span class="dv">3</span>},</span>
-<span id="cb107-4"><a href="#cb107-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'3'</span>: {<span class="st">'release'</span>: time_to_continuous_minutes(<span class="st">'Monday'</span>, <span class="dv">17</span>, <span class="dv">45</span>), <span class="st">'duration'</span>: (<span class="dv">2</span> <span class="op">*</span> <span class="dv">60</span> <span class="op">+</span> <span class="dv">45</span>) <span class="op">+</span> inspection_times[<span class="dv">2</span>], <span class="st">'due'</span>: time_to_continuous_minutes(<span class="st">'Thursday'</span>, <span class="dv">11</span>, <span class="dv">45</span>), <span class="st">'weight'</span>: <span class="dv">4</span>},</span>
-<span id="cb107-5"><a href="#cb107-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'4'</span>: {<span class="st">'release'</span>: time_to_continuous_minutes(<span class="st">'Monday'</span>, <span class="dv">8</span>, <span class="dv">30</span>), <span class="st">'duration'</span>: (<span class="dv">2</span> <span class="op">*</span> <span class="dv">60</span>) <span class="op">+</span> inspection_times[<span class="dv">3</span>], <span class="st">'due'</span>: time_to_continuous_minutes(<span class="st">'Wednesday'</span>, <span class="dv">13</span>, <span class="dv">45</span>), <span class="st">'weight'</span>: <span class="dv">1</span>},</span>
-<span id="cb107-6"><a href="#cb107-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'5'</span>: {<span class="st">'release'</span>: time_to_continuous_minutes(<span class="st">'Monday'</span>, <span class="dv">10</span>, <span class="dv">30</span>), <span class="st">'duration'</span>: (<span class="dv">2</span> <span class="op">*</span> <span class="dv">60</span> <span class="op">+</span> <span class="dv">30</span>) <span class="op">+</span> inspection_times[<span class="dv">4</span>], <span class="st">'due'</span>: time_to_continuous_minutes(<span class="st">'Tuesday'</span>, <span class="dv">8</span>, <span class="dv">30</span>), <span class="st">'weight'</span>: <span class="dv">1</span>},</span>
-<span id="cb107-7"><a href="#cb107-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'6'</span>: {<span class="st">'release'</span>: time_to_continuous_minutes(<span class="st">'Tuesday'</span>, <span class="dv">16</span>, <span class="dv">0</span>), <span class="st">'duration'</span>: (<span class="dv">3</span> <span class="op">*</span> <span class="dv">60</span> <span class="op">+</span> <span class="dv">15</span>) <span class="op">+</span> inspection_times[<span class="dv">5</span>], <span class="st">'due'</span>: time_to_continuous_minutes(<span class="st">'Thursday'</span>, <span class="dv">17</span>, <span class="dv">30</span>), <span class="st">'weight'</span>: <span class="dv">2</span>},</span>
-<span id="cb107-8"><a href="#cb107-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'7'</span>: {<span class="st">'release'</span>: time_to_continuous_minutes(<span class="st">'Tuesday'</span>, <span class="dv">16</span>, <span class="dv">30</span>), <span class="st">'duration'</span>: (<span class="dv">1</span> <span class="op">*</span> <span class="dv">60</span> <span class="op">+</span> <span class="dv">30</span>) <span class="op">+</span> inspection_times[<span class="dv">6</span>], <span class="st">'due'</span>: time_to_continuous_minutes(<span class="st">'Wednesday'</span>, <span class="dv">13</span>, <span class="dv">30</span>), <span class="st">'weight'</span>: <span class="dv">3</span>},</span>
-<span id="cb107-9"><a href="#cb107-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">'8'</span>: {<span class="st">'release'</span>: time_to_continuous_minutes(<span class="st">'Tuesday'</span>, <span class="dv">17</span>, <span class="dv">45</span>), <span class="st">'duration'</span>: (<span class="dv">1</span> <span class="op">*</span> <span class="dv">60</span> <span class="op">+</span> <span class="dv">15</span>) <span class="op">+</span> inspection_times[<span class="dv">7</span>], <span class="st">'due'</span>: time_to_continuous_minutes(<span class="st">'Friday'</span>, <span class="dv">9</span>, <span class="dv">45</span>), <span class="st">'weight'</span>: <span class="dv">1</span>},</span>
-<span id="cb107-10"><a href="#cb107-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'9'</span>: {<span class="st">'release'</span>: time_to_continuous_minutes(<span class="st">'Monday'</span>, <span class="dv">13</span>, <span class="dv">30</span>), <span class="st">'duration'</span>: (<span class="dv">3</span> <span class="op">*</span> <span class="dv">60</span>) <span class="op">+</span> inspection_times[<span class="dv">8</span>], <span class="st">'due'</span>: time_to_continuous_minutes(<span class="st">'Thursday'</span>, <span class="dv">14</span>, <span class="dv">15</span>), <span class="st">'weight'</span>: <span class="dv">2</span>},</span>
-<span id="cb107-11"><a href="#cb107-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'10'</span>: {<span class="st">'release'</span>: time_to_continuous_minutes(<span class="st">'Monday'</span>, <span class="dv">17</span>, <span class="dv">15</span>), <span class="st">'duration'</span>: (<span class="dv">3</span> <span class="op">*</span> <span class="dv">60</span>) <span class="op">+</span> inspection_times[<span class="dv">9</span>], <span class="st">'due'</span>: time_to_continuous_minutes(<span class="st">'Wednesday'</span>, <span class="dv">12</span>, <span class="dv">30</span>), <span class="st">'weight'</span>: <span class="dv">1</span>},</span>
-<span id="cb107-12"><a href="#cb107-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">'11'</span>: {<span class="st">'release'</span>: time_to_continuous_minutes(<span class="st">'Tuesday'</span>, <span class="dv">15</span>, <span class="dv">45</span>), <span class="st">'duration'</span>: (<span class="dv">3</span> <span class="op">*</span> <span class="dv">60</span> <span class="op">+</span> <span class="dv">45</span>) <span class="op">+</span> inspection_times[<span class="dv">10</span>], <span class="st">'due'</span>: time_to_continuous_minutes(<span class="st">'Thursday'</span>, <span class="dv">13</span>, <span class="dv">30</span>), <span class="st">'weight'</span>: <span class="dv">1</span>},</span>
-<span id="cb107-13"><a href="#cb107-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">'12'</span>: {<span class="st">'release'</span>: time_to_continuous_minutes(<span class="st">'Monday'</span>, <span class="dv">15</span>, <span class="dv">45</span>), <span class="st">'duration'</span>: (<span class="dv">1</span> <span class="op">*</span> <span class="dv">60</span> <span class="op">+</span> <span class="dv">15</span>) <span class="op">+</span> inspection_times[<span class="dv">11</span>], <span class="st">'due'</span>: time_to_continuous_minutes(<span class="st">'Tuesday'</span>, <span class="dv">15</span>, <span class="dv">0</span>), <span class="st">'weight'</span>: <span class="dv">1</span>},</span>
-<span id="cb107-14"><a href="#cb107-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">'13'</span>: {<span class="st">'release'</span>: time_to_continuous_minutes(<span class="st">'Monday'</span>, <span class="dv">15</span>, <span class="dv">30</span>), <span class="st">'duration'</span>: (<span class="dv">45</span>) <span class="op">+</span> inspection_times[<span class="dv">12</span>], <span class="st">'due'</span>: time_to_continuous_minutes(<span class="st">'Tuesday'</span>, <span class="dv">16</span>, <span class="dv">45</span>), <span class="st">'weight'</span>: <span class="dv">1</span>},</span>
-<span id="cb107-15"><a href="#cb107-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">'14'</span>: {<span class="st">'release'</span>: time_to_continuous_minutes(<span class="st">'Monday'</span>, <span class="dv">9</span>, <span class="dv">30</span>), <span class="st">'duration'</span>: (<span class="dv">2</span> <span class="op">*</span> <span class="dv">60</span> <span class="op">+</span> <span class="dv">15</span>) <span class="op">+</span> inspection_times[<span class="dv">13</span>], <span class="st">'due'</span>: time_to_continuous_minutes(<span class="st">'Tuesday'</span>, <span class="dv">13</span>, <span class="dv">30</span>), <span class="st">'weight'</span>: <span class="dv">1</span>},</span>
-<span id="cb107-16"><a href="#cb107-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">'15'</span>: {<span class="st">'release'</span>: time_to_continuous_minutes(<span class="st">'Tuesday'</span>, <span class="dv">13</span>, <span class="dv">0</span>), <span class="st">'duration'</span>: (<span class="dv">1</span> <span class="op">*</span> <span class="dv">60</span>) <span class="op">+</span> inspection_times[<span class="dv">14</span>], <span class="st">'due'</span>: time_to_continuous_minutes(<span class="st">'Tuesday'</span>, <span class="dv">15</span>, <span class="dv">45</span>), <span class="st">'weight'</span>: <span class="dv">3</span>},</span>
-<span id="cb107-17"><a href="#cb107-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">'16'</span>: {<span class="st">'release'</span>: time_to_continuous_minutes(<span class="st">'Tuesday'</span>, <span class="dv">17</span>, <span class="dv">0</span>), <span class="st">'duration'</span>: (<span class="dv">2</span> <span class="op">*</span> <span class="dv">60</span> <span class="op">+</span> <span class="dv">45</span>) <span class="op">+</span> inspection_times[<span class="dv">15</span>], <span class="st">'due'</span>: time_to_continuous_minutes(<span class="st">'Friday'</span>, <span class="dv">17</span>, <span class="dv">0</span>), <span class="st">'weight'</span>: <span class="dv">4</span>},</span>
-<span id="cb107-18"><a href="#cb107-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">'17'</span>: {<span class="st">'release'</span>: time_to_continuous_minutes(<span class="st">'Monday'</span>, <span class="dv">15</span>, <span class="dv">30</span>), <span class="st">'duration'</span>: (<span class="dv">2</span> <span class="op">*</span> <span class="dv">60</span> <span class="op">+</span> <span class="dv">30</span>) <span class="op">+</span> inspection_times[<span class="dv">16</span>], <span class="st">'due'</span>: time_to_continuous_minutes(<span class="st">'Wednesday'</span>, <span class="dv">8</span>, <span class="dv">45</span>), <span class="st">'weight'</span>: <span class="dv">4</span>},</span>
+<span id="cb107-2"><a href="#cb107-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'1'</span>: {<span class="st">'release'</span>: <span class="dv">1365</span>, <span class="st">'duration'</span>: (<span class="dv">2</span> <span class="op">*</span> <span class="dv">60</span> <span class="op">+</span> <span class="dv">45</span>), <span class="st">'due'</span>: time_to_continuous_minutes(<span class="st">'Wednesday'</span>, <span class="dv">10</span>, <span class="dv">30</span>), <span class="st">'weight'</span>: <span class="dv">1</span>},</span>
+<span id="cb107-3"><a href="#cb107-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'2'</span>: {<span class="st">'release'</span>: <span class="dv">570</span>, <span class="st">'duration'</span>: (<span class="dv">1</span> <span class="op">*</span> <span class="dv">60</span> <span class="op">+</span> <span class="dv">45</span>), <span class="st">'due'</span>: time_to_continuous_minutes(<span class="st">'Wednesday'</span>, <span class="dv">12</span>, <span class="dv">0</span>), <span class="st">'weight'</span>: <span class="dv">3</span>},</span>
+<span id="cb107-4"><a href="#cb107-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'3'</span>: {<span class="st">'release'</span>: <span class="dv">750</span>, <span class="st">'duration'</span>: (<span class="dv">2</span> <span class="op">*</span> <span class="dv">60</span> <span class="op">+</span> <span class="dv">45</span>), <span class="st">'due'</span>: time_to_continuous_minutes(<span class="st">'Thursday'</span>, <span class="dv">11</span>, <span class="dv">45</span>), <span class="st">'weight'</span>: <span class="dv">4</span>},</span>
+<span id="cb107-5"><a href="#cb107-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'4'</span>: {<span class="st">'release'</span>: <span class="dv">150</span>, <span class="st">'duration'</span>: (<span class="dv">2</span> <span class="op">*</span> <span class="dv">60</span>), <span class="st">'due'</span>: time_to_continuous_minutes(<span class="st">'Wednesday'</span>, <span class="dv">13</span>, <span class="dv">45</span>), <span class="st">'weight'</span>: <span class="dv">1</span>},</span>
+<span id="cb107-6"><a href="#cb107-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'5'</span>: {<span class="st">'release'</span>: <span class="dv">375</span>, <span class="st">'duration'</span>: (<span class="dv">2</span> <span class="op">*</span> <span class="dv">60</span> <span class="op">+</span> <span class="dv">30</span>), <span class="st">'due'</span>: time_to_continuous_minutes(<span class="st">'Tuesday'</span>, <span class="dv">8</span>, <span class="dv">30</span>), <span class="st">'weight'</span>: <span class="dv">1</span>},</span>
+<span id="cb107-7"><a href="#cb107-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'6'</span>: {<span class="st">'release'</span>: <span class="dv">1275</span>, <span class="st">'duration'</span>: (<span class="dv">3</span> <span class="op">*</span> <span class="dv">60</span> <span class="op">+</span> <span class="dv">15</span>), <span class="st">'due'</span>: time_to_continuous_minutes(<span class="st">'Thursday'</span>, <span class="dv">17</span>, <span class="dv">30</span>), <span class="st">'weight'</span>: <span class="dv">2</span>},</span>
+<span id="cb107-8"><a href="#cb107-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'7'</span>: {<span class="st">'release'</span>: <span class="dv">1200</span>, <span class="st">'duration'</span>: (<span class="dv">1</span> <span class="op">*</span> <span class="dv">60</span> <span class="op">+</span> <span class="dv">30</span>), <span class="st">'due'</span>: time_to_continuous_minutes(<span class="st">'Wednesday'</span>, <span class="dv">13</span>, <span class="dv">30</span>), <span class="st">'weight'</span>: <span class="dv">3</span>},</span>
+<span id="cb107-9"><a href="#cb107-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">'8'</span>: {<span class="st">'release'</span>: <span class="dv">1365</span>, <span class="st">'duration'</span>: (<span class="dv">1</span> <span class="op">*</span> <span class="dv">60</span> <span class="op">+</span> <span class="dv">15</span>), <span class="st">'due'</span>: time_to_continuous_minutes(<span class="st">'Friday'</span>, <span class="dv">9</span>, <span class="dv">45</span>), <span class="st">'weight'</span>: <span class="dv">1</span>},</span>
+<span id="cb107-10"><a href="#cb107-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'9'</span>: {<span class="st">'release'</span>: <span class="dv">1035</span>, <span class="st">'duration'</span>: (<span class="dv">3</span> <span class="op">*</span> <span class="dv">60</span>), <span class="st">'due'</span>: time_to_continuous_minutes(<span class="st">'Thursday'</span>, <span class="dv">14</span>, <span class="dv">15</span>), <span class="st">'weight'</span>: <span class="dv">2</span>},</span>
+<span id="cb107-11"><a href="#cb107-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'10'</span>: {<span class="st">'release'</span>: <span class="dv">735</span>, <span class="st">'duration'</span>: (<span class="dv">3</span> <span class="op">*</span> <span class="dv">60</span>), <span class="st">'due'</span>: time_to_continuous_minutes(<span class="st">'Wednesday'</span>, <span class="dv">12</span>, <span class="dv">30</span>), <span class="st">'weight'</span>: <span class="dv">1</span>},</span>
+<span id="cb107-12"><a href="#cb107-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">'11'</span>: {<span class="st">'release'</span>: <span class="dv">1290</span>, <span class="st">'duration'</span>: (<span class="dv">3</span> <span class="op">*</span> <span class="dv">60</span> <span class="op">+</span> <span class="dv">45</span>), <span class="st">'due'</span>: time_to_continuous_minutes(<span class="st">'Thursday'</span>, <span class="dv">13</span>, <span class="dv">30</span>), <span class="st">'weight'</span>: <span class="dv">1</span>},</span>
+<span id="cb107-13"><a href="#cb107-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">'12'</span>: {<span class="st">'release'</span>: <span class="dv">540</span>, <span class="st">'duration'</span>: (<span class="dv">1</span> <span class="op">*</span> <span class="dv">60</span> <span class="op">+</span> <span class="dv">15</span>), <span class="st">'due'</span>: time_to_continuous_minutes(<span class="st">'Tuesday'</span>, <span class="dv">15</span>, <span class="dv">0</span>), <span class="st">'weight'</span>: <span class="dv">1</span>},</span>
+<span id="cb107-14"><a href="#cb107-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">'13'</span>: {<span class="st">'release'</span>: <span class="dv">1080</span>, <span class="st">'duration'</span>: (<span class="dv">45</span>), <span class="st">'due'</span>: time_to_continuous_minutes(<span class="st">'Tuesday'</span>, <span class="dv">16</span>, <span class="dv">45</span>), <span class="st">'weight'</span>: <span class="dv">1</span>},</span>
+<span id="cb107-15"><a href="#cb107-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">'14'</span>: {<span class="st">'release'</span>: <span class="dv">225</span>, <span class="st">'duration'</span>: (<span class="dv">2</span> <span class="op">*</span> <span class="dv">60</span> <span class="op">+</span> <span class="dv">15</span>), <span class="st">'due'</span>: time_to_continuous_minutes(<span class="st">'Tuesday'</span>, <span class="dv">13</span>, <span class="dv">30</span>), <span class="st">'weight'</span>: <span class="dv">1</span>},</span>
+<span id="cb107-16"><a href="#cb107-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">'15'</span>: {<span class="st">'release'</span>: <span class="dv">960</span>, <span class="st">'duration'</span>: (<span class="dv">1</span> <span class="op">*</span> <span class="dv">60</span>), <span class="st">'due'</span>: time_to_continuous_minutes(<span class="st">'Tuesday'</span>, <span class="dv">15</span>, <span class="dv">45</span>), <span class="st">'weight'</span>: <span class="dv">3</span>},</span>
+<span id="cb107-17"><a href="#cb107-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">'16'</span>: {<span class="st">'release'</span>: <span class="dv">1440</span>, <span class="st">'duration'</span>: (<span class="dv">2</span> <span class="op">*</span> <span class="dv">60</span> <span class="op">+</span> <span class="dv">45</span>), <span class="st">'due'</span>: time_to_continuous_minutes(<span class="st">'Friday'</span>, <span class="dv">17</span>, <span class="dv">0</span>), <span class="st">'weight'</span>: <span class="dv">4</span>},</span>
+<span id="cb107-18"><a href="#cb107-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">'17'</span>: {<span class="st">'release'</span>: <span class="dv">600</span>, <span class="st">'duration'</span>: (<span class="dv">2</span> <span class="op">*</span> <span class="dv">60</span> <span class="op">+</span> <span class="dv">30</span>), <span class="st">'due'</span>: time_to_continuous_minutes(<span class="st">'Wednesday'</span>, <span class="dv">8</span>, <span class="dv">45</span>), <span class="st">'weight'</span>: <span class="dv">4</span>},</span>
 <span id="cb107-19"><a href="#cb107-19" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb107-20"><a href="#cb107-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb107-21"><a href="#cb107-21" aria-hidden="true" tabindex="-1"></a>MACHINES <span class="op">=</span> [<span class="st">'A'</span>, <span class="st">'B'</span>, <span class="st">'C'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb107-21"><a href="#cb107-21" aria-hidden="true" tabindex="-1"></a>MACHINES <span class="op">=</span> [<span class="st">'I'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="lpt-2" class="level3">
 <h3 class="anchored" data-anchor-id="lpt-2">LPT</h3>
-<div id="cell-114" class="cell" data-execution_count="213">
-<div class="sourceCode cell-code" id="cb108"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a>SCHEDULE <span class="op">=</span> schedule(JOBS)</span>
-<span id="cb108-2"><a href="#cb108-2" aria-hidden="true" tabindex="-1"></a>SCHEDULE</span>
-<span id="cb108-3"><a href="#cb108-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb108-4"><a href="#cb108-4" aria-hidden="true" tabindex="-1"></a>order<span class="op">=</span><span class="bu">sorted</span>(JOBS,reverse <span class="op">=</span> <span class="va">True</span>, key<span class="op">=</span><span class="kw">lambda</span> x: (JOBS[x][<span class="st">'duration'</span>], x))</span>
-<span id="cb108-5"><a href="#cb108-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"LPT Order:"</span>)</span>
-<span id="cb108-6"><a href="#cb108-6" aria-hidden="true" tabindex="-1"></a>print_job_order(JOBS, order)</span>
-<span id="cb108-7"><a href="#cb108-7" aria-hidden="true" tabindex="-1"></a>gantt(JOBS, schedule(JOBS,order))</span>
-<span id="cb108-8"><a href="#cb108-8" aria-hidden="true" tabindex="-1"></a>kpi(JOBS, schedule(JOBS,order))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-114" class="cell" data-execution_count="225">
+<div class="sourceCode cell-code" id="cb108"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> schedule(JOBS, order<span class="op">=</span><span class="bu">sorted</span>(JOBS.keys())):</span>
+<span id="cb108-2"><a href="#cb108-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"Schedule a dictionary of JOBS on a single machine in a specified order."</span></span>
+<span id="cb108-3"><a href="#cb108-3" aria-hidden="true" tabindex="-1"></a>    start <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb108-4"><a href="#cb108-4" aria-hidden="true" tabindex="-1"></a>    finish <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb108-5"><a href="#cb108-5" aria-hidden="true" tabindex="-1"></a>    SCHEDULE <span class="op">=</span> {}</span>
+<span id="cb108-6"><a href="#cb108-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb108-7"><a href="#cb108-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> job <span class="kw">in</span> order:</span>
+<span id="cb108-8"><a href="#cb108-8" aria-hidden="true" tabindex="-1"></a>        start <span class="op">=</span> <span class="bu">max</span>(JOBS[job][<span class="st">'release'</span>], finish)</span>
+<span id="cb108-9"><a href="#cb108-9" aria-hidden="true" tabindex="-1"></a>        finish <span class="op">=</span> start <span class="op">+</span> JOBS[job][<span class="st">'duration'</span>]</span>
+<span id="cb108-10"><a href="#cb108-10" aria-hidden="true" tabindex="-1"></a>        SCHEDULE[job] <span class="op">=</span> {<span class="st">'start'</span>: start, <span class="st">'finish'</span>: finish}</span>
+<span id="cb108-11"><a href="#cb108-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> SCHEDULE</span>
+<span id="cb108-12"><a href="#cb108-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb108-13"><a href="#cb108-13" aria-hidden="true" tabindex="-1"></a>SCHEDULE <span class="op">=</span> schedule(JOBS)</span>
+<span id="cb108-14"><a href="#cb108-14" aria-hidden="true" tabindex="-1"></a>SCHEDULE</span>
+<span id="cb108-15"><a href="#cb108-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb108-16"><a href="#cb108-16" aria-hidden="true" tabindex="-1"></a>order<span class="op">=</span><span class="bu">sorted</span>(JOBS,reverse <span class="op">=</span> <span class="va">True</span>, key<span class="op">=</span><span class="kw">lambda</span> x: (JOBS[x][<span class="st">'duration'</span>], x))</span>
+<span id="cb108-17"><a href="#cb108-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"LPT Order:"</span>)</span>
+<span id="cb108-18"><a href="#cb108-18" aria-hidden="true" tabindex="-1"></a>print_job_order(JOBS, order)</span>
+<span id="cb108-19"><a href="#cb108-19" aria-hidden="true" tabindex="-1"></a>gantt(JOBS, schedule(JOBS,order))</span>
+<span id="cb108-20"><a href="#cb108-20" aria-hidden="true" tabindex="-1"></a>kpi(JOBS, schedule(JOBS,order))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>LPT Order:</code></pre>
 </div>
@@ -24866,137 +24880,137 @@ x_{jm} \in \{0, 1\} \quad \forall j, m
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">0</td>
-<td>5</td>
-<td>150</td>
-<td>303</td>
-<td>630</td>
+<td>11</td>
+<td>1290</td>
+<td>225</td>
+<td>2130</td>
 <td>1</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">1</td>
-<td>11</td>
-<td>1065</td>
-<td>303</td>
-<td>2130</td>
-<td>1</td>
+<td>6</td>
+<td>1275</td>
+<td>195</td>
+<td>2370</td>
+<td>2</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
-<td>10</td>
-<td>555</td>
-<td>294</td>
-<td>1470</td>
-<td>1</td>
+<td>9</td>
+<td>1035</td>
+<td>180</td>
+<td>2175</td>
+<td>2</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">3</td>
-<td>4</td>
-<td>30</td>
-<td>293</td>
-<td>1545</td>
+<td>10</td>
+<td>735</td>
+<td>180</td>
+<td>1470</td>
 <td>1</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">4</td>
 <td>3</td>
-<td>585</td>
-<td>292</td>
+<td>750</td>
+<td>165</td>
 <td>2025</td>
 <td>4</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">5</td>
-<td>1</td>
-<td>1125</td>
-<td>278</td>
-<td>1350</td>
-<td>1</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">6</td>
 <td>16</td>
-<td>1140</td>
-<td>277</td>
+<td>1440</td>
+<td>165</td>
 <td>2940</td>
 <td>4</td>
 </tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>1</td>
+<td>1365</td>
+<td>165</td>
+<td>1350</td>
+<td>1</td>
+</tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">7</td>
-<td>14</td>
-<td>90</td>
-<td>262</td>
-<td>930</td>
+<td>5</td>
+<td>375</td>
+<td>150</td>
+<td>630</td>
 <td>1</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">8</td>
 <td>17</td>
-<td>450</td>
-<td>249</td>
+<td>600</td>
+<td>150</td>
 <td>1245</td>
 <td>4</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">9</td>
-<td>9</td>
-<td>330</td>
-<td>230</td>
-<td>2175</td>
-<td>2</td>
+<td>14</td>
+<td>225</td>
+<td>135</td>
+<td>930</td>
+<td>1</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">10</td>
-<td>6</td>
-<td>1080</td>
-<td>198</td>
-<td>2370</td>
-<td>2</td>
+<td>4</td>
+<td>150</td>
+<td>120</td>
+<td>1545</td>
+<td>1</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">11</td>
-<td>8</td>
-<td>1185</td>
-<td>151</td>
-<td>2505</td>
-<td>1</td>
+<td>2</td>
+<td>570</td>
+<td>105</td>
+<td>1440</td>
+<td>3</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">12</td>
 <td>7</td>
-<td>1110</td>
-<td>144</td>
+<td>1200</td>
+<td>90</td>
 <td>1530</td>
 <td>3</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">13</td>
-<td>2</td>
-<td>465</td>
-<td>140</td>
-<td>1440</td>
-<td>3</td>
+<td>8</td>
+<td>1365</td>
+<td>75</td>
+<td>2505</td>
+<td>1</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">14</td>
 <td>12</td>
-<td>465</td>
-<td>131</td>
+<td>540</td>
+<td>75</td>
 <td>1020</td>
 <td>1</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">15</td>
 <td>15</td>
-<td>900</td>
-<td>113</td>
+<td>960</td>
+<td>60</td>
 <td>1065</td>
 <td>3</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">16</td>
 <td>13</td>
-<td>450</td>
-<td>72</td>
+<td>1080</td>
+<td>45</td>
 <td>1125</td>
 <td>1</td>
 </tr>
@@ -25006,13 +25020,13 @@ x_{jm} \in \{0, 1\} \quad \forall j, m
 </div>
 </div>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="213">
-<pre><code>{'Makespan': 2001,
- 'Max Pastdue': 909,
- 'Sum of Pastdue': 4583,
- 'Number Pastdue': 8,
- 'Number on Time': 9,
- 'Fraction on Time': 0.5294117647058824}</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="225">
+<pre><code>{'Makespan': 3570,
+ 'Max Pastdue': 2460,
+ 'Sum of Pastdue': 21180,
+ 'Number Pastdue': 13,
+ 'Number on Time': 4,
+ 'Fraction on Time': 0.23529411764705882}</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div>
@@ -25032,7 +25046,7 @@ x_{jm} \in \{0, 1\} \quad \forall j, m
 </section>
 <section id="spt-2" class="level3">
 <h3 class="anchored" data-anchor-id="spt-2">SPT</h3>
-<div id="cell-116" class="cell" data-execution_count="214">
+<div id="cell-116" class="cell" data-execution_count="226">
 <div class="sourceCode cell-code" id="cb111"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a>order<span class="op">=</span><span class="bu">sorted</span>(JOBS, key<span class="op">=</span><span class="kw">lambda</span> x: (JOBS[x][<span class="st">'duration'</span>], x))</span>
 <span id="cb111-2"><a href="#cb111-2" aria-hidden="true" tabindex="-1"></a>gantt(JOBS, schedule(JOBS,order))</span>
 <span id="cb111-3"><a href="#cb111-3" aria-hidden="true" tabindex="-1"></a>kpi(JOBS, schedule(JOBS,order))</span>
@@ -25064,137 +25078,137 @@ EDD Order:</code></pre>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">0</td>
 <td>13</td>
-<td>450</td>
-<td>72</td>
+<td>1080</td>
+<td>45</td>
 <td>1125</td>
 <td>1</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">1</td>
 <td>15</td>
-<td>900</td>
-<td>113</td>
+<td>960</td>
+<td>60</td>
 <td>1065</td>
 <td>3</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
 <td>12</td>
-<td>465</td>
-<td>131</td>
+<td>540</td>
+<td>75</td>
 <td>1020</td>
 <td>1</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">3</td>
-<td>2</td>
-<td>465</td>
-<td>140</td>
-<td>1440</td>
-<td>3</td>
+<td>8</td>
+<td>1365</td>
+<td>75</td>
+<td>2505</td>
+<td>1</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">4</td>
 <td>7</td>
-<td>1110</td>
-<td>144</td>
+<td>1200</td>
+<td>90</td>
 <td>1530</td>
 <td>3</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">5</td>
-<td>8</td>
-<td>1185</td>
-<td>151</td>
-<td>2505</td>
-<td>1</td>
+<td>2</td>
+<td>570</td>
+<td>105</td>
+<td>1440</td>
+<td>3</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">6</td>
-<td>6</td>
-<td>1080</td>
-<td>198</td>
-<td>2370</td>
-<td>2</td>
+<td>4</td>
+<td>150</td>
+<td>120</td>
+<td>1545</td>
+<td>1</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">7</td>
-<td>9</td>
-<td>330</td>
-<td>230</td>
-<td>2175</td>
-<td>2</td>
+<td>14</td>
+<td>225</td>
+<td>135</td>
+<td>930</td>
+<td>1</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">8</td>
 <td>17</td>
-<td>450</td>
-<td>249</td>
+<td>600</td>
+<td>150</td>
 <td>1245</td>
 <td>4</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">9</td>
-<td>14</td>
-<td>90</td>
-<td>262</td>
-<td>930</td>
+<td>5</td>
+<td>375</td>
+<td>150</td>
+<td>630</td>
 <td>1</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">10</td>
-<td>16</td>
-<td>1140</td>
-<td>277</td>
-<td>2940</td>
-<td>4</td>
+<td>1</td>
+<td>1365</td>
+<td>165</td>
+<td>1350</td>
+<td>1</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">11</td>
-<td>1</td>
-<td>1125</td>
-<td>278</td>
-<td>1350</td>
-<td>1</td>
+<td>16</td>
+<td>1440</td>
+<td>165</td>
+<td>2940</td>
+<td>4</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">12</td>
 <td>3</td>
-<td>585</td>
-<td>292</td>
+<td>750</td>
+<td>165</td>
 <td>2025</td>
 <td>4</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">13</td>
-<td>4</td>
-<td>30</td>
-<td>293</td>
-<td>1545</td>
+<td>10</td>
+<td>735</td>
+<td>180</td>
+<td>1470</td>
 <td>1</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">14</td>
-<td>10</td>
-<td>555</td>
-<td>294</td>
-<td>1470</td>
-<td>1</td>
+<td>9</td>
+<td>1035</td>
+<td>180</td>
+<td>2175</td>
+<td>2</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">15</td>
-<td>11</td>
-<td>1065</td>
-<td>303</td>
-<td>2130</td>
-<td>1</td>
+<td>6</td>
+<td>1275</td>
+<td>195</td>
+<td>2370</td>
+<td>2</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">16</td>
-<td>5</td>
-<td>150</td>
-<td>303</td>
-<td>630</td>
+<td>11</td>
+<td>1290</td>
+<td>225</td>
+<td>2130</td>
 <td>1</td>
 </tr>
 </tbody>
@@ -25203,13 +25217,13 @@ EDD Order:</code></pre>
 </div>
 </div>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="214">
-<pre><code>{'Makespan': 2287,
- 'Max Pastdue': 1325,
- 'Sum of Pastdue': 3715,
- 'Number Pastdue': 9,
- 'Number on Time': 8,
- 'Fraction on Time': 0.47058823529411764}</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="226">
+<pre><code>{'Makespan': 3645,
+ 'Max Pastdue': 2475,
+ 'Sum of Pastdue': 17250,
+ 'Number Pastdue': 15,
+ 'Number on Time': 2,
+ 'Fraction on Time': 0.11764705882352941}</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div>
@@ -25229,7 +25243,7 @@ EDD Order:</code></pre>
 </section>
 <section id="edd-1" class="level3">
 <h3 class="anchored" data-anchor-id="edd-1">EDD</h3>
-<div id="cell-118" class="cell" data-execution_count="215">
+<div id="cell-118" class="cell" data-execution_count="227">
 <div class="sourceCode cell-code" id="cb114"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a>order <span class="op">=</span> <span class="bu">sorted</span>(JOBS, key<span class="op">=</span><span class="kw">lambda</span> x: (JOBS[x][<span class="st">'due'</span>], x))</span>
 <span id="cb114-2"><a href="#cb114-2" aria-hidden="true" tabindex="-1"></a>gantt(JOBS, schedule(JOBS,order))</span>
 <span id="cb114-3"><a href="#cb114-3" aria-hidden="true" tabindex="-1"></a>kpi(JOBS, schedule(JOBS,order))</span>
@@ -25261,136 +25275,136 @@ EDD Order:</code></pre>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">0</td>
 <td>5</td>
+<td>375</td>
 <td>150</td>
-<td>303</td>
 <td>630</td>
 <td>1</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">1</td>
 <td>14</td>
-<td>90</td>
-<td>262</td>
+<td>225</td>
+<td>135</td>
 <td>930</td>
 <td>1</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
 <td>12</td>
-<td>465</td>
-<td>131</td>
+<td>540</td>
+<td>75</td>
 <td>1020</td>
 <td>1</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">3</td>
 <td>15</td>
-<td>900</td>
-<td>113</td>
+<td>960</td>
+<td>60</td>
 <td>1065</td>
 <td>3</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">4</td>
 <td>13</td>
-<td>450</td>
-<td>72</td>
+<td>1080</td>
+<td>45</td>
 <td>1125</td>
 <td>1</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">5</td>
 <td>17</td>
-<td>450</td>
-<td>249</td>
+<td>600</td>
+<td>150</td>
 <td>1245</td>
 <td>4</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">6</td>
 <td>1</td>
-<td>1125</td>
-<td>278</td>
+<td>1365</td>
+<td>165</td>
 <td>1350</td>
 <td>1</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">7</td>
 <td>2</td>
-<td>465</td>
-<td>140</td>
+<td>570</td>
+<td>105</td>
 <td>1440</td>
 <td>3</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">8</td>
 <td>10</td>
-<td>555</td>
-<td>294</td>
+<td>735</td>
+<td>180</td>
 <td>1470</td>
 <td>1</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">9</td>
 <td>7</td>
-<td>1110</td>
-<td>144</td>
+<td>1200</td>
+<td>90</td>
 <td>1530</td>
 <td>3</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">10</td>
 <td>4</td>
-<td>30</td>
-<td>293</td>
+<td>150</td>
+<td>120</td>
 <td>1545</td>
 <td>1</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">11</td>
 <td>3</td>
-<td>585</td>
-<td>292</td>
+<td>750</td>
+<td>165</td>
 <td>2025</td>
 <td>4</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">12</td>
 <td>11</td>
-<td>1065</td>
-<td>303</td>
+<td>1290</td>
+<td>225</td>
 <td>2130</td>
 <td>1</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">13</td>
 <td>9</td>
-<td>330</td>
-<td>230</td>
+<td>1035</td>
+<td>180</td>
 <td>2175</td>
 <td>2</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">14</td>
 <td>6</td>
-<td>1080</td>
-<td>198</td>
+<td>1275</td>
+<td>195</td>
 <td>2370</td>
 <td>2</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">15</td>
 <td>8</td>
-<td>1185</td>
-<td>151</td>
+<td>1365</td>
+<td>75</td>
 <td>2505</td>
 <td>1</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">16</td>
 <td>16</td>
-<td>1140</td>
-<td>277</td>
+<td>1440</td>
+<td>165</td>
 <td>2940</td>
 <td>4</td>
 </tr>
@@ -25400,13 +25414,13 @@ EDD Order:</code></pre>
 </div>
 </div>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="215">
-<pre><code>{'Makespan': 2287,
- 'Max Pastdue': 1325,
- 'Sum of Pastdue': 3715,
- 'Number Pastdue': 9,
- 'Number on Time': 8,
- 'Fraction on Time': 0.47058823529411764}</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="227">
+<pre><code>{'Makespan': 3645,
+ 'Max Pastdue': 2475,
+ 'Sum of Pastdue': 17250,
+ 'Number Pastdue': 15,
+ 'Number on Time': 2,
+ 'Fraction on Time': 0.11764705882352941}</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div>
