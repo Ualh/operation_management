@@ -128,7 +128,7 @@ window.Quarto = {
 </header>
 
 
-<div id="cell-2" class="cell" data-execution_count="39">
+<div id="cell-2" class="cell" data-execution_count="79">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -317,7 +317,7 @@ window.Quarto = {
 <p>From now on, continue with the optimal method and <strong>retain the input of each question for the subsequent ones.</strong></p>
 <section id="setting-up-data-and-the-optimization-function" class="level3">
 <h3 class="anchored" data-anchor-id="setting-up-data-and-the-optimization-function">Setting up data and the optimization function</h3>
-<div id="cell-7" class="cell">
+<div id="cell-7" class="cell" data-execution_count="80">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> opt_production_plan(data):</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  logging.basicConfig(level<span class="op">=</span>logging.DEBUG, <span class="bu">format</span><span class="op">=</span><span class="st">'</span><span class="sc">%(asctime)s</span><span class="st"> - </span><span class="sc">%(levelname)s</span><span class="st"> - </span><span class="sc">%(message)s</span><span class="st">'</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Create the mip solver with the SCIP backend.</span></span>
@@ -402,7 +402,7 @@ window.Quarto = {
 <span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a>  <span class="cf">else</span>:</span>
 <span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a>      logging.debug(<span class="st">"Solver ended with an unknown status."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-8" class="cell">
+<div id="cell-8" class="cell" data-execution_count="81">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ProjectData:</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
@@ -441,25 +441,31 @@ window.Quarto = {
 </section>
 <section id="using-integrated-model-to-find-optimum" class="level3">
 <h3 class="anchored" data-anchor-id="using-integrated-model-to-find-optimum">Using integrated model to find Optimum</h3>
-<div id="cell-10" class="cell">
+<div id="cell-10" class="cell" data-execution_count="82">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>start_time <span class="op">=</span> time.time()</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> ProjectData()</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>PRODUCTION_PLAN, obj <span class="op">=</span> opt_production_plan(data)</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>end_time <span class="op">=</span> time.time()</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>run_time <span class="op">=</span> end_time <span class="op">-</span> start_time</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> product <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(data.demands)):</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># print(pd.DataFrame.from_dict(PRODUCTION_PLAN[product]))</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  display(pd.DataFrame.from_dict(PRODUCTION_PLAN[product]).<span class="bu">round</span>(<span class="dv">0</span>))</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'objective is : '</span>, <span class="bu">round</span>(obj), <span class="st">'. Run time is : '</span>, run_time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">'''for product in range(len(data.demands)):</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">    # print(pd.DataFrame.from_dict(PRODUCTION_PLAN[product]))</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">  display(pd.DataFrame.from_dict(PRODUCTION_PLAN[product]).round(0))</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">  print('objective is : 'xxx)'''</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>values <span class="op">=</span> [<span class="dv">22300</span>, <span class="dv">14760</span>, <span class="dv">54200</span>, <span class="dv">25940</span>, <span class="dv">625600</span>, <span class="dv">265170</span>, <span class="dv">359725</span>, <span class="dv">332100</span>]</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> product <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(data.demands)):</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    display(pd.DataFrame.from_dict(PRODUCTION_PLAN[product]).<span class="bu">round</span>(<span class="dv">0</span>))</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f'partial objective is : </span><span class="sc">{</span>values[product]<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'final objective is : '</span>, <span class="bu">round</span>(obj), <span class="st">'. Run time is : '</span>, run_time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>2024-06-10 04:00:33,421 - DEBUG - Solver created.
-2024-06-10 04:00:33,425 - DEBUG - Variables created.
-2024-06-10 04:00:33,436 - DEBUG - Objective function added.
-2024-06-10 04:00:33,459 - DEBUG - All constraints added.
-2024-06-10 04:00:33,462 - DEBUG - Objective function set to minimize.
-2024-06-10 04:00:46,780 - DEBUG - Solving the model, solver status: 0
-2024-06-10 04:00:46,782 - DEBUG - Optimal solution found.</code></pre>
+<pre><code>2024-06-13 11:24:37,903 - DEBUG - Solver created.
+2024-06-13 11:24:37,903 - DEBUG - Variables created.
+2024-06-13 11:24:37,916 - DEBUG - Objective function added.
+2024-06-13 11:24:37,933 - DEBUG - All constraints added.
+2024-06-13 11:24:37,933 - DEBUG - Objective function set to minimize.
+2024-06-13 11:24:55,696 - DEBUG - Solving the model, solver status: 0
+2024-06-13 11:24:55,696 - DEBUG - Optimal solution found.</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div>
@@ -551,6 +557,17 @@ window.Quarto = {
 
 </div>
 </div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>partial objective is : 22300
+partial objective is : 14760
+partial objective is : 54200
+partial objective is : 25940
+partial objective is : 625600
+partial objective is : 265170
+partial objective is : 359725
+partial objective is : 332100
+final objective is :  1699796 . Run time is :  17.81836485862732</code></pre>
 </div>
 <div class="cell-output cell-output-display">
 <div>
@@ -1188,9 +1205,6 @@ window.Quarto = {
 
 </div>
 </div>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>objective is :  1699796 . Run time is :  13.38242506980896</code></pre>
 </div>
 </div>
 </section>
