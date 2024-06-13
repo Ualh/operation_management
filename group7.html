@@ -25462,14 +25462,14 @@ EDD Order:</code></pre>
 <section id="question-7-1" class="level2">
 <h2 class="anchored" data-anchor-id="question-7-1">Question 7</h2>
 <p>Develop a MILP model designed to efficiently minimize the average completion time of the inspection station.</p>
-<div id="cell-120" class="cell" data-execution_count="33">
+<div id="cell-120" class="cell" data-execution_count="53">
 <div class="sourceCode cell-code" id="cb118"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a>SCHEDULE <span class="op">=</span> opt_schedule(JOBS)</span>
 <span id="cb118-2"><a href="#cb118-2" aria-hidden="true" tabindex="-1"></a>gantt(JOBS, SCHEDULE)</span>
 <span id="cb118-3"><a href="#cb118-3" aria-hidden="true" tabindex="-1"></a>kpi(JOBS, SCHEDULE)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>1.0</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="33">
+<div class="cell-output cell-output-display" data-execution_count="53">
 <pre><code>{'Makespan': 2890.0,
  'Max Pastdue': 1540.0,
  'Sum of Pastdue': 1540.0,
@@ -25633,7 +25633,7 @@ EDD Order:</code></pre>
 <ul>
 <li>Unlimited Intermediate Storage (UIS): The intermediate product can be stored indefinitely. There is enough storage capacity.</li>
 </ul>
-<div id="cell-127" class="cell" data-execution_count="42">
+<div id="cell-127" class="cell" data-execution_count="71">
 <div class="sourceCode cell-code" id="cb123"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb123-1"><a href="#cb123-1" aria-hidden="true" tabindex="-1"></a>TASKS <span class="op">=</span> {</span>
 <span id="cb123-2"><a href="#cb123-2" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Natural-Fiber Rug'</span>, <span class="st">'Fiber Processing'</span>): {<span class="st">'dur'</span>: <span class="fl">1.0</span>, <span class="st">'prec'</span>: <span class="va">None</span>},</span>
 <span id="cb123-3"><a href="#cb123-3" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Natural-Fiber Rug'</span>, <span class="st">'Coloring'</span>): {<span class="st">'dur'</span>: <span class="fl">5.0</span>, <span class="st">'prec'</span>: (<span class="st">'Natural-Fiber Rug'</span>, <span class="st">'Fiber Processing'</span>)},</span>
@@ -25657,7 +25657,7 @@ EDD Order:</code></pre>
 <span id="cb123-21"><a href="#cb123-21" aria-hidden="true" tabindex="-1"></a>    makespan <span class="op">=</span> schedule[<span class="st">'Finish'</span>].<span class="bu">max</span>()</span>
 <span id="cb123-22"><a href="#cb123-22" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb123-23"><a href="#cb123-23" aria-hidden="true" tabindex="-1"></a>    bar_style <span class="op">=</span> {<span class="st">'alpha'</span>:<span class="fl">1.0</span>, <span class="st">'lw'</span>:<span class="dv">25</span>, <span class="st">'solid_capstyle'</span>:<span class="st">'butt'</span>}</span>
-<span id="cb123-24"><a href="#cb123-24" aria-hidden="true" tabindex="-1"></a>    text_style <span class="op">=</span> {<span class="st">'color'</span>:<span class="st">'white'</span>, <span class="st">'weight'</span>:<span class="st">'bold'</span>, <span class="st">'ha'</span>:<span class="st">'center'</span>, <span class="st">'va'</span>:<span class="st">'center'</span>}</span>
+<span id="cb123-24"><a href="#cb123-24" aria-hidden="true" tabindex="-1"></a>    text_style <span class="op">=</span> {<span class="st">'color'</span>:<span class="st">'black'</span>, <span class="st">'weight'</span>:<span class="st">'bold'</span>, <span class="st">'ha'</span>:<span class="st">'center'</span>, <span class="st">'va'</span>:<span class="st">'center'</span>, <span class="st">'rotation'</span>: <span class="dv">20</span>}</span>
 <span id="cb123-25"><a href="#cb123-25" aria-hidden="true" tabindex="-1"></a>    colors <span class="op">=</span> mpl.cm.Dark2.colors</span>
 <span id="cb123-26"><a href="#cb123-26" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb123-27"><a href="#cb123-27" aria-hidden="true" tabindex="-1"></a>    schedule.sort_values(by<span class="op">=</span>[<span class="st">'Job'</span>, <span class="st">'Start'</span>])</span>
@@ -25773,7 +25773,7 @@ EDD Order:</code></pre>
 <ul>
 <li>Zero-Wait (ZW): The material cannot wait between different processes and must be processed as soon as it is produced.</li>
 </ul>
-<div id="cell-129" class="cell" data-execution_count="45">
+<div id="cell-129" class="cell" data-execution_count="72">
 <div class="sourceCode cell-code" id="cb124"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb124-1"><a href="#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> jobshop_model_zero_wait(TASKS):</span>
 <span id="cb124-2"><a href="#cb124-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create the mip solver with the SCIP backend.</span></span>
 <span id="cb124-3"><a href="#cb124-3" aria-hidden="true" tabindex="-1"></a>    m <span class="op">=</span> pywraplp.Solver.CreateSolver(<span class="st">'SCIP'</span>)</span>
@@ -25828,67 +25828,22 @@ EDD Order:</code></pre>
 <span id="cb124-52"><a href="#cb124-52" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">'The problem does not have an optimal solution.'</span>)</span>
 <span id="cb124-53"><a href="#cb124-53" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span>
 <span id="cb124-54"><a href="#cb124-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb124-55"><a href="#cb124-55" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> visualize(results):</span>
-<span id="cb124-56"><a href="#cb124-56" aria-hidden="true" tabindex="-1"></a>    <span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb124-57"><a href="#cb124-57" aria-hidden="true" tabindex="-1"></a>    <span class="im">import</span> matplotlib <span class="im">as</span> mpl</span>
-<span id="cb124-58"><a href="#cb124-58" aria-hidden="true" tabindex="-1"></a>    <span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb124-59"><a href="#cb124-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb124-60"><a href="#cb124-60" aria-hidden="true" tabindex="-1"></a>    schedule <span class="op">=</span> pd.DataFrame(results)</span>
-<span id="cb124-61"><a href="#cb124-61" aria-hidden="true" tabindex="-1"></a>    JOBS <span class="op">=</span> <span class="bu">sorted</span>(<span class="bu">list</span>(schedule[<span class="st">'Job'</span>].unique()))</span>
-<span id="cb124-62"><a href="#cb124-62" aria-hidden="true" tabindex="-1"></a>    MACHINES <span class="op">=</span> <span class="bu">sorted</span>(<span class="bu">list</span>(schedule[<span class="st">'Machine'</span>].unique()))</span>
-<span id="cb124-63"><a href="#cb124-63" aria-hidden="true" tabindex="-1"></a>    makespan <span class="op">=</span> schedule[<span class="st">'Finish'</span>].<span class="bu">max</span>()</span>
-<span id="cb124-64"><a href="#cb124-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb124-65"><a href="#cb124-65" aria-hidden="true" tabindex="-1"></a>    bar_style <span class="op">=</span> {<span class="st">'alpha'</span>: <span class="fl">1.0</span>, <span class="st">'lw'</span>: <span class="dv">25</span>, <span class="st">'solid_capstyle'</span>: <span class="st">'butt'</span>}</span>
-<span id="cb124-66"><a href="#cb124-66" aria-hidden="true" tabindex="-1"></a>    text_style <span class="op">=</span> {<span class="st">'color'</span>: <span class="st">'white'</span>, <span class="st">'weight'</span>: <span class="st">'bold'</span>, <span class="st">'ha'</span>: <span class="st">'center'</span>, <span class="st">'va'</span>: <span class="st">'center'</span>}</span>
-<span id="cb124-67"><a href="#cb124-67" aria-hidden="true" tabindex="-1"></a>    colors <span class="op">=</span> mpl.cm.Dark2.colors</span>
-<span id="cb124-68"><a href="#cb124-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb124-69"><a href="#cb124-69" aria-hidden="true" tabindex="-1"></a>    schedule.sort_values(by<span class="op">=</span>[<span class="st">'Job'</span>, <span class="st">'Start'</span>], inplace<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb124-70"><a href="#cb124-70" aria-hidden="true" tabindex="-1"></a>    schedule.set_index([<span class="st">'Job'</span>, <span class="st">'Machine'</span>], inplace<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb124-71"><a href="#cb124-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb124-72"><a href="#cb124-72" aria-hidden="true" tabindex="-1"></a>    fig, ax <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">5</span> <span class="op">+</span> (<span class="bu">len</span>(JOBS) <span class="op">+</span> <span class="bu">len</span>(MACHINES)) <span class="op">/</span> <span class="dv">4</span>))</span>
-<span id="cb124-73"><a href="#cb124-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb124-74"><a href="#cb124-74" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> jdx, j <span class="kw">in</span> <span class="bu">enumerate</span>(JOBS, <span class="dv">1</span>):</span>
-<span id="cb124-75"><a href="#cb124-75" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> mdx, m <span class="kw">in</span> <span class="bu">enumerate</span>(MACHINES, <span class="dv">1</span>):</span>
-<span id="cb124-76"><a href="#cb124-76" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> (j, m) <span class="kw">in</span> schedule.index:</span>
-<span id="cb124-77"><a href="#cb124-77" aria-hidden="true" tabindex="-1"></a>                xs <span class="op">=</span> schedule.loc[(j, m), <span class="st">'Start'</span>]</span>
-<span id="cb124-78"><a href="#cb124-78" aria-hidden="true" tabindex="-1"></a>                xf <span class="op">=</span> schedule.loc[(j, m), <span class="st">'Finish'</span>]</span>
-<span id="cb124-79"><a href="#cb124-79" aria-hidden="true" tabindex="-1"></a>                ax[<span class="dv">0</span>].plot([xs, xf], [jdx] <span class="op">*</span> <span class="dv">2</span>, c<span class="op">=</span>colors[mdx <span class="op">%</span> <span class="dv">7</span>], <span class="op">**</span>bar_style)</span>
-<span id="cb124-80"><a href="#cb124-80" aria-hidden="true" tabindex="-1"></a>                ax[<span class="dv">0</span>].text((xs <span class="op">+</span> xf) <span class="op">/</span> <span class="dv">2</span>, jdx, m, <span class="op">**</span>text_style)</span>
-<span id="cb124-81"><a href="#cb124-81" aria-hidden="true" tabindex="-1"></a>                ax[<span class="dv">1</span>].plot([xs, xf], [mdx] <span class="op">*</span> <span class="dv">2</span>, c<span class="op">=</span>colors[jdx <span class="op">%</span> <span class="dv">7</span>], <span class="op">**</span>bar_style)</span>
-<span id="cb124-82"><a href="#cb124-82" aria-hidden="true" tabindex="-1"></a>                ax[<span class="dv">1</span>].text((xs <span class="op">+</span> xf) <span class="op">/</span> <span class="dv">2</span>, mdx, j, <span class="op">**</span>text_style)</span>
-<span id="cb124-83"><a href="#cb124-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb124-84"><a href="#cb124-84" aria-hidden="true" tabindex="-1"></a>    ax[<span class="dv">0</span>].set_title(<span class="st">'Job Schedule'</span>)</span>
-<span id="cb124-85"><a href="#cb124-85" aria-hidden="true" tabindex="-1"></a>    ax[<span class="dv">0</span>].set_ylabel(<span class="st">'Job'</span>)</span>
-<span id="cb124-86"><a href="#cb124-86" aria-hidden="true" tabindex="-1"></a>    ax[<span class="dv">1</span>].set_title(<span class="st">'Machine Schedule'</span>)</span>
-<span id="cb124-87"><a href="#cb124-87" aria-hidden="true" tabindex="-1"></a>    ax[<span class="dv">1</span>].set_ylabel(<span class="st">'Machine'</span>)</span>
-<span id="cb124-88"><a href="#cb124-88" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb124-89"><a href="#cb124-89" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> idx, s <span class="kw">in</span> <span class="bu">enumerate</span>([JOBS, MACHINES]):</span>
-<span id="cb124-90"><a href="#cb124-90" aria-hidden="true" tabindex="-1"></a>        ax[idx].set_ylim(<span class="fl">0.5</span>, <span class="bu">len</span>(s) <span class="op">+</span> <span class="fl">0.5</span>)</span>
-<span id="cb124-91"><a href="#cb124-91" aria-hidden="true" tabindex="-1"></a>        ax[idx].set_yticks(<span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">1</span> <span class="op">+</span> <span class="bu">len</span>(s)))</span>
-<span id="cb124-92"><a href="#cb124-92" aria-hidden="true" tabindex="-1"></a>        ax[idx].set_yticklabels(s)</span>
-<span id="cb124-93"><a href="#cb124-93" aria-hidden="true" tabindex="-1"></a>        ax[idx].text(makespan, ax[idx].get_ylim()[<span class="dv">0</span>] <span class="op">-</span> <span class="fl">0.2</span>, <span class="st">"</span><span class="sc">{0:0.1f}</span><span class="st">"</span>.<span class="bu">format</span>(makespan), ha<span class="op">=</span><span class="st">'center'</span>, va<span class="op">=</span><span class="st">'top'</span>)</span>
-<span id="cb124-94"><a href="#cb124-94" aria-hidden="true" tabindex="-1"></a>        ax[idx].plot([makespan] <span class="op">*</span> <span class="dv">2</span>, ax[idx].get_ylim(), <span class="st">'r--'</span>)</span>
-<span id="cb124-95"><a href="#cb124-95" aria-hidden="true" tabindex="-1"></a>        ax[idx].set_xlabel(<span class="st">'Time'</span>)</span>
-<span id="cb124-96"><a href="#cb124-96" aria-hidden="true" tabindex="-1"></a>        ax[idx].grid(<span class="va">True</span>)</span>
-<span id="cb124-97"><a href="#cb124-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb124-98"><a href="#cb124-98" aria-hidden="true" tabindex="-1"></a>    fig.tight_layout()</span>
-<span id="cb124-99"><a href="#cb124-99" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb124-100"><a href="#cb124-100" aria-hidden="true" tabindex="-1"></a><span class="co"># Define tasks</span></span>
-<span id="cb124-101"><a href="#cb124-101" aria-hidden="true" tabindex="-1"></a>TASKS <span class="op">=</span> {</span>
-<span id="cb124-102"><a href="#cb124-102" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Natural-Fiber Rug'</span>, <span class="st">'Fiber Processing'</span>): {<span class="st">'dur'</span>: <span class="fl">1.0</span>, <span class="st">'prec'</span>: <span class="va">None</span>},</span>
-<span id="cb124-103"><a href="#cb124-103" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Natural-Fiber Rug'</span>, <span class="st">'Coloring'</span>): {<span class="st">'dur'</span>: <span class="fl">5.0</span>, <span class="st">'prec'</span>: (<span class="st">'Natural-Fiber Rug'</span>, <span class="st">'Fiber Processing'</span>)},</span>
-<span id="cb124-104"><a href="#cb124-104" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Natural-Fiber Rug'</span>, <span class="st">'Weaving'</span>): {<span class="st">'dur'</span>: <span class="fl">4.0</span>, <span class="st">'prec'</span>: (<span class="st">'Natural-Fiber Rug'</span>, <span class="st">'Coloring'</span>)},</span>
-<span id="cb124-105"><a href="#cb124-105" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Natural-Fiber Rug'</span>, <span class="st">'Inspection'</span>): {<span class="st">'dur'</span>: <span class="fl">1.5</span>, <span class="st">'prec'</span>: (<span class="st">'Natural-Fiber Rug'</span>, <span class="st">'Weaving'</span>)},</span>
-<span id="cb124-106"><a href="#cb124-106" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Black &amp; White Rug'</span>, <span class="st">'Weaving'</span>): {<span class="st">'dur'</span>: <span class="fl">4.5</span>, <span class="st">'prec'</span>: <span class="va">None</span>},</span>
-<span id="cb124-107"><a href="#cb124-107" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Black &amp; White Rug'</span>, <span class="st">'Inspection'</span>): {<span class="st">'dur'</span>: <span class="fl">1.0</span>, <span class="st">'prec'</span>: (<span class="st">'Black &amp; White Rug'</span>, <span class="st">'Weaving'</span>)},</span>
-<span id="cb124-108"><a href="#cb124-108" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Colored Rug'</span>, <span class="st">'Coloring'</span>): {<span class="st">'dur'</span>: <span class="fl">3.0</span>, <span class="st">'prec'</span>: <span class="va">None</span>},</span>
-<span id="cb124-109"><a href="#cb124-109" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Colored Rug'</span>, <span class="st">'Weaving'</span>): {<span class="st">'dur'</span>: <span class="fl">5.0</span>, <span class="st">'prec'</span>: (<span class="st">'Colored Rug'</span>, <span class="st">'Coloring'</span>)},</span>
-<span id="cb124-110"><a href="#cb124-110" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Colored Rug'</span>, <span class="st">'Inspection'</span>): {<span class="st">'dur'</span>: <span class="fl">1.5</span>, <span class="st">'prec'</span>: (<span class="st">'Colored Rug'</span>, <span class="st">'Weaving'</span>)}</span>
-<span id="cb124-111"><a href="#cb124-111" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb124-112"><a href="#cb124-112" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb124-113"><a href="#cb124-113" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the model with zero-wait constraint</span></span>
-<span id="cb124-114"><a href="#cb124-114" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> jobshop_model_zero_wait(TASKS)</span>
-<span id="cb124-115"><a href="#cb124-115" aria-hidden="true" tabindex="-1"></a>visualize(results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb124-55"><a href="#cb124-55" aria-hidden="true" tabindex="-1"></a><span class="co"># Define tasks</span></span>
+<span id="cb124-56"><a href="#cb124-56" aria-hidden="true" tabindex="-1"></a>TASKS <span class="op">=</span> {</span>
+<span id="cb124-57"><a href="#cb124-57" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Natural-Fiber Rug'</span>, <span class="st">'Fiber Processing'</span>): {<span class="st">'dur'</span>: <span class="fl">1.0</span>, <span class="st">'prec'</span>: <span class="va">None</span>},</span>
+<span id="cb124-58"><a href="#cb124-58" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Natural-Fiber Rug'</span>, <span class="st">'Coloring'</span>): {<span class="st">'dur'</span>: <span class="fl">5.0</span>, <span class="st">'prec'</span>: (<span class="st">'Natural-Fiber Rug'</span>, <span class="st">'Fiber Processing'</span>)},</span>
+<span id="cb124-59"><a href="#cb124-59" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Natural-Fiber Rug'</span>, <span class="st">'Weaving'</span>): {<span class="st">'dur'</span>: <span class="fl">4.0</span>, <span class="st">'prec'</span>: (<span class="st">'Natural-Fiber Rug'</span>, <span class="st">'Coloring'</span>)},</span>
+<span id="cb124-60"><a href="#cb124-60" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Natural-Fiber Rug'</span>, <span class="st">'Inspection'</span>): {<span class="st">'dur'</span>: <span class="fl">1.5</span>, <span class="st">'prec'</span>: (<span class="st">'Natural-Fiber Rug'</span>, <span class="st">'Weaving'</span>)},</span>
+<span id="cb124-61"><a href="#cb124-61" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Black &amp; White Rug'</span>, <span class="st">'Weaving'</span>): {<span class="st">'dur'</span>: <span class="fl">4.5</span>, <span class="st">'prec'</span>: <span class="va">None</span>},</span>
+<span id="cb124-62"><a href="#cb124-62" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Black &amp; White Rug'</span>, <span class="st">'Inspection'</span>): {<span class="st">'dur'</span>: <span class="fl">1.0</span>, <span class="st">'prec'</span>: (<span class="st">'Black &amp; White Rug'</span>, <span class="st">'Weaving'</span>)},</span>
+<span id="cb124-63"><a href="#cb124-63" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Colored Rug'</span>, <span class="st">'Coloring'</span>): {<span class="st">'dur'</span>: <span class="fl">3.0</span>, <span class="st">'prec'</span>: <span class="va">None</span>},</span>
+<span id="cb124-64"><a href="#cb124-64" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Colored Rug'</span>, <span class="st">'Weaving'</span>): {<span class="st">'dur'</span>: <span class="fl">5.0</span>, <span class="st">'prec'</span>: (<span class="st">'Colored Rug'</span>, <span class="st">'Coloring'</span>)},</span>
+<span id="cb124-65"><a href="#cb124-65" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Colored Rug'</span>, <span class="st">'Inspection'</span>): {<span class="st">'dur'</span>: <span class="fl">1.5</span>, <span class="st">'prec'</span>: (<span class="st">'Colored Rug'</span>, <span class="st">'Weaving'</span>)}</span>
+<span id="cb124-66"><a href="#cb124-66" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb124-67"><a href="#cb124-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb124-68"><a href="#cb124-68" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the model with zero-wait constraint</span></span>
+<span id="cb124-69"><a href="#cb124-69" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> jobshop_model_zero_wait(TASKS)</span>
+<span id="cb124-70"><a href="#cb124-70" aria-hidden="true" tabindex="-1"></a>visualize(results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -25901,7 +25856,7 @@ EDD Order:</code></pre>
 <section id="question-9-1" class="level2">
 <h2 class="anchored" data-anchor-id="question-9-1">Question 9</h2>
 <p>Consider that WoodCraft Creations needs to deliver a batch of ”NNBBCC” rugs (two batches of natural-fiber rug, two batches of black&amp;white rug and two batches of colored rug ) to the retail store. What would be the earliest time to deliver this order from the starting time?</p>
-<div id="cell-131" class="cell" data-execution_count="46">
+<div id="cell-131" class="cell" data-execution_count="73">
 <div class="sourceCode cell-code" id="cb125"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb125-1"><a href="#cb125-1" aria-hidden="true" tabindex="-1"></a>TASKS <span class="op">=</span> {</span>
 <span id="cb125-2"><a href="#cb125-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Natural-Fiber Rug Batches</span></span>
 <span id="cb125-3"><a href="#cb125-3" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Natural-Fiber Rug Batch 1'</span>, <span class="st">'Fiber Processing'</span>): {<span class="st">'dur'</span>: <span class="fl">1.0</span>, <span class="st">'prec'</span>: <span class="va">None</span>},</span>
@@ -25944,7 +25899,7 @@ EDD Order:</code></pre>
 </div>
 </div>
 <p>If you consider the use of the ’UIS policy’, what is the final schedule after applying this policy ? How this schedule will differ from the simple summation of the processing times?</p>
-<div id="cell-133" class="cell" data-execution_count="47">
+<div id="cell-133" class="cell" data-execution_count="74">
 <div class="sourceCode cell-code" id="cb127"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb127-1"><a href="#cb127-1" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> jobshop_model(TASKS)</span>
 <span id="cb127-2"><a href="#cb127-2" aria-hidden="true" tabindex="-1"></a>visualize(results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
@@ -25965,7 +25920,7 @@ EDD Order:</code></pre>
 <section id="question-11" class="level2">
 <h2 class="anchored" data-anchor-id="question-11">Question 11</h2>
 <p>Starting from the model in question 9, consider now that the fiber processing section is only available five time units after the process starts. How does it affect the result, and why?</p>
-<div id="cell-138" class="cell" data-execution_count="48">
+<div id="cell-138" class="cell" data-execution_count="75">
 <div class="sourceCode cell-code" id="cb128"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb128-1"><a href="#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> jobshop_model_with_fiber_delay(TASKS, fiber_delay):</span>
 <span id="cb128-2"><a href="#cb128-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create the mip solver with the SCIP backend.</span></span>
 <span id="cb128-3"><a href="#cb128-3" aria-hidden="true" tabindex="-1"></a>    m <span class="op">=</span> pywraplp.Solver.CreateSolver(<span class="st">'SCIP'</span>)</span>
@@ -26049,7 +26004,7 @@ EDD Order:</code></pre>
 <section id="question-12" class="level2">
 <h2 class="anchored" data-anchor-id="question-12">Question 12</h2>
 <p>In the stations, to consider specific protocols, they need to clean each section after producing one batch. So if natural-fiber rug is in the inspection station, they must do some cleaning, unless the next batch is again natural-fiber rug. Consider a cleaning time of one unit. Add this constraint to your model and report the result. Describe how it affects your previous solution and what the differences are.</p>
-<div id="cell-141" class="cell" data-execution_count="49">
+<div id="cell-141" class="cell" data-execution_count="76">
 <div class="sourceCode cell-code" id="cb130"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb130-1"><a href="#cb130-1" aria-hidden="true" tabindex="-1"></a>CLEANING_TIME <span class="op">=</span> <span class="fl">1.0</span>  <span class="co"># Time unit for cleaning between different rug types</span></span>
 <span id="cb130-2"><a href="#cb130-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> jobshop_model_with_cleaning(TASKS, fiber_delay, cleaning_time):</span>
 <span id="cb130-3"><a href="#cb130-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create the mip solver with the SCIP backend.</span></span>
@@ -26133,7 +26088,7 @@ EDD Order:</code></pre>
 </div>
 </div>
 </div>
-<div id="cell-142" class="cell" data-execution_count="50">
+<div id="cell-142" class="cell" data-execution_count="77">
 <div class="sourceCode cell-code" id="cb132"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb132-1"><a href="#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the difference</span></span>
 <span id="cb132-2"><a href="#cb132-2" aria-hidden="true" tabindex="-1"></a>difference_cleaning <span class="op">=</span> makespan_with_cleaning <span class="op">-</span> makespan_fiber_delay</span>
 <span id="cb132-3"><a href="#cb132-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Difference between fiber delay makespan and makespan with cleaning time constraint: </span><span class="sc">{</span>difference_cleaning<span class="sc">}</span><span class="ss"> hours."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -26145,7 +26100,7 @@ EDD Order:</code></pre>
 <section id="question-13" class="level2">
 <h2 class="anchored" data-anchor-id="question-13">Question 13</h2>
 <p>Assume a Zero-wait policy that prevents the material from waiting between different processes. Add the corresponding constraint to your model and comment on the result.</p>
-<div id="cell-144" class="cell" data-execution_count="51">
+<div id="cell-144" class="cell" data-execution_count="78">
 <div class="sourceCode cell-code" id="cb134"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb134-1"><a href="#cb134-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> jobshop_model_with_cleaning_and_zero_wait(TASKS, fiber_delay, cleaning_time):</span>
 <span id="cb134-2"><a href="#cb134-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create the mip solver with the SCIP backend.</span></span>
 <span id="cb134-3"><a href="#cb134-3" aria-hidden="true" tabindex="-1"></a>    m <span class="op">=</span> pywraplp.Solver.CreateSolver(<span class="st">'SCIP'</span>)</span>
