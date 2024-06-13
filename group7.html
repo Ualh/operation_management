@@ -25955,23 +25955,279 @@ EDD Order:</code></pre>
 </div>
 </div>
 </div>
+<p><span style="color: orange"> same makespan </span></p>
 </section>
 <section id="question-10" class="level2">
 <h2 class="anchored" data-anchor-id="question-10">Question 10</h2>
 <p>Can you use the production planning model to answer the above question? If yes, give the answer with it. Justify your answers.</p>
-<p><span style="color: orange"> theorique </span></p>
+<p><span style="color: orange"> theorique je te la laisse </span></p>
 </section>
 <section id="question-11" class="level2">
 <h2 class="anchored" data-anchor-id="question-11">Question 11</h2>
 <p>Starting from the model in question 9, consider now that the fiber processing section is only available five time units after the process starts. How does it affect the result, and why?</p>
+<div id="cell-138" class="cell" data-execution_count="48">
+<div class="sourceCode cell-code" id="cb128"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb128-1"><a href="#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> jobshop_model_with_fiber_delay(TASKS, fiber_delay):</span>
+<span id="cb128-2"><a href="#cb128-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create the mip solver with the SCIP backend.</span></span>
+<span id="cb128-3"><a href="#cb128-3" aria-hidden="true" tabindex="-1"></a>    m <span class="op">=</span> pywraplp.Solver.CreateSolver(<span class="st">'SCIP'</span>)</span>
+<span id="cb128-4"><a href="#cb128-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> m:</span>
+<span id="cb128-5"><a href="#cb128-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span></span>
+<span id="cb128-6"><a href="#cb128-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb128-7"><a href="#cb128-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Define Sets</span></span>
+<span id="cb128-8"><a href="#cb128-8" aria-hidden="true" tabindex="-1"></a>    JOBS <span class="op">=</span> <span class="bu">list</span>(<span class="bu">set</span>(j <span class="cf">for</span> (j, _) <span class="kw">in</span> TASKS))</span>
+<span id="cb128-9"><a href="#cb128-9" aria-hidden="true" tabindex="-1"></a>    MACHINES <span class="op">=</span> <span class="bu">list</span>(<span class="bu">set</span>(m <span class="cf">for</span> (_, m) <span class="kw">in</span> TASKS.keys()))</span>
+<span id="cb128-10"><a href="#cb128-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb128-11"><a href="#cb128-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Establish an upper bound on makespan</span></span>
+<span id="cb128-12"><a href="#cb128-12" aria-hidden="true" tabindex="-1"></a>    ub <span class="op">=</span> <span class="bu">sum</span>(TASKS[t][<span class="st">'dur'</span>] <span class="cf">for</span> t <span class="kw">in</span> TASKS.keys())</span>
+<span id="cb128-13"><a href="#cb128-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb128-14"><a href="#cb128-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Decision variables</span></span>
+<span id="cb128-15"><a href="#cb128-15" aria-hidden="true" tabindex="-1"></a>    start <span class="op">=</span> {}</span>
+<span id="cb128-16"><a href="#cb128-16" aria-hidden="true" tabindex="-1"></a>    auxilaryVar <span class="op">=</span> {}</span>
+<span id="cb128-17"><a href="#cb128-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> t <span class="kw">in</span> TASKS.keys():</span>
+<span id="cb128-18"><a href="#cb128-18" aria-hidden="true" tabindex="-1"></a>        start[t] <span class="op">=</span> m.NumVar(<span class="dv">0</span>, ub, <span class="ss">f'start_</span><span class="sc">{</span>t<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb128-19"><a href="#cb128-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> tp <span class="kw">in</span> TASKS.keys():</span>
+<span id="cb128-20"><a href="#cb128-20" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> t <span class="op">!=</span> tp:</span>
+<span id="cb128-21"><a href="#cb128-21" aria-hidden="true" tabindex="-1"></a>                auxilaryVar[(t, tp)] <span class="op">=</span> m.BoolVar(<span class="ss">f'aux_</span><span class="sc">{</span>t<span class="sc">}</span><span class="ss">_</span><span class="sc">{</span>tp<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb128-22"><a href="#cb128-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb128-23"><a href="#cb128-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Additional decision variables for use in the objective</span></span>
+<span id="cb128-24"><a href="#cb128-24" aria-hidden="true" tabindex="-1"></a>    makespan <span class="op">=</span> m.NumVar(<span class="dv">0</span>, ub, <span class="st">'makespan'</span>)</span>
+<span id="cb128-25"><a href="#cb128-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb128-26"><a href="#cb128-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Constraints</span></span>
+<span id="cb128-27"><a href="#cb128-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> t <span class="kw">in</span> TASKS.keys():</span>
+<span id="cb128-28"><a href="#cb128-28" aria-hidden="true" tabindex="-1"></a>        m.Add(start[t] <span class="op">+</span> TASKS[t][<span class="st">'dur'</span>] <span class="op">&lt;=</span> makespan)</span>
+<span id="cb128-29"><a href="#cb128-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb128-30"><a href="#cb128-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> TASKS[t][<span class="st">'prec'</span>] <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb128-31"><a href="#cb128-31" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Ensure the task starts after its predecessor ends</span></span>
+<span id="cb128-32"><a href="#cb128-32" aria-hidden="true" tabindex="-1"></a>            m.Add(start[t] <span class="op">&gt;=</span> start[TASKS[t][<span class="st">'prec'</span>]] <span class="op">+</span> TASKS[TASKS[t][<span class="st">'prec'</span>]][<span class="st">'dur'</span>])</span>
+<span id="cb128-33"><a href="#cb128-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb128-34"><a href="#cb128-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> t, tp <span class="kw">in</span> auxilaryVar.keys():</span>
+<span id="cb128-35"><a href="#cb128-35" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> t[<span class="dv">1</span>] <span class="op">==</span> tp[<span class="dv">1</span>]:  <span class="co"># same machine</span></span>
+<span id="cb128-36"><a href="#cb128-36" aria-hidden="true" tabindex="-1"></a>            m.Add(start[t] <span class="op">+</span> TASKS[t][<span class="st">'dur'</span>] <span class="op">&lt;=</span> start[tp] <span class="op">+</span> ub <span class="op">*</span> auxilaryVar[(t, tp)])</span>
+<span id="cb128-37"><a href="#cb128-37" aria-hidden="true" tabindex="-1"></a>            m.Add(start[tp] <span class="op">+</span> TASKS[tp][<span class="st">'dur'</span>] <span class="op">&lt;=</span> start[t] <span class="op">+</span> ub <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> auxilaryVar[(t, tp)]))</span>
+<span id="cb128-38"><a href="#cb128-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb128-39"><a href="#cb128-39" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add fiber processing delay constraint</span></span>
+<span id="cb128-40"><a href="#cb128-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> t <span class="kw">in</span> TASKS.keys():</span>
+<span id="cb128-41"><a href="#cb128-41" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> t[<span class="dv">1</span>] <span class="op">==</span> <span class="st">'Fiber Processing'</span>:</span>
+<span id="cb128-42"><a href="#cb128-42" aria-hidden="true" tabindex="-1"></a>            m.Add(start[t] <span class="op">&gt;=</span> fiber_delay)</span>
+<span id="cb128-43"><a href="#cb128-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb128-44"><a href="#cb128-44" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Objective function</span></span>
+<span id="cb128-45"><a href="#cb128-45" aria-hidden="true" tabindex="-1"></a>    m.Minimize(makespan)</span>
+<span id="cb128-46"><a href="#cb128-46" aria-hidden="true" tabindex="-1"></a>    status <span class="op">=</span> m.Solve()</span>
+<span id="cb128-47"><a href="#cb128-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb128-48"><a href="#cb128-48" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> status <span class="op">==</span> pywraplp.Solver.OPTIMAL:</span>
+<span id="cb128-49"><a href="#cb128-49" aria-hidden="true" tabindex="-1"></a>        results <span class="op">=</span> [{<span class="st">'Job'</span>: t[<span class="dv">0</span>],</span>
+<span id="cb128-50"><a href="#cb128-50" aria-hidden="true" tabindex="-1"></a>                    <span class="st">'Machine'</span>: t[<span class="dv">1</span>],</span>
+<span id="cb128-51"><a href="#cb128-51" aria-hidden="true" tabindex="-1"></a>                    <span class="st">'Start'</span>: start[t].solution_value(),</span>
+<span id="cb128-52"><a href="#cb128-52" aria-hidden="true" tabindex="-1"></a>                    <span class="st">'Duration'</span>: TASKS[t][<span class="st">'dur'</span>],</span>
+<span id="cb128-53"><a href="#cb128-53" aria-hidden="true" tabindex="-1"></a>                    <span class="st">'Finish'</span>: start[t].solution_value() <span class="op">+</span> TASKS[t][<span class="st">'dur'</span>]}</span>
+<span id="cb128-54"><a href="#cb128-54" aria-hidden="true" tabindex="-1"></a>                   <span class="cf">for</span> t <span class="kw">in</span> TASKS.keys()]</span>
+<span id="cb128-55"><a href="#cb128-55" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> results</span>
+<span id="cb128-56"><a href="#cb128-56" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb128-57"><a href="#cb128-57" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">'The problem does not have an optimal solution.'</span>)</span>
+<span id="cb128-58"><a href="#cb128-58" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb128-59"><a href="#cb128-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb128-60"><a href="#cb128-60" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the model with fiber processing delay</span></span>
+<span id="cb128-61"><a href="#cb128-61" aria-hidden="true" tabindex="-1"></a>fiber_delay <span class="op">=</span> <span class="dv">5</span>  <span class="co"># Fiber processing section is available 5 time units after the process starts</span></span>
+<span id="cb128-62"><a href="#cb128-62" aria-hidden="true" tabindex="-1"></a>results_fiber_delay <span class="op">=</span> jobshop_model_with_fiber_delay(TASKS, fiber_delay)</span>
+<span id="cb128-63"><a href="#cb128-63" aria-hidden="true" tabindex="-1"></a>visualize(results_fiber_delay)</span>
+<span id="cb128-64"><a href="#cb128-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb128-65"><a href="#cb128-65" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the makespan</span></span>
+<span id="cb128-66"><a href="#cb128-66" aria-hidden="true" tabindex="-1"></a>makespan_fiber_delay <span class="op">=</span> <span class="bu">max</span>(result[<span class="st">'Finish'</span>] <span class="cf">for</span> result <span class="kw">in</span> results_fiber_delay)</span>
+<span id="cb128-67"><a href="#cb128-67" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"The makespan with fiber processing delay is: </span><span class="sc">{</span>makespan_fiber_delay<span class="sc">}</span><span class="ss"> hours."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The makespan with fiber processing delay is: 27.999999999999996 hours.</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="group7_files/figure-html/cell-57-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><span style="color: orange"> using the same NNBBCC model we see that it does not change anything </span></p>
 </section>
 <section id="question-12" class="level2">
 <h2 class="anchored" data-anchor-id="question-12">Question 12</h2>
 <p>In the stations, to consider specific protocols, they need to clean each section after producing one batch. So if natural-fiber rug is in the inspection station, they must do some cleaning, unless the next batch is again natural-fiber rug. Consider a cleaning time of one unit. Add this constraint to your model and report the result. Describe how it affects your previous solution and what the differences are.</p>
+<div id="cell-141" class="cell" data-execution_count="49">
+<div class="sourceCode cell-code" id="cb130"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb130-1"><a href="#cb130-1" aria-hidden="true" tabindex="-1"></a>CLEANING_TIME <span class="op">=</span> <span class="fl">1.0</span>  <span class="co"># Time unit for cleaning between different rug types</span></span>
+<span id="cb130-2"><a href="#cb130-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> jobshop_model_with_cleaning(TASKS, fiber_delay, cleaning_time):</span>
+<span id="cb130-3"><a href="#cb130-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create the mip solver with the SCIP backend.</span></span>
+<span id="cb130-4"><a href="#cb130-4" aria-hidden="true" tabindex="-1"></a>    m <span class="op">=</span> pywraplp.Solver.CreateSolver(<span class="st">'SCIP'</span>)</span>
+<span id="cb130-5"><a href="#cb130-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> m:</span>
+<span id="cb130-6"><a href="#cb130-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span></span>
+<span id="cb130-7"><a href="#cb130-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb130-8"><a href="#cb130-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Define Sets</span></span>
+<span id="cb130-9"><a href="#cb130-9" aria-hidden="true" tabindex="-1"></a>    JOBS <span class="op">=</span> <span class="bu">list</span>(<span class="bu">set</span>(j <span class="cf">for</span> (j, _) <span class="kw">in</span> TASKS))</span>
+<span id="cb130-10"><a href="#cb130-10" aria-hidden="true" tabindex="-1"></a>    MACHINES <span class="op">=</span> <span class="bu">list</span>(<span class="bu">set</span>(m <span class="cf">for</span> (_, m) <span class="kw">in</span> TASKS.keys()))</span>
+<span id="cb130-11"><a href="#cb130-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb130-12"><a href="#cb130-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Establish an upper bound on makespan</span></span>
+<span id="cb130-13"><a href="#cb130-13" aria-hidden="true" tabindex="-1"></a>    ub <span class="op">=</span> <span class="bu">sum</span>(TASKS[t][<span class="st">'dur'</span>] <span class="cf">for</span> t <span class="kw">in</span> TASKS.keys()) <span class="op">+</span> cleaning_time <span class="op">*</span> (<span class="bu">len</span>(TASKS) <span class="op">-</span> <span class="dv">1</span>)</span>
+<span id="cb130-14"><a href="#cb130-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb130-15"><a href="#cb130-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Decision variables</span></span>
+<span id="cb130-16"><a href="#cb130-16" aria-hidden="true" tabindex="-1"></a>    start <span class="op">=</span> {}</span>
+<span id="cb130-17"><a href="#cb130-17" aria-hidden="true" tabindex="-1"></a>    auxilaryVar <span class="op">=</span> {}</span>
+<span id="cb130-18"><a href="#cb130-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> t <span class="kw">in</span> TASKS.keys():</span>
+<span id="cb130-19"><a href="#cb130-19" aria-hidden="true" tabindex="-1"></a>        start[t] <span class="op">=</span> m.NumVar(<span class="dv">0</span>, ub, <span class="ss">f'start_</span><span class="sc">{</span>t<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb130-20"><a href="#cb130-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> tp <span class="kw">in</span> TASKS.keys():</span>
+<span id="cb130-21"><a href="#cb130-21" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> t <span class="op">!=</span> tp:</span>
+<span id="cb130-22"><a href="#cb130-22" aria-hidden="true" tabindex="-1"></a>                auxilaryVar[(t, tp)] <span class="op">=</span> m.BoolVar(<span class="ss">f'aux_</span><span class="sc">{</span>t<span class="sc">}</span><span class="ss">_</span><span class="sc">{</span>tp<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb130-23"><a href="#cb130-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb130-24"><a href="#cb130-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Additional decision variables for use in the objective</span></span>
+<span id="cb130-25"><a href="#cb130-25" aria-hidden="true" tabindex="-1"></a>    makespan <span class="op">=</span> m.NumVar(<span class="dv">0</span>, ub, <span class="st">'makespan'</span>)</span>
+<span id="cb130-26"><a href="#cb130-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb130-27"><a href="#cb130-27" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Constraints</span></span>
+<span id="cb130-28"><a href="#cb130-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> t <span class="kw">in</span> TASKS.keys():</span>
+<span id="cb130-29"><a href="#cb130-29" aria-hidden="true" tabindex="-1"></a>        m.Add(start[t] <span class="op">+</span> TASKS[t][<span class="st">'dur'</span>] <span class="op">&lt;=</span> makespan)</span>
+<span id="cb130-30"><a href="#cb130-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb130-31"><a href="#cb130-31" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> TASKS[t][<span class="st">'prec'</span>] <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb130-32"><a href="#cb130-32" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Ensure the task starts after its predecessor ends</span></span>
+<span id="cb130-33"><a href="#cb130-33" aria-hidden="true" tabindex="-1"></a>            m.Add(start[t] <span class="op">&gt;=</span> start[TASKS[t][<span class="st">'prec'</span>]] <span class="op">+</span> TASKS[TASKS[t][<span class="st">'prec'</span>]][<span class="st">'dur'</span>])</span>
+<span id="cb130-34"><a href="#cb130-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb130-35"><a href="#cb130-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> t, tp <span class="kw">in</span> auxilaryVar.keys():</span>
+<span id="cb130-36"><a href="#cb130-36" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> t[<span class="dv">1</span>] <span class="op">==</span> tp[<span class="dv">1</span>]:  <span class="co"># same machine</span></span>
+<span id="cb130-37"><a href="#cb130-37" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> t[<span class="dv">0</span>].split()[<span class="dv">0</span>] <span class="op">!=</span> tp[<span class="dv">0</span>].split()[<span class="dv">0</span>]:  <span class="co"># Different rug types require cleaning</span></span>
+<span id="cb130-38"><a href="#cb130-38" aria-hidden="true" tabindex="-1"></a>                m.Add(start[t] <span class="op">+</span> TASKS[t][<span class="st">'dur'</span>] <span class="op">+</span> cleaning_time <span class="op">&lt;=</span> start[tp] <span class="op">+</span> ub <span class="op">*</span> auxilaryVar[(t, tp)])</span>
+<span id="cb130-39"><a href="#cb130-39" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:</span>
+<span id="cb130-40"><a href="#cb130-40" aria-hidden="true" tabindex="-1"></a>                m.Add(start[t] <span class="op">+</span> TASKS[t][<span class="st">'dur'</span>] <span class="op">&lt;=</span> start[tp] <span class="op">+</span> ub <span class="op">*</span> auxilaryVar[(t, tp)])</span>
+<span id="cb130-41"><a href="#cb130-41" aria-hidden="true" tabindex="-1"></a>            m.Add(start[tp] <span class="op">+</span> TASKS[tp][<span class="st">'dur'</span>] <span class="op">&lt;=</span> start[t] <span class="op">+</span> ub <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> auxilaryVar[(t, tp)]))</span>
+<span id="cb130-42"><a href="#cb130-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb130-43"><a href="#cb130-43" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add fiber processing delay constraint</span></span>
+<span id="cb130-44"><a href="#cb130-44" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> t <span class="kw">in</span> TASKS.keys():</span>
+<span id="cb130-45"><a href="#cb130-45" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> t[<span class="dv">1</span>] <span class="op">==</span> <span class="st">'Fiber Processing'</span>:</span>
+<span id="cb130-46"><a href="#cb130-46" aria-hidden="true" tabindex="-1"></a>            m.Add(start[t] <span class="op">&gt;=</span> fiber_delay)</span>
+<span id="cb130-47"><a href="#cb130-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb130-48"><a href="#cb130-48" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Objective function</span></span>
+<span id="cb130-49"><a href="#cb130-49" aria-hidden="true" tabindex="-1"></a>    m.Minimize(makespan)</span>
+<span id="cb130-50"><a href="#cb130-50" aria-hidden="true" tabindex="-1"></a>    status <span class="op">=</span> m.Solve()</span>
+<span id="cb130-51"><a href="#cb130-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb130-52"><a href="#cb130-52" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> status <span class="op">==</span> pywraplp.Solver.OPTIMAL:</span>
+<span id="cb130-53"><a href="#cb130-53" aria-hidden="true" tabindex="-1"></a>        results <span class="op">=</span> [{<span class="st">'Job'</span>: t[<span class="dv">0</span>],</span>
+<span id="cb130-54"><a href="#cb130-54" aria-hidden="true" tabindex="-1"></a>                    <span class="st">'Machine'</span>: t[<span class="dv">1</span>],</span>
+<span id="cb130-55"><a href="#cb130-55" aria-hidden="true" tabindex="-1"></a>                    <span class="st">'Start'</span>: start[t].solution_value(),</span>
+<span id="cb130-56"><a href="#cb130-56" aria-hidden="true" tabindex="-1"></a>                    <span class="st">'Duration'</span>: TASKS[t][<span class="st">'dur'</span>],</span>
+<span id="cb130-57"><a href="#cb130-57" aria-hidden="true" tabindex="-1"></a>                    <span class="st">'Finish'</span>: start[t].solution_value() <span class="op">+</span> TASKS[t][<span class="st">'dur'</span>]}</span>
+<span id="cb130-58"><a href="#cb130-58" aria-hidden="true" tabindex="-1"></a>                   <span class="cf">for</span> t <span class="kw">in</span> TASKS.keys()]</span>
+<span id="cb130-59"><a href="#cb130-59" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> results</span>
+<span id="cb130-60"><a href="#cb130-60" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb130-61"><a href="#cb130-61" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">'The problem does not have an optimal solution.'</span>)</span>
+<span id="cb130-62"><a href="#cb130-62" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb130-63"><a href="#cb130-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb130-64"><a href="#cb130-64" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the model with cleaning time constraint</span></span>
+<span id="cb130-65"><a href="#cb130-65" aria-hidden="true" tabindex="-1"></a>fiber_delay <span class="op">=</span> <span class="dv">5</span>  <span class="co"># Fiber processing section is available 5 time units after the process starts</span></span>
+<span id="cb130-66"><a href="#cb130-66" aria-hidden="true" tabindex="-1"></a>cleaning_time <span class="op">=</span> <span class="fl">1.0</span>  <span class="co"># Time unit for cleaning between different rug types</span></span>
+<span id="cb130-67"><a href="#cb130-67" aria-hidden="true" tabindex="-1"></a>results_with_cleaning <span class="op">=</span> jobshop_model_with_cleaning(TASKS, fiber_delay, cleaning_time)</span>
+<span id="cb130-68"><a href="#cb130-68" aria-hidden="true" tabindex="-1"></a>visualize(results_with_cleaning)</span>
+<span id="cb130-69"><a href="#cb130-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb130-70"><a href="#cb130-70" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the makespan</span></span>
+<span id="cb130-71"><a href="#cb130-71" aria-hidden="true" tabindex="-1"></a>makespan_with_cleaning <span class="op">=</span> <span class="bu">max</span>(result[<span class="st">'Finish'</span>] <span class="cf">for</span> result <span class="kw">in</span> results_with_cleaning)</span>
+<span id="cb130-72"><a href="#cb130-72" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"The makespan with cleaning time constraint is: </span><span class="sc">{</span>makespan_with_cleaning<span class="sc">}</span><span class="ss"> hours."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The makespan with cleaning time constraint is: 30.499999999999996 hours.</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="group7_files/figure-html/cell-58-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="cell-142" class="cell" data-execution_count="50">
+<div class="sourceCode cell-code" id="cb132"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb132-1"><a href="#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the difference</span></span>
+<span id="cb132-2"><a href="#cb132-2" aria-hidden="true" tabindex="-1"></a>difference_cleaning <span class="op">=</span> makespan_with_cleaning <span class="op">-</span> makespan_fiber_delay</span>
+<span id="cb132-3"><a href="#cb132-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Difference between fiber delay makespan and makespan with cleaning time constraint: </span><span class="sc">{</span>difference_cleaning<span class="sc">}</span><span class="ss"> hours."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Difference between fiber delay makespan and makespan with cleaning time constraint: 2.5 hours.</code></pre>
+</div>
+</div>
 </section>
 <section id="question-13" class="level2">
 <h2 class="anchored" data-anchor-id="question-13">Question 13</h2>
 <p>Assume a Zero-wait policy that prevents the material from waiting between different processes. Add the corresponding constraint to your model and comment on the result.</p>
+<div id="cell-144" class="cell" data-execution_count="51">
+<div class="sourceCode cell-code" id="cb134"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb134-1"><a href="#cb134-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> jobshop_model_with_cleaning_and_zero_wait(TASKS, fiber_delay, cleaning_time):</span>
+<span id="cb134-2"><a href="#cb134-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create the mip solver with the SCIP backend.</span></span>
+<span id="cb134-3"><a href="#cb134-3" aria-hidden="true" tabindex="-1"></a>    m <span class="op">=</span> pywraplp.Solver.CreateSolver(<span class="st">'SCIP'</span>)</span>
+<span id="cb134-4"><a href="#cb134-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> m:</span>
+<span id="cb134-5"><a href="#cb134-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span></span>
+<span id="cb134-6"><a href="#cb134-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb134-7"><a href="#cb134-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Define Sets</span></span>
+<span id="cb134-8"><a href="#cb134-8" aria-hidden="true" tabindex="-1"></a>    JOBS <span class="op">=</span> <span class="bu">list</span>(<span class="bu">set</span>(j <span class="cf">for</span> (j, _) <span class="kw">in</span> TASKS))</span>
+<span id="cb134-9"><a href="#cb134-9" aria-hidden="true" tabindex="-1"></a>    MACHINES <span class="op">=</span> <span class="bu">list</span>(<span class="bu">set</span>(m <span class="cf">for</span> (_, m) <span class="kw">in</span> TASKS.keys()))</span>
+<span id="cb134-10"><a href="#cb134-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb134-11"><a href="#cb134-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Establish an upper bound on makespan</span></span>
+<span id="cb134-12"><a href="#cb134-12" aria-hidden="true" tabindex="-1"></a>    ub <span class="op">=</span> <span class="bu">sum</span>(TASKS[t][<span class="st">'dur'</span>] <span class="cf">for</span> t <span class="kw">in</span> TASKS.keys()) <span class="op">+</span> cleaning_time <span class="op">*</span> (<span class="bu">len</span>(TASKS) <span class="op">-</span> <span class="dv">1</span>)</span>
+<span id="cb134-13"><a href="#cb134-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb134-14"><a href="#cb134-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Decision variables</span></span>
+<span id="cb134-15"><a href="#cb134-15" aria-hidden="true" tabindex="-1"></a>    start <span class="op">=</span> {}</span>
+<span id="cb134-16"><a href="#cb134-16" aria-hidden="true" tabindex="-1"></a>    auxilaryVar <span class="op">=</span> {}</span>
+<span id="cb134-17"><a href="#cb134-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> t <span class="kw">in</span> TASKS.keys():</span>
+<span id="cb134-18"><a href="#cb134-18" aria-hidden="true" tabindex="-1"></a>        start[t] <span class="op">=</span> m.NumVar(<span class="dv">0</span>, ub, <span class="ss">f'start_</span><span class="sc">{</span>t<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb134-19"><a href="#cb134-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> tp <span class="kw">in</span> TASKS.keys():</span>
+<span id="cb134-20"><a href="#cb134-20" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> t <span class="op">!=</span> tp:</span>
+<span id="cb134-21"><a href="#cb134-21" aria-hidden="true" tabindex="-1"></a>                auxilaryVar[(t, tp)] <span class="op">=</span> m.BoolVar(<span class="ss">f'aux_</span><span class="sc">{</span>t<span class="sc">}</span><span class="ss">_</span><span class="sc">{</span>tp<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb134-22"><a href="#cb134-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb134-23"><a href="#cb134-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Additional decision variables for use in the objective</span></span>
+<span id="cb134-24"><a href="#cb134-24" aria-hidden="true" tabindex="-1"></a>    makespan <span class="op">=</span> m.NumVar(<span class="dv">0</span>, ub, <span class="st">'makespan'</span>)</span>
+<span id="cb134-25"><a href="#cb134-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb134-26"><a href="#cb134-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Constraints</span></span>
+<span id="cb134-27"><a href="#cb134-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> t <span class="kw">in</span> TASKS.keys():</span>
+<span id="cb134-28"><a href="#cb134-28" aria-hidden="true" tabindex="-1"></a>        m.Add(start[t] <span class="op">+</span> TASKS[t][<span class="st">'dur'</span>] <span class="op">&lt;=</span> makespan)</span>
+<span id="cb134-29"><a href="#cb134-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb134-30"><a href="#cb134-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> TASKS[t][<span class="st">'prec'</span>] <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb134-31"><a href="#cb134-31" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Zero-wait constraint: Ensure the next task starts immediately after the current task ends</span></span>
+<span id="cb134-32"><a href="#cb134-32" aria-hidden="true" tabindex="-1"></a>            m.Add(start[t] <span class="op">==</span> start[TASKS[t][<span class="st">'prec'</span>]] <span class="op">+</span> TASKS[TASKS[t][<span class="st">'prec'</span>]][<span class="st">'dur'</span>])</span>
+<span id="cb134-33"><a href="#cb134-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb134-34"><a href="#cb134-34" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> t, tp <span class="kw">in</span> auxilaryVar.keys():</span>
+<span id="cb134-35"><a href="#cb134-35" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> t[<span class="dv">1</span>] <span class="op">==</span> tp[<span class="dv">1</span>]:  <span class="co"># same machine</span></span>
+<span id="cb134-36"><a href="#cb134-36" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> t[<span class="dv">0</span>].split()[<span class="dv">0</span>] <span class="op">!=</span> tp[<span class="dv">0</span>].split()[<span class="dv">0</span>]:  <span class="co"># Different rug types require cleaning</span></span>
+<span id="cb134-37"><a href="#cb134-37" aria-hidden="true" tabindex="-1"></a>                m.Add(start[t] <span class="op">+</span> TASKS[t][<span class="st">'dur'</span>] <span class="op">+</span> cleaning_time <span class="op">&lt;=</span> start[tp] <span class="op">+</span> ub <span class="op">*</span> auxilaryVar[(t, tp)])</span>
+<span id="cb134-38"><a href="#cb134-38" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:</span>
+<span id="cb134-39"><a href="#cb134-39" aria-hidden="true" tabindex="-1"></a>                m.Add(start[t] <span class="op">+</span> TASKS[t][<span class="st">'dur'</span>] <span class="op">&lt;=</span> start[tp] <span class="op">+</span> ub <span class="op">*</span> auxilaryVar[(t, tp)])</span>
+<span id="cb134-40"><a href="#cb134-40" aria-hidden="true" tabindex="-1"></a>            m.Add(start[tp] <span class="op">+</span> TASKS[tp][<span class="st">'dur'</span>] <span class="op">&lt;=</span> start[t] <span class="op">+</span> ub <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> auxilaryVar[(t, tp)]))</span>
+<span id="cb134-41"><a href="#cb134-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb134-42"><a href="#cb134-42" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add fiber processing delay constraint</span></span>
+<span id="cb134-43"><a href="#cb134-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> t <span class="kw">in</span> TASKS.keys():</span>
+<span id="cb134-44"><a href="#cb134-44" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> t[<span class="dv">1</span>] <span class="op">==</span> <span class="st">'Fiber Processing'</span>:</span>
+<span id="cb134-45"><a href="#cb134-45" aria-hidden="true" tabindex="-1"></a>            m.Add(start[t] <span class="op">&gt;=</span> fiber_delay)</span>
+<span id="cb134-46"><a href="#cb134-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb134-47"><a href="#cb134-47" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Objective function</span></span>
+<span id="cb134-48"><a href="#cb134-48" aria-hidden="true" tabindex="-1"></a>    m.Minimize(makespan)</span>
+<span id="cb134-49"><a href="#cb134-49" aria-hidden="true" tabindex="-1"></a>    status <span class="op">=</span> m.Solve()</span>
+<span id="cb134-50"><a href="#cb134-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb134-51"><a href="#cb134-51" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> status <span class="op">==</span> pywraplp.Solver.OPTIMAL:</span>
+<span id="cb134-52"><a href="#cb134-52" aria-hidden="true" tabindex="-1"></a>        results <span class="op">=</span> [{<span class="st">'Job'</span>: t[<span class="dv">0</span>],</span>
+<span id="cb134-53"><a href="#cb134-53" aria-hidden="true" tabindex="-1"></a>                    <span class="st">'Machine'</span>: t[<span class="dv">1</span>],</span>
+<span id="cb134-54"><a href="#cb134-54" aria-hidden="true" tabindex="-1"></a>                    <span class="st">'Start'</span>: start[t].solution_value(),</span>
+<span id="cb134-55"><a href="#cb134-55" aria-hidden="true" tabindex="-1"></a>                    <span class="st">'Duration'</span>: TASKS[t][<span class="st">'dur'</span>],</span>
+<span id="cb134-56"><a href="#cb134-56" aria-hidden="true" tabindex="-1"></a>                    <span class="st">'Finish'</span>: start[t].solution_value() <span class="op">+</span> TASKS[t][<span class="st">'dur'</span>]}</span>
+<span id="cb134-57"><a href="#cb134-57" aria-hidden="true" tabindex="-1"></a>                   <span class="cf">for</span> t <span class="kw">in</span> TASKS.keys()]</span>
+<span id="cb134-58"><a href="#cb134-58" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> results</span>
+<span id="cb134-59"><a href="#cb134-59" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb134-60"><a href="#cb134-60" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">'The problem does not have an optimal solution.'</span>)</span>
+<span id="cb134-61"><a href="#cb134-61" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb134-62"><a href="#cb134-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb134-63"><a href="#cb134-63" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the model with zero-wait, fiber delay, and cleaning time constraint</span></span>
+<span id="cb134-64"><a href="#cb134-64" aria-hidden="true" tabindex="-1"></a>fiber_delay <span class="op">=</span> <span class="dv">5</span>  <span class="co"># Fiber processing section is available 5 time units after the process starts</span></span>
+<span id="cb134-65"><a href="#cb134-65" aria-hidden="true" tabindex="-1"></a>cleaning_time <span class="op">=</span> <span class="fl">1.0</span>  <span class="co"># Time unit for cleaning between different rug types</span></span>
+<span id="cb134-66"><a href="#cb134-66" aria-hidden="true" tabindex="-1"></a>results_with_cleaning_and_zero_wait <span class="op">=</span> jobshop_model_with_cleaning_and_zero_wait(TASKS, fiber_delay, cleaning_time)</span>
+<span id="cb134-67"><a href="#cb134-67" aria-hidden="true" tabindex="-1"></a>visualize(results_with_cleaning_and_zero_wait)</span>
+<span id="cb134-68"><a href="#cb134-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb134-69"><a href="#cb134-69" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the makespan</span></span>
+<span id="cb134-70"><a href="#cb134-70" aria-hidden="true" tabindex="-1"></a>makespan_with_cleaning_and_zero_wait <span class="op">=</span> <span class="bu">max</span>(result[<span class="st">'Finish'</span>] <span class="cf">for</span> result <span class="kw">in</span> results_with_cleaning_and_zero_wait)</span>
+<span id="cb134-71"><a href="#cb134-71" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"The makespan with zero-wait, cleaning time, and fiber processing delay is: </span><span class="sc">{</span>makespan_with_cleaning_and_zero_wait<span class="sc">}</span><span class="ss"> hours."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The makespan with zero-wait, cleaning time, and fiber processing delay is: 31.5 hours.</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="group7_files/figure-html/cell-60-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
 </section>
 
